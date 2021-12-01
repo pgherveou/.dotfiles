@@ -6,3 +6,4 @@ autocmd BufWritePost ~/Github/dotfiles/qmk/**/keymap.c silent !keymapviz --confi
 autocmd BufWritePost ~/Github/dotfiles/qmk/**/keymap.c edit
 autocmd BufWritePost ~/Github/dotfiles/qmk/**/keymap.c redraw!
 
+autocmd BufWritePre *.bzl,*.bazel,WORKSPACE,BUILD silent  lua require('plugins.formatter').bzl_formatter()
