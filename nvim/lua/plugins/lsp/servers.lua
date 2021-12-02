@@ -16,6 +16,8 @@ local config_servers = function()
   }
 
   return {
+    gopls = commonConfig,
+    golangci_lint_ls = commonConfig,
     ccls = commonConfig,
     rust_analyzer = commonConfig,
     tsserver = {

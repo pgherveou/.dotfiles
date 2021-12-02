@@ -4,11 +4,14 @@ let g:mapleader="\<Space>"
 " Remove search highlight.
 nnoremap <silent> <Esc><Esc> :nohl<CR>
 
+" Repeat last command
+nnoremap <leader>r @:<CR>
+
 " Don't copy the contents of an overwritten selection.
 vnoremap p "_dP
 
 " Easier save mapping
-nnoremap W :write<CR>
+nnoremap <leader>s :write<CR>
 
 " better vertial movement for wrapped lines
 nnoremap j gj

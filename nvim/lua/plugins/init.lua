@@ -17,12 +17,13 @@ setup(function(import)
   import('psliwka/vim-smoothie')
 
   -- Syntax For languages
-  import('fatih/vim-go')
+  import({ 'fatih/vim-go', { ['do'] = ':GoUpdateBinaries' } }).then_configure(function() end)
   import('cespare/vim-toml')
   import('rust-lang/rust.vim')
   import('uarun/vim-protobuf')
   import('plasticboy/vim-markdown')
 
+  -- indent guidelines
   import('lukas-reineke/indent-blankline.nvim').then_configure(function()
     vim.opt.list = true
     require('indent_blankline').setup({
@@ -33,13 +34,20 @@ setup(function(import)
     })
   end)
 
-  -- Color Scheme
-  import({ 'folke/tokyonight.nvim', { branch = 'main' } }, 'vim-airline/vim-airline', 'vim-airline/vim-airline-themes').then_configure(
-    require('plugins.theme')
-  )
+  -- status line and Color Scheme
+  import({ 'folke/tokyonight.nvim', { branch = 'main' } }, 'nvim-lualine/lualine.nvim', 'kyazdani42/nvim-web-devicons').then_configure(
+    function()
+      vim.cmd('colorscheme tokyonight')
+      vim.g.tokyonight_style = 'storm'
+      vim.g.tokyonight_italic_functions = 1
 
-  -- Highlight trailing whitespaces
-  import('ntpeters/vim-better-whitespace')
+      require('nvim-web-devicons').setup({
+        default = true,
+      })
+
+      require('lualine').setup({})
+    end
+  )
 
   -- Treesitter ast / higlighting
   import('nvim-treesitter/nvim-treesitter', {
