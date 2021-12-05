@@ -8,6 +8,7 @@ return function()
     -- debug = true,
     sources = {
       formatters.eslint_d,
+      formatters.rustfmt,
       formatters.gofmt,
       formatters.prettier,
       formatters.stylua.with({

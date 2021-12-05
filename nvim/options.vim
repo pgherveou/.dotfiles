@@ -29,6 +29,8 @@ set tabstop=2                  " Number of spaces each tab counts for
 set termencoding=utf-8         " Set the default encodings just in case $LANG isn't set
 set title                      " Do not inherit the terminal title
 set ttyfast                    " Set that we have a fast terminal
+set signcolumn=yes             " always show the gutter
+set relativenumber             " relative number 
 
 " Ignore these folders for completions
 set wildignore+=.hg,.git,.svn                          " Version control

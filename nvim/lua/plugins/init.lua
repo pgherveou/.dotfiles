@@ -35,19 +35,30 @@ setup(function(import)
   end)
 
   -- status line and Color Scheme
-  import({ 'folke/tokyonight.nvim', { branch = 'main' } }, 'nvim-lualine/lualine.nvim', 'kyazdani42/nvim-web-devicons').then_configure(
-    function()
-      vim.cmd('colorscheme tokyonight')
-      vim.g.tokyonight_style = 'storm'
-      vim.g.tokyonight_italic_functions = 1
+  import('folke/tokyonight.nvim', 'nvim-lualine/lualine.nvim', 'kyazdani42/nvim-web-devicons').then_configure(function()
+    vim.cmd('colorscheme tokyonight')
+    vim.g.tokyonight_style = 'storm'
+    vim.g.tokyonight_italic_functions = true
+    vim.g.tokyonight_italic_comments = true
 
-      require('nvim-web-devicons').setup({
-        default = true,
-      })
+    require('nvim-web-devicons').setup({
+      default = true,
+    })
 
-      require('lualine').setup({})
-    end
-  )
+    require('lualine').setup({})
+  end)
+
+  -- git integration
+  import('tpope/vim-fugitive')
+  import('nvim-lua/plenary.nvim', 'lewis6991/gitsigns.nvim').then_configure(function()
+    require('gitsigns').setup()
+  end)
+
+  -- highlight yanked text
+  import('machakann/vim-highlightedyank')
+
+  -- auto select the root directory
+  import('airblade/vim-rooter')
 
   -- Treesitter ast / higlighting
   import('nvim-treesitter/nvim-treesitter', {
@@ -76,6 +87,7 @@ setup(function(import)
   -- lsp completion
   import(
     'neovim/nvim-lspconfig',
+    'nvim-lua/lsp_extensions.nvim',
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-nvim-lua',

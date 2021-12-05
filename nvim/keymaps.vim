@@ -17,6 +17,9 @@ nnoremap <leader>s :write<CR>
 nnoremap j gj
 nnoremap k gk
 
+"act like othet capitalized actions
+nnoremap Y yg$
+
 " quickly cancel search highlighting
 nnoremap <leader><space> :nohlsearch<cr>
 
