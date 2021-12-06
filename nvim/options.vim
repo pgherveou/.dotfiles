@@ -37,6 +37,7 @@ set wildignore+=.hg,.git,.svn                          " Version control
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg         " binary images
 set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest,*.pyc " compiled object files
 set wildignore+=*.resolved,*.lock                      " package manager lock files
+set wildignore+=*/node_modules/*                       " nodejs module
 set wildignore+=tags,.tags
 
 " https://kinbiko.com/vim/my-shiniest-vim-gems/

@@ -18,5 +18,10 @@ return function()
   -- mappings
   vim.cmd([[
   :nnoremap <Leader>fr :lua require('telescope.builtin').lsp_references{}<CR>
+  :nnoremap <Leader>fo :lua require('telescope.builtin').oldfiles{}<CR>
+  :nnoremap <Leader>fh :lua require('telescope.builtin').command_history{}<CR>
+  :nnoremap <Leader>fc :lua require('telescope.builtin').commands{}<CR>
+  :nnoremap <Leader>fs :lua require('telescope.builtin').search_history{}<CR>
+  :nnoremap <Leader>fe :lua require('telescope.builtin').file_browser{}<CR>
   ]])
 end
