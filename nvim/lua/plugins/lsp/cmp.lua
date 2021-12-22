@@ -19,6 +19,9 @@ return function()
       }),
       ['<CR>'] = cmp.mapping.confirm({ select = true }),
     },
+    experimental = {
+      ghost_text = true,
+    },
     sources = cmp.config.sources({
       { name = 'nvim_lua' },
       { name = 'nvim_lsp' },

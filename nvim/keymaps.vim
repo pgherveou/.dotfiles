@@ -13,11 +13,11 @@ vnoremap p "_dP
 " Easier save mapping
 nnoremap <leader>s :write<CR>
 
-" better vertial movement for wrapped lines
+" better vertical movement for wrapped lines
 nnoremap j gj
 nnoremap k gk
 
-"act like othet capitalized actions
+"act like other capitalized actions
 nnoremap Y yg$
 
 " quickly cancel search highlighting
@@ -26,21 +26,31 @@ nnoremap <leader><space> :nohlsearch<cr>
 " copy path into unnamed register
 nmap cp :let @" = expand("%")<cr>
 
+" make it easy to use cgn using the current word under the cursor 
+nnoremap <silent> c<Tab> :let @/=expand('<cword>')<cr>cgn
+" Allow gf to open non-existent files
+" map gf :edit <cfile><cr>
+
 " source vim
 noremap <leader>esv :edit $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
-" Find files using Telescope command-line sugar.
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+" Add undo breakpoints, useful when used in combination with C-o u (one shot
+" command + undo)
+inoremap <Del> <c-g>u<Del>
+inoremap ! !<c-g>u
+inoremap ( (<c-g>u
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ? ?<c-g>u
+inoremap [ [<c-g>u
+inoremap { {<c-g>u 
 
 " :navigate quicklist and location list
-nnoremap <leader>k :cnext<CR>zz
-nnoremap <leader>j :cprev<CR>zz
-nnoremap <leader>K :lnext<CR>zz
-nnoremap <leader>J :lprev<CR>zz
+nnoremap <leader>j :cnext<CR>zz
+nnoremap <leader>k :cprev<CR>zz
+nnoremap <leader>J :lnext<CR>zz
+nnoremap <leader>K :lprev<CR>zz
 
 " Go to previous buffer
 nnoremap <leader>o :bprevious<cr>
@@ -79,3 +89,6 @@ nmap <leader>w :call StripTrailingWhitespace()<cr>
 
 " fix gx to open files
 nnoremap gx :call netrw#BrowseX(expand('<cfile>'), 0)<CR>
+
+" Replay last command in tmux pane
+" nmap <leader>tk  !tmux send-keys -t bottom Up Enter<CR>

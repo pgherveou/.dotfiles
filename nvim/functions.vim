@@ -6,7 +6,7 @@ function! ClearRegisters()
     endfor
 endfunction
 
-command! ClearRegisters call ClearRegisers()
+command! ClearRegisters call ClearRegisters()
 
 function! RenameFile()
     let old_name = expand('%')
@@ -25,3 +25,4 @@ function! StripTrailingWhitespace()
 endfunction
 
 command! StripTrailingWhitespace call StripTrailingWhitespace()
+command! E Explore %:h

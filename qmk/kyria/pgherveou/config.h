@@ -17,21 +17,20 @@
 #pragma once
 
 #define RETRO_TAPPING_PER_KEY
+/* #define PERMISSIVE_HOLD */
+/* #define IGNORE_MOD_TAP_INTERRUPT */
 
 #ifdef RGBLIGHT_ENABLE
-#    define RGBLIGHT_LIMIT_VAL 128
-#    define RGBLIGHT_SLEEP
-#    define RGBLIGHT_LAYERS
-#    define RGBLIGHT_MAX_LAYERS 16
-#    define RGBLIGHT_HUE_STEP 8
-#    define RGBLIGHT_SAT_STEP 8
-#    define RGBLIGHT_VAL_STEP 8
+#define RGBLIGHT_LIMIT_VAL 128
+#define RGBLIGHT_SLEEP
+#define RGBLIGHT_LAYERS
+#define RGBLIGHT_MAX_LAYERS 16
+#define RGBLIGHT_HUE_STEP 8
+#define RGBLIGHT_SAT_STEP 8
+#define RGBLIGHT_VAL_STEP 8
 #endif
 
-// Lets you roll mod-tap keys
-#define IGNORE_MOD_TAP_INTERRUPT
-
 #ifdef ENCODER_ENABLE
-#    define ENCODER_DIRECTION_FLIP
-#    define ENCODER_RESOLUTION 2
+#define ENCODER_DIRECTION_FLIP
+#define ENCODER_RESOLUTION 2
 #endif

@@ -26,8 +26,6 @@ return function()
         lookahead = true,
 
         keymaps = {
-          ['ab'] = '@block.outer',
-          ['ib'] = '@block.inner',
           ['af'] = '@function.outer',
           ['if'] = '@function.inner',
           ['ac'] = '@class.outer',

@@ -1,12 +1,27 @@
 local M = {}
+
+local function getFileName(url)
+  return url:match('^.+/(.+)$')
+end
+
 M.bzl_formatter = function()
   local buf = vim.api.nvim_get_current_buf()
   local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+  local args = { '-lint', 'fix', '--warnings', 'all', '--type' }
+
+  local filename = getFileName(vim.api.nvim_buf_get_name(0))
+  if string.find(filename, 'BUILD') then
+    table.insert(args, 'build')
+  elseif string.find(filename, 'WORKSPACE') then
+    table.insert(args, 'workspace')
+  else
+    table.insert(args, 'bzl')
+  end
 
   local Job = require('plenary.job')
   local s, jobOrErr = pcall(Job.new, Job, {
     command = 'buildifier',
-    args = { '-lint', 'fix', '--warnings', 'all' },
+    args = args,
     writer = lines,
   })
 
