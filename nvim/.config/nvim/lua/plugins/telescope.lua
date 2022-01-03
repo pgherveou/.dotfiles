@@ -2,7 +2,8 @@ local M = {}
 M.file_browser = function()
   local cwd = require('telescope.utils').buffer_dir()
 
-  require('telescope.builtin').file_browser({
+  -- https://github.com/nvim-telescope/telescope-file-browser.nvim#mappings
+  require('telescope').extensions.file_browser.file_browser({
     cwd = cwd,
     follow = true,
     hidden = true,
@@ -36,10 +37,8 @@ M.setup = function()
       },
     },
   })
-  -- require('telescope.builtin').find_files({
-  --   follow = true
-  -- })
   telescope.load_extension('fzf')
+  telescope.load_extension('file_browser')
 
   -- mappings
   vim.cmd([[

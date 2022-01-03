@@ -26,6 +26,9 @@ nnoremap <leader><space> :nohlsearch<cr>
 " copy path into unnamed register
 nmap cp :let @" = expand("%")<cr>
 
+" search and replace the visual selection
+vnoremap <C-r> "hy:%s/<C-r>h//g<left><left>
+
 " make it easy to use cgn using the current word under the cursor 
 nnoremap <silent> c<Tab> :let @/=expand('<cword>')<cr>cgn
 " Allow gf to open non-existent files
