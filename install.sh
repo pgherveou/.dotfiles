@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+pushd -q "$HOME/.dotfiles"
+
 # install brew and the brewfile
 if ! command -v brew &>/dev/null; then
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -14,6 +16,7 @@ STOW_FOLDERS=(
 	"codespell"
 	"stylua"
 	"tmux"
+	"qmk"
 	"zsh"
 )
 
@@ -31,6 +34,9 @@ fi
 # clone qmk firmware
 if [ ! -d ~/qmk_firmware ]; then
 	git clone https://github.com/qmk/qmk_firmware ~/qmk_firmware
+	qmk setup -y
+	qmk config user.keyboard=splitkb/kyria
+	qmk config user.keymap=pgherveou
 	qmk generate-compilation-database
 	cp -f ~/qmk_firmware/compile_commands.json ~/.dotfiles/qmk/
 fi
@@ -40,3 +46,5 @@ vimplug="$HOME/.local/share/nvim/site/autoload/plug.vim"
 if [ ! -f vimplug ]; then
 	curl -fLo "$vimplug" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
+
+popd -q
