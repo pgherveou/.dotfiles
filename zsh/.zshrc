@@ -1,5 +1,5 @@
 # OSX antigen file
-source /usr/local/share/antigen/antigen.zsh
+source /opt/homebrew/share/antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
@@ -17,14 +17,14 @@ antigen bundle compleat
 antigen bundle git-extras
 antigen bundle bazel
 antigen bundle npm
-antigen bundle osx
+antigen bundle macos
 antigen bundle zsh-users/zsh-history-substring-search
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Tell Antigen that you're done.
 antigen apply
-
+alias vim=nvim
 alias ..="cd .."
 alias ...="cd ../.."
 alias vimrc="vim ~/.config/nvim/init.vim"
@@ -39,7 +39,7 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 
 # Rust
-source "$HOME/.cargo/env"
+export PATH="$HOME/.cargo/bin:$PATH"
 export CARGO_NET_GIT_FETCH_WITH_CLI=true
 
 # Xcode via @orta

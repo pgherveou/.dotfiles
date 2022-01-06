@@ -30,7 +30,7 @@ fi
 
 # clone qmk firmware
 if [ ! -d ~/qmk_firmware ]; then
-	git clone https://github.com/qmk/qmk_firmware
+	git clone https://github.com/qmk/qmk_firmware ~/qmk_firmware
 	qmk generate-compilation-database
 	cp -f ~/qmk_firmware/compile_commands.json ~/.dotfiles/qmk/
 fi
