@@ -16,7 +16,7 @@ local sources = {
   builtins.formatting.stylua.with({
     extra_args = {
       '--config-path',
-      vim.fn.expand('~/Github/dotfiles/stylua.toml'),
+      vim.fn.expand('~/.config/stylua/stylua.toml'),
     },
   }),
   builtins.diagnostics.luacheck.with({
