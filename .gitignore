@@ -1,3 +1,3 @@
-nvim/plugged
+nvim/.config/nvim/plugged
 .ccls-cache
 .DS_Store
