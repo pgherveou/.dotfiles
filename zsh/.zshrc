@@ -42,6 +42,9 @@ export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export CARGO_NET_GIT_FETCH_WITH_CLI=true
 
+# Kubectl
+[[ /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)
+
 # Xcode via @orta
 openx(){
   if test -n "$(find . -maxdepth 1 -name '*.xcworkspace' -print -quit)"
@@ -65,4 +68,4 @@ openx(){
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # work config
-[ -f ~/.work.zsh ] && source ~/.work.zsh
+[ -f ~/.private/init.zsh ] && source ~/.private/init.zsh
