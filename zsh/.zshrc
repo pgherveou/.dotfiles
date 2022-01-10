@@ -1,5 +1,5 @@
 # OSX antigen file
-source /opt/homebrew/share/antigen/antigen.zsh
+source /usr/local/share/antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
@@ -30,6 +30,26 @@ alias ...="cd ../.."
 alias vimrc="vim ~/.config/nvim/init.vim"
 alias vimbbl="vim ~/src/bbl"
 export EDITOR=vim
+
+# list of globally installed npm packages
+NPM_PKGS_LIST=(
+	"@fsouza/prettierd"
+	"bash-language-server"
+	"eslint_d"
+	"neovim"
+	"prettier"
+	"serve"
+	"ts-node"
+	"typescript"
+	"typescript-language-server"
+)
+export NPM_PKGS=$( IFS=" "; printf '%s' "${NPM_PKGS_LIST[*]}" )
+
+# list of globally installed lua packages
+LUA_PKGS_LIST=(
+	"luacheck"
+)
+export LUA_PKGS=$( IFS=" "; printf '%s' "${LUA_PKGS_LIST[*]}" )
 
 # Deno
 export DENO_INSTALL="$HOME/.deno"

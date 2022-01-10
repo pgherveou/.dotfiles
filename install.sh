@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-pushd -q "$HOME/.dotfiles"
+pushd "$HOME/.dotfiles"
 
 # install brew and the brewfile
 if ! command -v brew &>/dev/null; then
@@ -14,6 +14,7 @@ STOW_FOLDERS=(
 	"alacritty"
 	"nvim"
 	"codespell"
+	"private"
 	"stylua"
 	"tmux"
 	"qmk"
@@ -41,8 +42,13 @@ if [ ! -d ~/qmk_firmware ]; then
 	ln -s ~/qmk_firmware/compile_commands.json ~/.dotfiles/qmk
 fi
 
-npm install -g typescript bash-language-server eslint_d prettier typescript-language-server
-luarocks install luacheck
+# install global npm packages
+IFS=' ' read -r -a NPM_PKGS_LIST <<<"$NPM_PKGS"
+npm install -g "${NPM_PKGS_LIST[@]}"
+
+# install global lua packages
+IFS=' ' read -r -a LUA_PKGS_LIST <<<"$LUA_PKGS"
+luarocks install "${LUA_PKGS_LIST[@]}"
 
 # install vimplug
 vimplug="$HOME/.local/share/nvim/site/autoload/plug.vim"
