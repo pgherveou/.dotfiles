@@ -38,8 +38,11 @@ if [ ! -d ~/qmk_firmware ]; then
 	qmk config user.keyboard=splitkb/kyria
 	qmk config user.keymap=pgherveou
 	qmk generate-compilation-database
-	cp -f ~/qmk_firmware/compile_commands.json ~/.dotfiles/qmk/
+	ln -s ~/qmk_firmware/compile_commands.json ~/.dotfiles/qmk
 fi
+
+npm install -g typescript bash-language-server eslint_d prettier typescript-language-server
+luarocks install luacheck
 
 # install vimplug
 vimplug="$HOME/.local/share/nvim/site/autoload/plug.vim"
