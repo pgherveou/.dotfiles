@@ -19,6 +19,7 @@ nnoremap k gk
 
 "act like other capitalized actions
 nnoremap Y yg$
+nnoremap YY :%y<cr>
 
 " quickly cancel search highlighting
 nnoremap <leader><space> :nohlsearch<cr>

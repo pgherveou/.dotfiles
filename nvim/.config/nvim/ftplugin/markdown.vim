@@ -1,2 +1,4 @@
-set nofoldenable    " disable folding
+set nofoldenable
+set wrap
+set linebreak
 

@@ -5,6 +5,10 @@ local get_lsp_status = function()
   return progress
 end
 
+local function get_progress()
+  return '%6o %3l:%-2v'
+end
+
 require('lualine').setup({
   sections = {
     lualine_c = {
@@ -17,5 +21,6 @@ require('lualine').setup({
     lualine_x = {
       get_lsp_status,
     },
+    lualine_z = { get_progress },
   },
 })
