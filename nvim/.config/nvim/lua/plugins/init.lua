@@ -70,6 +70,7 @@ setup(function(import)
     'nvim-telescope/telescope.nvim',
     'nvim-telescope/telescope-rg.nvim',
     'nvim-telescope/telescope-file-browser.nvim',
+    'nvim-telescope/telescope-github.nvim',
     { 'nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make' } }
   ).then_configure(require('plugins.telescope').setup)
 

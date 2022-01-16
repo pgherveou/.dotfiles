@@ -1,5 +1,15 @@
 return function()
   local cmp = require('cmp')
+  local get_bufnrs = function()
+    local buf = vim.api.nvim_get_current_buf()
+    local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+    if byte_size > 2 * 1024 * 1024 then -- 2 Megabyte max
+      return {}
+    end
+    return { buf }
+  end
+
+  local buffer_src = { name = 'buffer', get_bufnrs = get_bufnrs }
 
   cmp.setup({
     snippet = {
@@ -26,15 +36,14 @@ return function()
       { name = 'nvim_lua' },
       { name = 'nvim_lsp' },
       { name = 'vsnip' },
-    }, {
-      { name = 'buffer' },
+      buffer_src,
     }),
   })
 
   -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline('/', {
     sources = {
-      { name = 'buffer' },
+      buffer_src,
     },
   })
 
@@ -42,7 +51,6 @@ return function()
   cmp.setup.cmdline(':', {
     sources = cmp.config.sources({
       { name = 'path' },
-    }, {
       { name = 'cmdline' },
     }),
   })

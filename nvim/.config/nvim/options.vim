@@ -31,7 +31,7 @@ set title                      " Do not inherit the terminal title
 set ttyfast                    " Set that we have a fast terminal
 set signcolumn=yes             " always show the gutter
 set relativenumber             " relative number 
-
+set pumheight=10               " maximum number of item to show in the completion menu
 " Ignore these folders for completions
 set wildignore+=.hg,.git,.svn                          " Version control
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg         " binary images
