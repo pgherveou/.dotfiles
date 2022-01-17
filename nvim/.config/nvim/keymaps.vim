@@ -35,6 +35,9 @@ nnoremap <silent> c<Tab> :let @/=expand('<cword>')<cr>cgn
 " Allow gf to open non-existent files
 " map gf :edit <cfile><cr>
 
+" redirect last command to register 
+nnoremap <silent> <leader>red :redir @"> <bar> <C-r>: <bar> redir END<cr>
+
 " source vim
 noremap <leader>esv :edit $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>

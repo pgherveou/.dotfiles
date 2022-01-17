@@ -43,7 +43,7 @@ setup(function(import)
 
   -- git integration
   import('ruanyl/vim-gh-line') -- gh links for text
-  import('tpope/vim-fugitive')
+  import('tpope/vim-fugitive').then_configure(require('plugins.fugitive'))
   import('nvim-lua/plenary.nvim', 'lewis6991/gitsigns.nvim').then_configure(function()
     require('gitsigns').setup()
   end)
