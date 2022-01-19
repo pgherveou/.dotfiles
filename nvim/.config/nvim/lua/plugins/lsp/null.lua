@@ -13,12 +13,7 @@ local sources = {
   builtins.formatting.gofmt,
   builtins.formatting.clang_format,
   builtins.formatting.prettier,
-  builtins.formatting.stylua.with({
-    extra_args = {
-      '--config-path',
-      vim.fn.expand('~/.config/stylua/stylua.toml'),
-    },
-  }),
+  builtins.formatting.stylua,
   builtins.diagnostics.luacheck.with({
     args = {
       '--no-max-line-length',

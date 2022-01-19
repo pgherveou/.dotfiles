@@ -48,6 +48,16 @@ setup(function(import)
     require('gitsigns').setup()
   end)
 
+  -- git reviews
+  import(
+    'pwntester/octo.nvim',
+    'nvim-lua/plenary.nvim',
+    'nvim-telescope/telescope.nvim',
+    'kyazdani42/nvim-web-devicons'
+  ).then_configure(function()
+    require('octo').setup()
+  end)
+
   -- highlight yanked text
   import('machakann/vim-highlightedyank')
 
