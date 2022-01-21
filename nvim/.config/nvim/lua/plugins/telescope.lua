@@ -23,6 +23,7 @@ M.setup = function()
   local actions = require('telescope.actions')
   telescope.setup({
     defaults = {
+      path_display = { truncate = 3 },
       file_ignore_patterns = { '.git/' },
       -- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua#L9
       mappings = {
@@ -49,7 +50,6 @@ M.setup = function()
   :nnoremap <Leader>ff :lua require('plugins.telescope').find_files{}<CR>
   :nnoremap <Leader>fg :lua require('telescope.builtin').live_grep{}<CR>
   :nnoremap <Leader>fh :lua require('telescope.builtin').command_history{}<CR>
-  :nnoremap <Leader>fl :lua require('telescope.builtin').lsp_references{}<CR>
   :nnoremap <Leader>fo :lua require('telescope.builtin').oldfiles{}<CR>
   :nnoremap <Leader>fr :Telescope resume<CR>
   :nnoremap <Leader>fs :lua require('telescope.builtin').search_history{}<CR>

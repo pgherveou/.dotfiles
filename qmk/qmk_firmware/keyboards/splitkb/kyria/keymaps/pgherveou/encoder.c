@@ -1,18 +1,127 @@
+#pragma GCC diagnostic ignored "-Wattributes"
+
 #include "encoder.h"
+#include "keycode.h"
+#include "pgherveou.h"
+
+enum enc_mode_t { ZOOM, SLACK, CHROME, VIM_QF, AFTER_LAST_MODE };
+
+enum enc_mode_t enc_current_mode = 0;
+
+const char *get_enc_str(void) {
+  switch (enc_current_mode) {
+  case ZOOM:
+    return "Zoom";
+  case SLACK:
+    return "Slack";
+  case CHROME:
+    return "Chrome";
+  case VIM_QF:
+    return "Vim Quickfix";
+  case AFTER_LAST_MODE:
+    return "-";
+  }
+  return "";
+}
+
+void switch_mode(enc_action_t action) {
+  int i = (int)enc_current_mode;
+
+  switch (action & ENC_MSK) {
+  case ENC_CW:
+    if (++i == AFTER_LAST_MODE) {
+      i = 0;
+    }
+    break;
+  case ENC_CCW:
+    if (--i < 0) {
+      i = AFTER_LAST_MODE - 1;
+    }
+    break;
+  case ENC_DOWN:
+    i = 0;
+  }
+
+  enc_current_mode = i;
+}
+
+void brightness(enc_action_t action) {
+  switch (action & ENC_MSK) {
+  case ENC_CW:
+    tap_code16(KC_BRIGHTNESS_UP);
+    break;
+  case ENC_CCW:
+    tap_code16(KC_BRIGHTNESS_DOWN);
+    break;
+  case ENC_DOWN:
+    tap_code16(KC_SYSTEM_POWER);
+  default:
+    return;
+  }
+}
+
+void slack(enc_action_t action) {
+  switch (action & ENC_MSK) {
+  case ENC_CW:
+    tap_code16(G(KC_RBRC));
+    break;
+  case ENC_CCW:
+    tap_code16(G(KC_LBRC));
+    break;
+  case ENC_DOWN:
+    tap_code16(LSG(KC_T)); // go to thread
+    break;
+  default:
+    return;
+  }
+}
+
+void chrome(enc_action_t action) {
+  switch (action & ENC_MSK) {
+  case ENC_CW:
+    tap_code16(LAG(KC_RIGHT));
+    break;
+  case ENC_CCW:
+    tap_code16(LAG(KC_LEFT));
+    break;
+  default:
+    break;
+    ;
+  }
+}
+
+void vim_quickfix(enc_action_t action) {
+  switch (action & ENC_MSK) {
+  case ENC_CW:
+    SEND_STRING(":cnext");
+    tap_code16(KC_ENTER);
+    break;
+  case ENC_CCW:
+    SEND_STRING(":cprev");
+    tap_code16(KC_ENTER);
+    break;
+  case ENC_DOWN:
+    SEND_STRING(":copen");
+    tap_code16(KC_ENTER);
+    break;
+  default:
+    break;
+  }
+}
 
 void zoom(enc_action_t action) {
   switch (action & ENC_MSK) {
   case ENC_CW:
-    tap_code16(C(KC_PLUS));
+    tap_code16(G(KC_EQUAL));
     break;
   case ENC_CCW:
-    tap_code16(C(KC_MINUS));
+    tap_code16(G(KC_MINUS));
     break;
   case ENC_DOWN:
-    tap_code16(C(KC_0));
+    tap_code16(G(KC_0));
     break;
   default:
-    return;
+    break;
   }
 }
 
@@ -47,49 +156,134 @@ void media(enc_action_t action) {
     return;
   }
 }
-
-void tab(enc_action_t action) {
-  switch (action & ENC_MSK) {
+void workspace(enc_action_t action) {
+  switch (action) {
   case ENC_CW:
-    tap_code16(C(KC_TAB));
+    tap_code16(G(KC_PGDOWN));
     break;
   case ENC_CCW:
-    tap_code16(S(C(KC_TAB)));
+    tap_code16(G(KC_PGUP));
+    break;
+  case ENC_DOWN:
+    tap_code16(G(KC_HOME));
     break;
   default:
     return;
   }
 }
-bool is_gui_time_active = false;
-uint16_t gui_tab_timer = 0; // we will be using them soon.
 
-enum custom_keycodes { // Make sure have the awesome keycode ready
-  GUI_TAB = SAFE_RANGE,
-};
-
-bool process_record_encoder(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) { // This will do most of the grunt work with the keycodes.
-  case GUI_TAB:
-    if (record->event.pressed) {
-      if (!is_gui_time_active) {
-        is_gui_time_active = true;
-        register_code(KC_LGUI);
-      }
-      gui_tab_timer = timer_read();
-      register_code(KC_TAB);
-    } else {
-      unregister_code(KC_TAB);
-    }
+void tab(enc_action_t action) {
+  switch (action & ENC_MSK) {
+  case ENC_CW:
+    tap_code16(G(KC_TAB));
     break;
+  case ENC_CCW:
+    tap_code16(S(G(KC_TAB)));
+    break;
+  default:
+    return;
   }
-  return true;
 }
 
-void matrix_scan_encoder(void) { // The very important timer.
-  if (is_gui_time_active) {
-    if (timer_elapsed(gui_tab_timer) > 1000) {
-      unregister_code(KC_LGUI);
-      is_gui_time_active = false;
+void exec_mode(enc_action_t action) {
+  switch (enc_current_mode) {
+  case ZOOM:
+    zoom(action);
+    break;
+  case SLACK:
+    slack(action);
+    break;
+  case CHROME:
+    chrome(action);
+    break;
+  case VIM_QF:
+    vim_quickfix(action);
+    break;
+  case AFTER_LAST_MODE:
+    break;
+  }
+}
+bool is_alt_tab_active = false;
+uint16_t alt_tab_timer = 0;
+const uint16_t alt_tab_timeout = 500;
+
+void window(enc_action_t action) {
+  uint16_t kc;
+  switch (action & ENC_MSK) {
+  case ENC_TICK:
+    if (is_alt_tab_active && timer_elapsed(alt_tab_timer) > alt_tab_timeout) {
+      unregister_code(KC_LALT);
+      is_alt_tab_active = false;
     }
+    return;
+  case ENC_CW:
+    kc = KC_TAB;
+    break;
+  case ENC_CCW:
+    kc = S(KC_TAB);
+    break;
+  default:
+    return;
+  }
+  if (!is_alt_tab_active) {
+    register_code(KC_LALT);
+  }
+  tap_code16(kc);
+  is_alt_tab_active = true;
+  alt_tab_timer = timer_read();
+}
+
+void encoder_execute(uint8_t index, enc_action_t action) {
+  if (index == 0) { // Left encoder
+    switch_mode(action);
+  } else if (index == 1) { // Right encoder
+    exec_mode(action);
+  }
+
+  // We use one-shot layers, but that doesn't work well when
+  // the oneshot is an encoder action.
+  // So we need to ensure that oneshot is reset
+  clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
+}
+
+void matrix_scan_enc(void) { window(ENC_TICK); }
+
+bool pressed[2];
+bool encoder_update_user(uint8_t index, bool clockwise) {
+  enc_action_t action;
+  if (clockwise) {
+    action = ENC_CW;
+  } else {
+    action = ENC_CCW;
+  }
+  if (pressed[index]) {
+    action |= ENC_PRESSED;
+  }
+
+  encoder_execute(index, action);
+  return false;
+}
+
+void matrix_init_enc(void) {
+  pressed[0] = false;
+  pressed[1] = false;
+}
+
+bool process_record_encoder(uint16_t keycode, keyrecord_t *record) {
+  uint8_t idx = 0; // 0 for left, 1 for right
+  switch (keycode) {
+  case ENC_R:
+    idx++;
+  case ENC_L:
+    if (record->event.pressed) {
+      pressed[idx] = true;
+      encoder_execute(idx, ENC_DOWN | ENC_PRESSED);
+    } else {
+      pressed[idx] = false;
+      encoder_execute(idx, ENC_UP);
+    };
+    return false;
+  default:
+    return true;
   }
 }

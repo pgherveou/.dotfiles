@@ -39,7 +39,7 @@ if [ ! -d ~/qmk_firmware ]; then
 	qmk config user.keyboard=splitkb/kyria
 	qmk config user.keymap=pgherveou
 	qmk generate-compilation-database
-	ln -s ~/qmk_firmware/compile_commands.json ~/.dotfiles/qmk
+	ln -s ~/qmk_firmware/compile_commands.json "$PWD"
 fi
 
 # install global npm packages

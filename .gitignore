@@ -1,3 +1,7 @@
 nvim/.config/nvim/plugged
 .ccls-cache
+compile_commands.json
+*.bac
+.cache
+qmk/.cache
 .DS_Store

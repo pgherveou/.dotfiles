@@ -25,11 +25,15 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 # Tell Antigen that you're done.
 antigen apply
 alias vim=nvim
+alias v=nvim
 alias ..="cd .."
 alias ...="cd ../.."
 alias vimrc="vim ~/.config/nvim/init.vim"
 alias vimbbl="vim ~/src/bbl"
 export EDITOR=vim
+
+# clangd
+export PATH="/usr/local/opt/llvm/bin:$PATH"
 
 # list of globally installed npm packages
 NPM_PKGS_LIST=(

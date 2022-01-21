@@ -8,3 +8,4 @@ MOUSEKEY_ENABLE = no
 RAW_ENABLE = no
 WPM_ENABLE = no
 CONSOLE_ENABLE = no
+SRC += encoder.c

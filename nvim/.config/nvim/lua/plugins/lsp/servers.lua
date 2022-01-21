@@ -13,6 +13,7 @@ local set_common_mappings = function(client, bufnr)
   u.buf_nmap(bufnr, ']a', ':LspDiagNext<CR>')
   u.buf_nmap(bufnr, 'ga', ':Telescope lsp_code_actions<CR>')
   u.buf_nmap(bufnr, 'go', ':Telescope lsp_references<CR>')
+  u.buf_nmap(bufnr, 'gi', ':LspDiagLine<CR>')
   u.buf_imap(bufnr, '<C-x><C-x>', '<cmd> LspSignatureHelp<CR>')
 
   u.lua_command('LspDef', 'vim.lsp.buf.definition()')
@@ -23,9 +24,9 @@ local set_common_mappings = function(client, bufnr)
   u.lua_command('LspRefs', 'vim.lsp.buf.references()')
   u.lua_command('LspTypeDef', 'vim.lsp.buf.type_definition()')
   u.lua_command('LspImplementation', 'vim.lsp.buf.implementation()')
-  u.lua_command('LspDiagPrev', 'vim.lsp.diagnostic.goto_prev()')
-  u.lua_command('LspDiagNext', 'vim.lsp.diagnostic.goto_next()')
-  u.lua_command('LspDiagLine', 'vim.lsp.diagnostic.show_line_diagnostics()')
+  u.lua_command('LspDiagPrev', 'vim.diagnostic.goto_prev()')
+  u.lua_command('LspDiagNext', 'vim.diagnostic.goto_next()')
+  u.lua_command('LspDiagLine', 'vim.diagnostic.open_float()')
   u.lua_command('LspSignatureHelp', 'vim.lsp.buf.signature_help()')
   u.lua_command('LspDiagQuickfix', 'vim.diagnostic.setqflist()')
 
@@ -45,8 +46,11 @@ local setup_servers = function()
   local lsp_status = require('lsp-status')
   lsp_status.register_progress()
 
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+  capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
   capabilities = vim.tbl_extend('keep', capabilities, lsp_status.capabilities)
+  capabilities.offsetEncoding = { 'utf-16' }
 
   -- most languages use a custom formatter to format the code
   local disable_formatting = function(client)
@@ -85,7 +89,9 @@ local setup_servers = function()
   lspconfig.bashls.setup(default_config)
   lspconfig.gopls.setup(default_config)
   lspconfig.golangci_lint_ls.setup(default_config)
-  lspconfig.ccls.setup(default_config)
+
+  lspconfig.clangd.setup(default_config)
+  -- lspconfig.ccls.setup(default_config)
 
   lspconfig.tsserver.setup({
     capabilities = capabilities,
