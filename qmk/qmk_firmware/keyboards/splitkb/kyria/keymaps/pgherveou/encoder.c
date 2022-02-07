@@ -4,18 +4,33 @@
 #include "keycode.h"
 #include "pgherveou.h"
 
-enum enc_mode_t { ZOOM, SLACK, CHROME, VIM_QF, AFTER_LAST_MODE };
+enum enc_mode_t {
+  TAB,
+  ZOOM,
+  SLACK,
+  CHROME,
+  VOLUME,
+  BRIGHTNESS,
+  VIM_QF,
+  AFTER_LAST_MODE
+};
 
 enum enc_mode_t enc_current_mode = 0;
 
 const char *get_enc_str(void) {
   switch (enc_current_mode) {
+  case TAB:
+    return "TAB";
   case ZOOM:
     return "Zoom";
   case SLACK:
     return "Slack";
   case CHROME:
     return "Chrome";
+  case VOLUME:
+    return "Volume";
+  case BRIGHTNESS:
+    return "Brightness";
   case VIM_QF:
     return "Vim Quickfix";
   case AFTER_LAST_MODE:
@@ -156,63 +171,16 @@ void media(enc_action_t action) {
     return;
   }
 }
-void workspace(enc_action_t action) {
-  switch (action) {
-  case ENC_CW:
-    tap_code16(G(KC_PGDOWN));
-    break;
-  case ENC_CCW:
-    tap_code16(G(KC_PGUP));
-    break;
-  case ENC_DOWN:
-    tap_code16(G(KC_HOME));
-    break;
-  default:
-    return;
-  }
-}
 
-void tab(enc_action_t action) {
-  switch (action & ENC_MSK) {
-  case ENC_CW:
-    tap_code16(G(KC_TAB));
-    break;
-  case ENC_CCW:
-    tap_code16(S(G(KC_TAB)));
-    break;
-  default:
-    return;
-  }
-}
-
-void exec_mode(enc_action_t action) {
-  switch (enc_current_mode) {
-  case ZOOM:
-    zoom(action);
-    break;
-  case SLACK:
-    slack(action);
-    break;
-  case CHROME:
-    chrome(action);
-    break;
-  case VIM_QF:
-    vim_quickfix(action);
-    break;
-  case AFTER_LAST_MODE:
-    break;
-  }
-}
 bool is_alt_tab_active = false;
 uint16_t alt_tab_timer = 0;
 const uint16_t alt_tab_timeout = 500;
-
 void window(enc_action_t action) {
   uint16_t kc;
   switch (action & ENC_MSK) {
   case ENC_TICK:
     if (is_alt_tab_active && timer_elapsed(alt_tab_timer) > alt_tab_timeout) {
-      unregister_code(KC_LALT);
+      unregister_code(KC_LGUI);
       is_alt_tab_active = false;
     }
     return;
@@ -226,11 +194,39 @@ void window(enc_action_t action) {
     return;
   }
   if (!is_alt_tab_active) {
-    register_code(KC_LALT);
+    register_code(KC_LGUI);
   }
   tap_code16(kc);
   is_alt_tab_active = true;
   alt_tab_timer = timer_read();
+}
+
+void exec_mode(enc_action_t action) {
+  switch (enc_current_mode) {
+  case TAB:
+    window(action);
+    break;
+  case ZOOM:
+    zoom(action);
+    break;
+  case SLACK:
+    slack(action);
+    break;
+  case CHROME:
+    chrome(action);
+    break;
+  case VOLUME:
+    volume(action);
+    break;
+  case BRIGHTNESS:
+    brightness(action);
+    break;
+  case VIM_QF:
+    vim_quickfix(action);
+    break;
+  case AFTER_LAST_MODE:
+    break;
+  }
 }
 
 void encoder_execute(uint8_t index, enc_action_t action) {
@@ -246,6 +242,8 @@ void encoder_execute(uint8_t index, enc_action_t action) {
   clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
 }
 
+// Some actions have a timeout, so they
+// need to get a tick every so often
 void matrix_scan_enc(void) { window(ENC_TICK); }
 
 bool pressed[2];

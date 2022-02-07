@@ -63,14 +63,15 @@ setup(function(import)
 
   -- auto select the root directory
   import('airblade/vim-rooter').then_configure(function()
-    vim.g.rooter_patterns = { '.git' }
+    vim.g.rooter_patterns = { '.git', 'Cargo.lock' }
   end)
 
   -- Treesitter ast / highlighting
-  import('nvim-treesitter/nvim-treesitter', {
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    { ['do'] = ':TSUpdate' },
-  }).then_configure(require('plugins.treesitter'))
+  import(
+    { 'nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' } },
+    'nvim-treesitter/playground',
+    'nvim-treesitter/nvim-treesitter-textobjects'
+  ).then_configure(require('plugins.treesitter'))
 
   --toggle quicklist location list with leader q or l
   import('milkypostman/vim-togglelist')

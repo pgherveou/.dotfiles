@@ -106,8 +106,8 @@ local setup_servers = function()
       ts_utils.setup_client(client)
 
       u.buf_nmap(bufnr, 'gs', ':TSLspOrganize<CR>')
-      u.buf_nmap(bufnr, 'gi', ':TSLspImportAll<CR>')
-      u.buf_nmap(bufnr, 'gi', ':TSLspRenameFile<CR>')
+      u.buf_nmap(bufnr, 'gI', ':TSLspImportAll<CR>')
+      u.buf_nmap(bufnr, 'gR', ':TSLspRenameFile<CR>')
     end,
   })
 end

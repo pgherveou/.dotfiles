@@ -73,7 +73,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ├──────┼──────┼──────┼──────┼──────┼──────┤                              ├──────┼──────┼──────┼──────┼──────┼──────┤
  * │G(KC_A│ LCTL │ LGUI │ LALT │ LSFT │      │                              │ LEFT │ DOWN │  UP  │ RGHT │      │      │
  * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┬──────┐  ┌──────┬──────┼──────┼──────┼──────┼──────┼──────┼──────┤
- * │C(KC_B│G(KC_Z│G(KC_X│G(KC_C│NAV_V │ALT_KL│      │      │  │      │C(KC_P│C(KC_N│ PGDN │      │      │      │      │
+ * │C(KC_B│G(KC_Z│G(KC_X│G(KC_C│NAV_V │ALT_KL│      │      │  │      │      │      │ PGDN │      │      │      │      │
  * └──────┴──────┴──────┼──────┼──────┼──────┼──────┼──────┤  ├──────┼──────┼──────┼──────┼──────┼──────┴──────┴──────┘
  *                      │      │      │      │      │      │  │S(ALT_│NAV_CA│S(ALT_│      │      │
  *                      │      │      │      │      │      │  │      │      │      │      │      │
@@ -82,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_NAV] = LAYOUT(
       XXXXXXX, XXXXXXX, ALT_KRG, XXXXXXX,S(G(KC_Z)),XXXXXXX,                                           KC_HOME, KC_END,  KC_PGUP, NAV_O,  G(KC_V), XXXXXXX,
       G(KC_A), KC_LCTL, KC_LGUI, KC_LALT, KC_LSFT, XXXXXXX,                                            KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, XXXXXXX,
-      C(KC_B), G(KC_Z), G(KC_X), G(KC_C), NAV_V,   ALT_KLT, XXXXXXX, XXXXXXX,        XXXXXXX, C(KC_P), C(KC_N), KC_PGDN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      C(KC_B), G(KC_Z), G(KC_X), G(KC_C), NAV_V,   ALT_KLT, XXXXXXX, XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                  KC_TRNS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     S(ALT_KLT), NAV_CAPS, S(ALT_KRG), _______,KC_TRNS
     ),
 /* ┌──────┬──────┬──────┬──────┬──────┬──────┐                              ┌──────┬──────┬──────┬──────┬──────┬──────┐
@@ -181,8 +181,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       uint8_t mod_state = get_mods();
       unregister_mods(MOD_MASK_SHIFT);
       mod_state &MOD_MASK_SHIFT
-          ? SEND_STRING(SS_TAP(X_UP) SS_LGUI(SS_TAP(X_RIGHT)) SS_TAP(X_ENTER))
-          : SEND_STRING(SS_LGUI(SS_TAP(X_RIGHT)) SS_TAP(X_ENTER));
+          ? SEND_STRING(SS_TAP(X_HOME) SS_TAP(X_ENTER) SS_TAP(X_UP))
+          : SEND_STRING(SS_TAP(X_END) SS_TAP(X_ENTER));
       set_mods(mod_state);
     }
     break;
@@ -220,19 +220,19 @@ bool oled_task_user(void) {
     oled_write_P(PSTR("Layer: "), false);
     switch (get_highest_layer(layer_state | default_layer_state)) {
     case _QWERTY:
-      oled_write_P(PSTR("QWERTY\n"), false);
+      oled_write_ln_P(PSTR("QWERTY"), false);
       break;
     case _NAV:
-      oled_write_P(PSTR("Nav\n"), false);
+      oled_write_ln_P(PSTR("Nav"), false);
       break;
     case _SYM:
-      oled_write_P(PSTR("Sym\n"), false);
+      oled_write_ln_P(PSTR("Sym"), false);
       break;
     case _FUNCTION:
-      oled_write_P(PSTR("Function\n"), false);
+      oled_write_ln_P(PSTR("Function"), false);
       break;
     default:
-      oled_write_P(PSTR("Undefined\n"), false);
+      oled_write_ln_P(PSTR("Undefined"), false);
     }
 
     oled_write_P(PSTR("Encoder: "), false);
@@ -295,7 +295,7 @@ void matrix_scan_rgb(void) {
 }
 
 void matrix_scan_user(void) {
-  /*   matrix_scan_enc(); */
+  matrix_scan_enc();
   matrix_scan_rgb();
 }
 

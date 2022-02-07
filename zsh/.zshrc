@@ -69,6 +69,13 @@ export CARGO_NET_GIT_FETCH_WITH_CLI=true
 # Kubectl
 [[ /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)
 
+# Open gh url
+browsePR(){
+  BRANCH=$(git branch --show-current)
+  PR=$(gh pr list --json "headRefName,url" --jq . | jq -r ".[] | select(.headRefName == \"$BRANCH\") | .url")
+  open $PR
+} 
+
 # Xcode via @orta
 openx(){
   if test -n "$(find . -maxdepth 1 -name '*.xcworkspace' -print -quit)"
@@ -87,6 +94,9 @@ openx(){
     fi
   fi
 }
+
+# bazel
+alias bazel=bazelisk
 
 # fzf config
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
