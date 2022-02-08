@@ -1,4 +1,10 @@
 live_config_reload: true
+shell:
+  program: zsh
+  args:
+    - -l
+    - -c
+    - "tmux attach || tmux new -s main"
 
 dpi:
   x: 120.0
