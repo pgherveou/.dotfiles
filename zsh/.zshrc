@@ -1,29 +1,33 @@
 # OSX antigen file
 source /usr/local/share/antigen/antigen.zsh
 
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
+if [[ -z "${ANTIGEN_LOADED}" ]]; then
+  # Load the oh-my-zsh's library.
+  antigen use oh-my-zsh
 
-# Load the theme
-antigen bundle mafredri/zsh-async
-antigen bundle sindresorhus/pure@main
+  # Load the theme
+  antigen bundle mafredri/zsh-async
+  antigen bundle sindresorhus/pure@main
 
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle git
-antigen bundle command-not-found
-antigen bundle brew
-antigen bundle common-aliases
-antigen bundle compleat
-antigen bundle git-extras
-antigen bundle bazel
-antigen bundle npm
-antigen bundle macos
-antigen bundle zsh-users/zsh-history-substring-search
-antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle zsh-users/zsh-syntax-highlighting
+  # Bundles from the default repo (robbyrussell's oh-my-zsh).
+  antigen bundle git
+  antigen bundle command-not-found
+  antigen bundle brew
+  antigen bundle common-aliases
+  antigen bundle compleat
+  antigen bundle git-extras
+  antigen bundle bazel
+  antigen bundle npm
+  antigen bundle macos
+  antigen bundle zsh-users/zsh-history-substring-search
+  antigen bundle zsh-users/zsh-autosuggestions
+  antigen bundle zsh-users/zsh-syntax-highlighting
 
-# Tell Antigen that you're done.
-antigen apply
+  # Tell Antigen that you're done.
+  antigen apply
+  export ANTIGEN_LOADED=1
+fi
+
 alias vim=nvim
 alias v=nvim
 alias ..="cd .."
@@ -71,10 +75,14 @@ export CARGO_NET_GIT_FETCH_WITH_CLI=true
 
 # Open gh url
 browsePR(){
-  BRANCH=$(git branch --show-current)
-  PR=$(gh pr list --json "headRefName,url" --jq . | jq -r ".[] | select(.headRefName == \"$BRANCH\") | .url")
-  open $PR
+  gh pr view --web
 } 
+
+checkoutPR(){
+  SELECTED_PR=$(gh pr list | fzf)
+  PR=$(echo $SELECTED_PR | awk '{print $1;}')
+  gh pr checkout $PR
+}
 
 # Xcode via @orta
 openx(){

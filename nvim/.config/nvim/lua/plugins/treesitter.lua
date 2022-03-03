@@ -4,24 +4,30 @@ return function()
   -- set foldexpr=nvim_treesitter#foldexpr()
   -- ]])
 
-  require('nvim-treesitter.configs').setup({
+  local function disable(_, bufnr)
+    return vim.api.nvim_buf_line_count(bufnr) > 100000
+  end
 
+  require('nvim-treesitter.configs').setup({
     ensure_installed = {
       'go',
       'rust',
       'typescript',
       'c',
+      'cpp',
       'vim',
       'lua',
       'bash',
+      'yaml',
     },
     highlight = {
       enable = true,
+      disable = disable,
     },
     textobjects = {
       select = {
         enable = true,
-
+        disable = disable,
         -- Automatically jump forward to textobj, similar to targets.vim
         lookahead = true,
 
@@ -37,6 +43,8 @@ return function()
 
       move = {
         enable = true,
+        disable = disable,
+
         set_jumps = true, -- whether to set jumps in the jumplist
         goto_next_start = {
           [']m'] = '@function.outer',

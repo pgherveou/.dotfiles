@@ -6,6 +6,13 @@ setup(function(import)
   -- import('tpope/vim-surround')
   import('machakann/vim-sandwich')
 
+  -- change case utilities
+  import('icatalina/vim-case-change')
+
+  -- CopyRTF to copy highlighted text to clipboard
+  -- import('zerowidth/vim-copy-as-rtf')
+  import('google/vim-maktaba', 'google/vim-glaive', 'google/vim-syncopate')
+
   -- comment/uncomment binding
   import('tpope/vim-commentary')
 
@@ -24,11 +31,14 @@ setup(function(import)
   import('psliwka/vim-smoothie')
 
   -- Syntax For languages
-  import({ 'fatih/vim-go', { ['do'] = ':GoUpdateBinaries' } }).then_configure(function() end)
-  import('cespare/vim-toml')
-  import('rust-lang/rust.vim')
-  import('uarun/vim-protobuf')
-  import('plasticboy/vim-markdown')
+  -- import({ 'fatih/vim-go', { ['do'] = ':GoUpdateBinaries' } }).then_configure(function() end)
+  -- import('rust-lang/rust.vim')
+  -- import('uarun/vim-protobuf')
+  -- import('cespare/vim-toml')
+  -- import('plasticboy/vim-markdown')
+  -- import('hashivim/vim-terraform')
+  import('sheerun/vim-polyglot')
+  -- import('bfrg/vim-cpp-modern')
 
   -- indent guidelines
   import('lukas-reineke/indent-blankline.nvim').then_configure(function()
@@ -62,9 +72,9 @@ setup(function(import)
   import('machakann/vim-highlightedyank')
 
   -- auto select the root directory
-  import('airblade/vim-rooter').then_configure(function()
-    vim.g.rooter_patterns = { '.git', 'Cargo.lock' }
-  end)
+  -- import('airblade/vim-rooter').then_configure(function()
+  --   vim.g.rooter_patterns = { '.git', 'Cargo.lock' }
+  -- end)
 
   -- Treesitter ast / highlighting
   import(
@@ -72,6 +82,9 @@ setup(function(import)
     'nvim-treesitter/playground',
     'nvim-treesitter/nvim-treesitter-textobjects'
   ).then_configure(require('plugins.treesitter'))
+
+  -- json navigation
+  import('nvim-treesitter/nvim-treesitter', 'theprimeagen/jvim.nvim')
 
   --toggle quicklist location list with leader q or l
   import('milkypostman/vim-togglelist')

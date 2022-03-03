@@ -12,7 +12,12 @@ local sources = {
   }),
   builtins.formatting.gofmt,
   builtins.formatting.clang_format,
-  builtins.formatting.prettier,
+  -- builtins.formatting.prettier,
+  builtins.formatting.prettierd.with({
+    env = {
+      PRETTIERD_DEFAULT_CONFIG = vim.fn.expand('~/.config/nvim/linter-configs/.prettierrc.json'),
+    },
+  }),
   builtins.formatting.stylua,
   builtins.diagnostics.luacheck.with({
     args = {

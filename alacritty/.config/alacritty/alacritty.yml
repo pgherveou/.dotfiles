@@ -1,6 +1,6 @@
 live_config_reload: true
 shell:
-  program: zsh
+  program: /bin/zsh
   args:
     - -l
     - -c

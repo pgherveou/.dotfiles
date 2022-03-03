@@ -24,8 +24,8 @@ nnoremap YY :%y<cr>
 " quickly cancel search highlighting
 nnoremap <leader><space> :nohlsearch<cr>
 
-" copy path into unnamed register
-nmap cp :let @" = expand("%")<cr>
+" copy path into clipboard
+nmap cp :let @* = expand("%")<cr>
 
 " search and replace the visual selection
 vnoremap <C-r> "hy:%s/<C-r>h//g<left><left>
