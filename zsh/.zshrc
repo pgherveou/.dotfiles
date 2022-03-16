@@ -74,11 +74,11 @@ export CARGO_NET_GIT_FETCH_WITH_CLI=true
 [[ /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)
 
 # Open gh url
-browsePR(){
+gh-pr-view(){
   gh pr view --web
 } 
 
-checkoutPR(){
+gh-pr-checkout(){
   SELECTED_PR=$(gh pr list | fzf)
   PR=$(echo $SELECTED_PR | awk '{print $1;}')
   gh pr checkout $PR
