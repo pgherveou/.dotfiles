@@ -56,4 +56,7 @@ if [ ! -f vimplug ]; then
 	curl -fLo "$vimplug" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
+# setup spectacle
+cp -r spectacles/Shortcuts.json "$HOME/Library/Application Support/Spectacle/Shortcuts.json" 2>/dev/null
+
 popd -q
