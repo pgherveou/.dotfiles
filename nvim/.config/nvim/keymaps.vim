@@ -30,6 +30,9 @@ nmap cp :let @* = expand("%")<cr>
 " search and replace the visual selection
 vnoremap <C-r> "hy:%s/<C-r>h//g<left><left>
 
+" search visual selection
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+
 " make it easy to use cgn using the current word under the cursor 
 nnoremap <silent> c<Tab> :let @/=expand('<cword>')<cr>cgn
 " Allow gf to open non-existent files

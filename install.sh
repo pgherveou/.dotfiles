@@ -15,7 +15,6 @@ STOW_FOLDERS=(
 	"nvim"
 	"codespell"
 	"private"
-	"stylua"
 	"tmux"
 	"qmk"
 	"zsh"

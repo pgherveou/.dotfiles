@@ -2,6 +2,13 @@
 local null_ls = require('null-ls')
 local builtins = null_ls.builtins
 
+local eslintConfig = {
+  timeout = 20000,
+  condition = function(utils)
+    return utils.root_has_file({ '.eslintrc.js', '.eslintrc' })
+  end,
+}
+
 local sources = {
   builtins.formatting.shfmt,
   builtins.formatting.rustfmt,
@@ -12,18 +19,21 @@ local sources = {
   }),
   builtins.formatting.gofmt,
   builtins.formatting.clang_format,
-  -- builtins.formatting.prettier,
   builtins.formatting.prettierd.with({
-    env = {
-      PRETTIERD_DEFAULT_CONFIG = vim.fn.expand('~/.config/nvim/linter-configs/.prettierrc.json'),
-    },
+    condition = function(utils)
+      return utils.root_has_file({ '.prettierrc', '.prettierrc.js' })
+    end,
   }),
-  builtins.formatting.stylua,
+  builtins.formatting.stylua.with({
+    condition = function(utils)
+      return utils.root_has_file({ 'stylua.toml', '.stylua.toml' })
+    end,
+  }),
   builtins.diagnostics.luacheck.with({
+    condition = function(utils)
+      return utils.root_has_file({ '.luacheckrc' })
+    end,
     args = {
-      '--no-max-line-length',
-      '--globals',
-      'vim',
       '--formatter',
       'plain',
       '--codes',
@@ -33,8 +43,8 @@ local sources = {
       '-',
     },
   }),
-  builtins.code_actions.eslint_d.with({ timeout = 20000 }),
-  builtins.diagnostics.eslint_d.with({ timeout = 20000 }),
+  builtins.code_actions.eslint_d.with(eslintConfig),
+  builtins.diagnostics.eslint_d.with(eslintConfig),
   builtins.diagnostics.shellcheck,
 }
 
@@ -45,6 +55,9 @@ M.setup = function(on_attach)
     --debug = true,
     sources = sources,
     on_attach = on_attach,
+    should_attach = function(bufnr)
+      return vim.api.nvim_buf_line_count(bufnr) < 10000
+    end,
   })
 end
 

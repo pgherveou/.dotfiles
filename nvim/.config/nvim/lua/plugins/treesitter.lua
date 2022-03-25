@@ -5,7 +5,7 @@ return function()
   -- ]])
 
   local function disable(_, bufnr)
-    return vim.api.nvim_buf_line_count(bufnr) > 100000
+    return vim.api.nvim_buf_line_count(bufnr) > 10000
   end
 
   require('nvim-treesitter.configs').setup({
@@ -18,6 +18,7 @@ return function()
       'vim',
       'lua',
       'bash',
+      'json',
       'yaml',
     },
     highlight = {

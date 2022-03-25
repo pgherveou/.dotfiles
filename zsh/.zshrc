@@ -106,6 +106,12 @@ openx(){
 # bazel
 alias bazel=bazelisk
 
+# Envoy exports required for make_format 
+export BUILDIFIER_BIN=$(which buildifier)
+export BUILDOZER_BIN=$(which buildozer)
+export CLANG_FORMAT=$(which clang-format)
+
+
 # fzf config
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

@@ -14,7 +14,9 @@ setup(function(import)
   import('google/vim-maktaba', 'google/vim-glaive', 'google/vim-syncopate')
 
   -- comment/uncomment binding
-  import('tpope/vim-commentary')
+  import('numToStr/Comment.nvim').then_configure(function()
+    require('Comment').setup()
+  end)
 
   -- Auto close parens, braces, brackets, etc
   -- import('jiangmiao/auto-pairs')
