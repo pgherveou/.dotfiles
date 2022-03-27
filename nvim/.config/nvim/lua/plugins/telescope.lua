@@ -26,6 +26,7 @@ M.setup = function()
       path_display = { truncate = 3 },
       file_ignore_patterns = { '.git/' },
       -- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua#L9
+      -- https://github.com/nvim-telescope/telescope.nvim#default-mappings
       mappings = {
         i = {
           ['<C-n>'] = actions.cycle_history_next,
@@ -34,6 +35,18 @@ M.setup = function()
         },
         n = {
           ['q'] = actions.close,
+        },
+      },
+    },
+
+    pickers = {
+      buffers = {
+        show_all_buffers = true,
+        sort_lastused = true,
+        mappings = {
+          i = {
+            ['<c-d>'] = 'delete_buffer',
+          },
         },
       },
     },
