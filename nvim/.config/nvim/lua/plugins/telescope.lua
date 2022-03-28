@@ -58,14 +58,14 @@ M.setup = function()
   -- mappings
   vim.cmd([[
   :nnoremap <Leader>fb :lua require('telescope.builtin').buffers{}<CR>
-  :nnoremap <Leader>fc :lua require('telescope.builtin').commands{}<CR>
   :nnoremap <Leader>fe :lua require('plugins.telescope').file_browser{}<CR>
   :nnoremap <Leader>ff :lua require('plugins.telescope').find_files{}<CR>
   :nnoremap <Leader>fg :lua require('telescope.builtin').live_grep{}<CR>
-  :nnoremap <Leader>fh :lua require('telescope.builtin').command_history{}<CR>
+  :nnoremap <Leader>fs :lua require('telescope.builtin').grep_string{}<CR>
+  :nnoremap <Leader>fc :lua require('telescope.builtin').command_history{}<CR>
+  :nnoremap <Leader>fh :lua require('telescope.builtin').search_history{}<CR>
   :nnoremap <Leader>fo :lua require('telescope.builtin').oldfiles{}<CR>
   :nnoremap <Leader>fr :Telescope resume<CR>
-  :nnoremap <Leader>fs :lua require('telescope.builtin').search_history{}<CR>
   :nnoremap <leader>f/ :lua require("telescope").extensions.live_grep_raw.live_grep_raw()<CR>
   ]])
 end
