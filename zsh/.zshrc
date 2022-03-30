@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # OSX antigen file
 source /usr/local/share/antigen/antigen.zsh
 
@@ -6,8 +13,9 @@ if [[ -z "${ANTIGEN_LOADED}" ]]; then
   antigen use oh-my-zsh
 
   # Load the theme
-  antigen bundle mafredri/zsh-async
-  antigen bundle sindresorhus/pure@main
+  antigen theme romkatv/powerlevel10k
+  # antigen bundle mafredri/zsh-async
+  # antigen bundle sindresorhus/pure@main
 
   # Bundles from the default repo (robbyrussell's oh-my-zsh).
   antigen bundle git
@@ -117,3 +125,6 @@ export CLANG_FORMAT=$(which clang-format)
 
 # work config
 [ -f ~/.private/init.zsh ] && source ~/.private/init.zsh
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

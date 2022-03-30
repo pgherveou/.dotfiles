@@ -51,6 +51,7 @@ M.setup = function()
   :nnoremap <Leader>fe :lua require('plugins.telescope').file_browser{}<CR>
   :nnoremap <Leader>ff :lua require('plugins.telescope').find_files{}<CR>
   :nnoremap <Leader>fg :lua require('telescope.builtin').live_grep{}<CR>
+  :vnoremap <leader>fs "zy:Telescope grep_string search=<C-r>z<CR>
   :nnoremap <Leader>fs :lua require('telescope.builtin').grep_string{}<CR>
   :nnoremap <Leader>fc :lua require('telescope.builtin').command_history{}<CR>
   :nnoremap <Leader>fh :lua require('telescope.builtin').search_history{}<CR>
