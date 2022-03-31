@@ -33,14 +33,7 @@ setup(function(import)
   import('psliwka/vim-smoothie')
 
   -- Syntax For languages
-  -- import({ 'fatih/vim-go', { ['do'] = ':GoUpdateBinaries' } }).then_configure(function() end)
-  -- import('rust-lang/rust.vim')
-  -- import('uarun/vim-protobuf')
-  -- import('cespare/vim-toml')
-  -- import('plasticboy/vim-markdown')
-  -- import('hashivim/vim-terraform')
   import('sheerun/vim-polyglot')
-  -- import('bfrg/vim-cpp-modern')
 
   -- indent guidelines
   import('lukas-reineke/indent-blankline.nvim').then_configure(function()
@@ -97,8 +90,12 @@ setup(function(import)
     'nvim-telescope/telescope-rg.nvim',
     'nvim-telescope/telescope-file-browser.nvim',
     'nvim-telescope/telescope-github.nvim',
+    'ThePrimeagen/harpoon',
     { 'nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make' } }
   ).then_configure(require('plugins.telescope').setup)
+
+  -- harpoon navigation
+  import('nvim-lua/plenary.nvim', 'ThePrimeagen/harpoon').then_configure(require('plugins.harpoon').setup)
 
   -- lsp ts setup
   import(
