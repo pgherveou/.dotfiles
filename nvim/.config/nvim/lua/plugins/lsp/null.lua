@@ -1,6 +1,7 @@
 -- https://github.com/jose-elias-alvarez/null-ls.nvim
 local null_ls = require('null-ls')
 local builtins = null_ls.builtins
+local Path = require('plenary.path')
 
 local eslintConfig = {
   timeout = 20000,
@@ -14,7 +15,7 @@ local sources = {
   builtins.formatting.rustfmt,
   builtins.diagnostics.codespell.with({
     extra_args = {
-      '--ignore-words=~/.config/codespell/ignore-words.txt',
+      '--ignore-words=' .. Path:new('~/.config/codespell/ignore-words.txt'):expand(),
     },
   }),
   builtins.formatting.gofmt,
@@ -52,7 +53,7 @@ local M = {}
 
 M.setup = function(on_attach)
   null_ls.setup({
-    --debug = true,
+    -- debug = true,
     sources = sources,
     on_attach = on_attach,
     should_attach = function(bufnr)

@@ -106,7 +106,8 @@ setup(function(import)
     'jose-elias-alvarez/null-ls.nvim',
     'RRethy/vim-illuminate',
     'simrat39/rust-tools.nvim',
-    'nvim-lua/lsp-status.nvim'
+    'nvim-lua/lsp-status.nvim',
+    'b0o/schemastore.nvim'
   ).then_configure(require('plugins.lsp.servers'))
 
   -- lsp completion

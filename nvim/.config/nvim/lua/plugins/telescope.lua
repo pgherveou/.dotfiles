@@ -32,7 +32,7 @@ M.setup = function()
           ['<C-n>'] = actions.cycle_history_next,
           ['<C-p>'] = actions.cycle_history_prev,
           ['<C-c>'] = actions.close,
-          ['<c-d>'] = actions.delete_buffer,
+          ['<c-x>'] = actions.delete_buffer,
         },
         n = {
           ['q'] = actions.close,

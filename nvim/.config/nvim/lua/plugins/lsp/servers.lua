@@ -86,13 +86,21 @@ local setup_servers = function()
     },
   })
 
+  lspconfig.jsonls.setup({
+    flags = default_flags,
+    capabilities = capabilities,
+    on_attach = on_attach,
+    settings = {
+      json = {
+        schemas = require('schemastore').json.schemas(),
+      },
+    },
+  })
+
   lspconfig.bashls.setup(default_config)
   lspconfig.gopls.setup(default_config)
   lspconfig.golangci_lint_ls.setup(default_config)
-
   lspconfig.clangd.setup(default_config)
-  -- lspconfig.ccls.setup(default_config)
-
   lspconfig.tsserver.setup({
     capabilities = capabilities,
     on_attach = function(client, bufnr)

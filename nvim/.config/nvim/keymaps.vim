@@ -91,12 +91,6 @@ nnoremap <M-Right> :vertical resize -1<cr>
 " Edit the alternnate file
 nmap <leader><leader> <c-^>
 
-
-nmap <leader>n :call RenameFile()<cr>
-
-
-nmap <leader>w :call StripTrailingWhitespace()<cr>
-
 " fix gx to open files
 nnoremap gx :call netrw#BrowseX(expand('<cfile>'), 0)<CR>
 

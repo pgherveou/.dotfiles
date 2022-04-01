@@ -58,6 +58,7 @@ NPM_PKGS_LIST=(
 	"ts-node"
 	"typescript"
 	"typescript-language-server"
+  "vscode-langservers-extracted"
 )
 export NPM_PKGS=$( IFS=" "; printf '%s' "${NPM_PKGS_LIST[*]}" )
 
