@@ -21,6 +21,9 @@ nnoremap k gk
 nnoremap Y yg$
 nnoremap YY :%y<cr>
 
+" qq to record, Q to replay
+nnoremap Q @q
+
 " quickly cancel search highlighting
 nnoremap <leader><space> :nohlsearch<cr>
 

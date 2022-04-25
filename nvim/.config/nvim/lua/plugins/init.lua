@@ -48,6 +48,7 @@ setup(function(import)
 
   -- git integration
   import('ruanyl/vim-gh-line') -- gh links for text
+  import('ThePrimeagen/git-worktree.nvim')
   import('tpope/vim-fugitive').then_configure(require('plugins.fugitive'))
   import('nvim-lua/plenary.nvim', 'lewis6991/gitsigns.nvim').then_configure(function()
     require('gitsigns').setup()
@@ -90,6 +91,7 @@ setup(function(import)
     'nvim-telescope/telescope-rg.nvim',
     'nvim-telescope/telescope-file-browser.nvim',
     'nvim-telescope/telescope-github.nvim',
+    'ThePrimeagen/git-worktree.nvim',
     'ThePrimeagen/harpoon',
     { 'nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make' } }
   ).then_configure(require('plugins.telescope').setup)
@@ -120,8 +122,10 @@ setup(function(import)
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-cmdline',
-    'hrsh7th/cmp-vsnip',
-    'hrsh7th/vim-vsnip'
+    'L3MON4D3/LuaSnip',
+    'saadparwaiz1/cmp_luasnip'
+    -- 'hrsh7th/cmp-vsnip',
+    -- 'hrsh7th/vim-vsnip'
   ).then_configure(require('plugins.lsp.cmp'))
 
   -- lsp signatures

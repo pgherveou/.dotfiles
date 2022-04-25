@@ -21,9 +21,10 @@ end
 M.setup = function()
   local telescope = require('telescope')
   local actions = require('telescope.actions')
+  local fb_actions = require('telescope').extensions.file_browser.actions
   telescope.setup({
     defaults = {
-      path_display = { truncate = 3 },
+      -- path_display = { truncate = 3 },
       file_ignore_patterns = { '.git/' },
       -- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua#L9
       -- https://github.com/nvim-telescope/telescope.nvim#default-mappings
@@ -37,7 +38,19 @@ M.setup = function()
         n = {
           ['q'] = actions.close,
           ['x'] = actions.delete_buffer,
+          ['d'] = fb_actions.remove,
         },
+      },
+    },
+    pickers = {
+      buffers = {
+        path_display = { truncate = 3 },
+      },
+      find_files = {
+        path_display = { truncate = 3 },
+      },
+      file_browser = {
+        path_display = { truncate = 3 },
       },
     },
   })
@@ -46,6 +59,7 @@ M.setup = function()
   telescope.load_extension('file_browser')
   telescope.load_extension('gh')
   telescope.load_extension('harpoon')
+  telescope.load_extension('git_worktree')
 
   -- mappings
   vim.cmd([[
@@ -60,6 +74,8 @@ M.setup = function()
   :nnoremap <Leader>fo :lua require('telescope.builtin').oldfiles{}<CR>
   :nnoremap <Leader>fr :Telescope resume<CR>
   :nnoremap <leader>f/ :lua require("telescope").extensions.live_grep_raw.live_grep_raw()<CR>
+  :nnoremap <leader>wt :lua require("telescope").extensions.git_worktree.git_worktrees()<CR>
+  :nnoremap <leader>cw :lua require("telescope").extensions.git_worktree.create_git_worktree()<CR>
   ]])
 end
 

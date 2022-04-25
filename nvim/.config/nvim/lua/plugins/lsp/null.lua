@@ -46,7 +46,11 @@ local sources = {
   }),
   builtins.code_actions.eslint_d.with(eslintConfig),
   builtins.diagnostics.eslint_d.with(eslintConfig),
-  builtins.diagnostics.shellcheck,
+  builtins.diagnostics.shellcheck.with({
+    condition = function(utils)
+      return utils.root_has_file({ '.shellcheckrc' })
+    end,
+  }),
 }
 
 local M = {}
