@@ -43,13 +43,9 @@ end
 
 local setup_servers = function()
   local lspconfig = require('lspconfig')
-  local lsp_status = require('lsp-status')
-  lsp_status.register_progress()
-
   local capabilities = vim.lsp.protocol.make_client_capabilities()
 
   capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-  capabilities = vim.tbl_extend('keep', capabilities, lsp_status.capabilities)
   capabilities.offsetEncoding = { 'utf-16' }
 
   -- most languages use a custom formatter to format the code
@@ -59,7 +55,6 @@ local setup_servers = function()
   end
 
   local on_attach = function(client, bufnr)
-    lsp_status.on_attach(client, bufnr)
     disable_formatting(client)
     set_common_mappings(client, bufnr)
   end

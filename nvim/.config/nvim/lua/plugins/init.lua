@@ -91,6 +91,7 @@ setup(function(import)
     'nvim-telescope/telescope-rg.nvim',
     'nvim-telescope/telescope-file-browser.nvim',
     'nvim-telescope/telescope-github.nvim',
+    'nvim-telescope/telescope-node-modules.nvim',
     'ThePrimeagen/git-worktree.nvim',
     'ThePrimeagen/harpoon',
     { 'nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make' } }
@@ -108,9 +109,13 @@ setup(function(import)
     'jose-elias-alvarez/null-ls.nvim',
     'RRethy/vim-illuminate',
     'simrat39/rust-tools.nvim',
-    'nvim-lua/lsp-status.nvim',
     'b0o/schemastore.nvim'
   ).then_configure(require('plugins.lsp.servers'))
+
+  -- lsp progress
+  import('j-hui/fidget.nvim').then_configure(function()
+    require('fidget').setup({})
+  end)
 
   -- lsp completion
   import(
@@ -134,12 +139,7 @@ setup(function(import)
   end)
 
   -- status line and Color Scheme
-  import(
-    'nvim-lua/lsp-status.nvim',
-    'folke/tokyonight.nvim',
-    'nvim-lualine/lualine.nvim',
-    'kyazdani42/nvim-web-devicons'
-  ).then_configure(function()
+  import('folke/tokyonight.nvim', 'nvim-lualine/lualine.nvim', 'kyazdani42/nvim-web-devicons').then_configure(function()
     vim.cmd('colorscheme tokyonight')
     vim.g.tokyonight_style = 'storm'
     vim.g.tokyonight_italic_functions = true

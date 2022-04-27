@@ -60,6 +60,7 @@ M.setup = function()
   telescope.load_extension('gh')
   telescope.load_extension('harpoon')
   telescope.load_extension('git_worktree')
+  telescope.load_extension('node_modules')
 
   -- mappings
   vim.cmd([[
