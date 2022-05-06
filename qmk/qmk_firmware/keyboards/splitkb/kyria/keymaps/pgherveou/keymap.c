@@ -311,14 +311,16 @@ void keyboard_post_init_user(void) {
 const uint16_t PROGMEM COMBO_JK_KEYS[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM COMBO_ER_KEYS[] = {KC_E, KC_R, COMBO_END};
 const uint16_t PROGMEM COMBO_DF_KEYS[] = {KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM COMBO_CV_KEYS[] = {KC_C, KC_V, COMBO_END};
 
-enum combo_events { COMBO_JK, COMBO_ER, COMBO_DF, COMBO_LENGTH };
+enum combo_events { COMBO_JK, COMBO_ER, COMBO_DF, COMBO_CV, COMBO_LENGTH };
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 combo_t key_combos[] = {
     [COMBO_JK] = COMBO_ACTION(COMBO_JK_KEYS),
     [COMBO_ER] = COMBO_ACTION(COMBO_ER_KEYS),
     [COMBO_DF] = COMBO_ACTION(COMBO_DF_KEYS),
+    [COMBO_CV] = COMBO_ACTION(COMBO_CV_KEYS),
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
@@ -335,10 +337,17 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       tap_code16(C(KC_R));
     }
     break;
-  // er -> ctrl+c
+  // df -> ctrl+c
   case COMBO_DF:
     if (pressed) {
       tap_code16(C(KC_C));
+    }
+    break;
+  // cv -> ctrl+b z
+  case COMBO_CV:
+    if (pressed) {
+      tap_code16(C(KC_B));
+      tap_code16(KC_Z);
     }
     break;
   }

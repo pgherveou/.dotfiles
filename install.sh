@@ -35,7 +35,7 @@ fi
 if [ ! -d ~/qmk_firmware ]; then
 	git clone https://github.com/qmk/qmk_firmware ~/qmk_firmware
 	qmk setup -y
-	qmk config user.keyboard=splitkb/kyria
+	qmk config user.keyboard=splitkb/kyria/rev1
 	qmk config user.keymap=pgherveou
 	qmk generate-compilation-database
 	ln -s ~/qmk_firmware/compile_commands.json "$PWD"
