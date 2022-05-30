@@ -38,8 +38,6 @@ vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 " make it easy to use cgn using the current word under the cursor 
 nnoremap <silent> c<Tab> :let @/=expand('<cword>')<cr>cgn
-" Allow gf to open non-existent files
-" map gf :edit <cfile><cr>
 
 " redirect last command to register 
 nnoremap <silent> <leader>red :redir @"> <bar> <C-r>: <bar> redir END<cr>

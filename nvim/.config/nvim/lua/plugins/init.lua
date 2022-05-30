@@ -35,6 +35,9 @@ setup(function(import)
   -- Syntax For languages
   import('sheerun/vim-polyglot')
 
+  -- search visually selected text
+  import('nelstrom/vim-visual-star-search')
+
   -- indent guidelines
   import('lukas-reineke/indent-blankline.nvim').then_configure(function()
     vim.opt.list = true
@@ -91,7 +94,7 @@ setup(function(import)
     'nvim-telescope/telescope-rg.nvim',
     'nvim-telescope/telescope-file-browser.nvim',
     'nvim-telescope/telescope-github.nvim',
-    'nvim-telescope/telescope-node-modules.nvim',
+    'nvim-telescope/telescope-ui-select.nvim',
     'ThePrimeagen/git-worktree.nvim',
     'ThePrimeagen/harpoon',
     { 'nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make' } }

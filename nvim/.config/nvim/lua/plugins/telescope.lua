@@ -20,9 +20,14 @@ end
 
 M.setup = function()
   local telescope = require('telescope')
+  local themes = require('telescope.themes')
   local actions = require('telescope.actions')
   local fb_actions = require('telescope').extensions.file_browser.actions
+
   telescope.setup({
+    ['ui-select'] = {
+      themes.get_dropdown(),
+    },
     defaults = {
       -- path_display = { truncate = 3 },
       file_ignore_patterns = { '.git/' },
@@ -60,7 +65,7 @@ M.setup = function()
   telescope.load_extension('gh')
   telescope.load_extension('harpoon')
   telescope.load_extension('git_worktree')
-  telescope.load_extension('node_modules')
+  telescope.load_extension('ui-select')
 
   -- mappings
   vim.cmd([[

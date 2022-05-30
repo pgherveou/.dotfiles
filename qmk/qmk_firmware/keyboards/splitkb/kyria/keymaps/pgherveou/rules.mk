@@ -8,4 +8,6 @@ MOUSEKEY_ENABLE = no
 RAW_ENABLE = no
 WPM_ENABLE = no
 CONSOLE_ENABLE = no
+# https://github.com/qmk/qmk_firmware/issues/5585
+NO_USB_STARTUP_CHECK = yes
 SRC += encoder.c
