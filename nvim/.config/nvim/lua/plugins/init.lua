@@ -9,10 +9,6 @@ setup(function(import)
   -- change case utilities
   import('icatalina/vim-case-change')
 
-  -- CopyRTF to copy highlighted text to clipboard
-  -- import('zerowidth/vim-copy-as-rtf')
-  import('google/vim-maktaba', 'google/vim-glaive', 'google/vim-syncopate')
-
   -- comment/uncomment binding
   import('numToStr/Comment.nvim').then_configure(function()
     require('Comment').setup()
@@ -32,9 +28,15 @@ setup(function(import)
   -- Smooth scrolling
   import('psliwka/vim-smoothie')
 
-  -- Syntax For languages
+  -- Syntax / languages
   import('sheerun/vim-polyglot')
-
+  import({ 'fatih/vim-go', { ['do'] = ':GoUpdateBinaries' } }).then_configure(function()
+    vim.g.go_term_reuse = 1
+    vim.g.go_term_enabled = 1
+    vim.g.go_term_close_on_exit = 0
+    vim.g.go_term_mode = 'split'
+    vim.g.go_test_timeout = '5s'
+  end)
   -- search visually selected text
   import('nelstrom/vim-visual-star-search')
 
@@ -85,17 +87,22 @@ setup(function(import)
   -- json navigation
   import('nvim-treesitter/nvim-treesitter', 'theprimeagen/jvim.nvim')
 
-  --toggle quicklist location list with leader q or l
-  import('milkypostman/vim-togglelist')
+  -- lsp refactoring
+  import('ThePrimeagen/refactoring.nvim', 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter').then_configure(
+    function()
+      require('refactoring').setup({})
+    end
+  )
 
   -- Telescope
   import(
     'nvim-telescope/telescope.nvim',
-    'nvim-telescope/telescope-rg.nvim',
+    'nvim-telescope/telescope-live-grep-args.nvim',
     'nvim-telescope/telescope-file-browser.nvim',
     'nvim-telescope/telescope-github.nvim',
     'nvim-telescope/telescope-ui-select.nvim',
     'ThePrimeagen/git-worktree.nvim',
+    'ThePrimeagen/refactoring.nvim',
     'ThePrimeagen/harpoon',
     { 'nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make' } }
   ).then_configure(require('plugins.telescope').setup)
@@ -110,6 +117,7 @@ setup(function(import)
     'hrsh7th/cmp-nvim-lsp',
     'jose-elias-alvarez/nvim-lsp-ts-utils',
     'jose-elias-alvarez/null-ls.nvim',
+    'ThePrimeagen/refactoring.nvim',
     'RRethy/vim-illuminate',
     'simrat39/rust-tools.nvim',
     'b0o/schemastore.nvim'
@@ -153,5 +161,10 @@ setup(function(import)
     })
 
     require('plugins.lualine')
+  end)
+
+  -- debugger
+  import('mfussenegger/nvim-dap', 'rcarriga/nvim-dap-ui', 'simrat39/rust-tools.nvim').then_configure(function()
+    require('dapui').setup()
   end)
 end)

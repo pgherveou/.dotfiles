@@ -10,9 +10,6 @@ nnoremap <leader>r @:<CR>
 " Don't copy the contents of an overwritten selection.
 vnoremap p "_dP
 
-" Easier save mapping
-nnoremap <leader>s :write<CR>
-
 " better vertical movement for wrapped lines
 nnoremap j gj
 nnoremap k gk
@@ -58,10 +55,10 @@ inoremap [ [<c-g>u
 inoremap { {<c-g>u 
 
 " :navigate quicklist and location list
-nnoremap <leader>j :cnext<CR>zz
-nnoremap <leader>k :cprev<CR>zz
-nnoremap <leader>J :lnext<CR>zz
-nnoremap <leader>K :lprev<CR>zz
+nnoremap <Tab>j :cnext<CR>zz
+nnoremap <Tab>k :cprev<CR>zz
+nnoremap <Tab>J :lnext<CR>zz
+nnoremap <Tab>K :lprev<CR>zz
 
 " Go to previous buffer
 nnoremap <leader>o :bprevious<cr>
@@ -80,8 +77,11 @@ vnoremap < <gv
 vnoremap > >gv
 
 " split window
-nmap ss :split<Return><C-w>w
-nmap sv :vsplit<Return><C-w>w
+nnoremap ss :split<Return><C-w>w
+nnoremap sv :vsplit<Return><C-w>w
+
+" maximize minimize
+nnoremap <C-w>m <C-w>\|<C-W>_
 
 " easy window resizing
 nnoremap <M-Left> :vertical resize +1<cr>
@@ -91,6 +91,9 @@ nnoremap <M-Right> :vertical resize -1<cr>
 
 " Edit the alternnate file
 nmap <leader><leader> <c-^>
+
+" Toggle edit between the header and cc file
+map <leader>s :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
 
 " fix gx to open files
 nnoremap gx :call netrw#BrowseX(expand('<cfile>'), 0)<CR>

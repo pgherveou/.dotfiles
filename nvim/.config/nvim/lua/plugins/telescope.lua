@@ -66,6 +66,7 @@ M.setup = function()
   telescope.load_extension('harpoon')
   telescope.load_extension('git_worktree')
   telescope.load_extension('ui-select')
+  telescope.load_extension('refactoring')
 
   -- mappings
   vim.cmd([[
@@ -79,9 +80,11 @@ M.setup = function()
   :nnoremap <Leader>fh :lua require('telescope.builtin').search_history{}<CR>
   :nnoremap <Leader>fo :lua require('telescope.builtin').oldfiles{}<CR>
   :nnoremap <Leader>fr :Telescope resume<CR>
-  :nnoremap <leader>f/ :lua require("telescope").extensions.live_grep_raw.live_grep_raw()<CR>
+  :nnoremap <leader>f/ :lua require("telescope").extensions.live_grep_args.live_grep_args()<CR>
   :nnoremap <leader>wt :lua require("telescope").extensions.git_worktree.git_worktrees()<CR>
   :nnoremap <leader>cw :lua require("telescope").extensions.git_worktree.create_git_worktree()<CR>
+
+  :vnoremap <leader>rr :lua require("telescope").extensions.refactoring.refactors()<CR>
   ]])
 end
 

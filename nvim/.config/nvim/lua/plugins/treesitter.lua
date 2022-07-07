@@ -35,6 +35,8 @@ return function()
         keymaps = {
           ['af'] = '@function.outer',
           ['if'] = '@function.inner',
+          ['ia'] = '@parameter.inner',
+          ['aa'] = '@parameter.outer',
           ['ac'] = '@class.outer',
           ['ic'] = '@class.inner',
           ['al'] = '@loop.outer',
@@ -48,20 +50,12 @@ return function()
 
         set_jumps = true, -- whether to set jumps in the jumplist
         goto_next_start = {
-          [']m'] = '@function.outer',
-          [']]'] = '@class.outer',
-        },
-        goto_next_end = {
-          [']M'] = '@function.outer',
-          [']['] = '@class.outer',
+          [']f'] = '@function.outer',
+          [']a'] = '@parameter.outer',
         },
         goto_previous_start = {
-          ['[m'] = '@function.outer',
-          ['[['] = '@class.outer',
-        },
-        goto_previous_end = {
-          ['[M'] = '@function.outer',
-          ['[]'] = '@class.outer',
+          ['[f'] = '@function.outer',
+          ['[a'] = '@parameter.outer',
         },
       },
     },

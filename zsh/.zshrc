@@ -82,6 +82,11 @@ export CARGO_NET_GIT_FETCH_WITH_CLI=true
 # Kubectl
 [[ /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)
 
+
+# Use a prefix with git-pile
+# see https://github.com/keith/git-pile#optional
+export GIT_PILE_PREFIX=pg/
+
 # Open gh url
 gh-pr-view(){
   gh pr view --web

@@ -67,7 +67,13 @@ local setup_servers = function()
   }
 
   -- setup rust via rust-tools
+  local extension_path = vim.env.HOME .. '/.vscode/extensions/vadimcn.vscode-lldb-1.7.0/'
+  local codelldb_path = extension_path .. 'adapter/codelldb'
+  local liblldb_path = extension_path .. 'lldb/lib/liblldb.dylib'
   require('rust-tools').setup({
+    dap = {
+      adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path),
+    },
     server = {
       cargo = {
         allFeatures = true,
@@ -93,8 +99,14 @@ local setup_servers = function()
   })
 
   lspconfig.bashls.setup(default_config)
-  lspconfig.gopls.setup(default_config)
   lspconfig.golangci_lint_ls.setup(default_config)
+  lspconfig.gopls.setup(vim.tbl_extend('force', default_config, {
+    on_attach = function(client, bufnr)
+      default_config.on_attach(client, bufnr)
+      u.buf_nmap(bufnr, '<leader>t', ':GoTestFunc<CR>')
+    end,
+  }))
+
   lspconfig.clangd.setup(default_config)
   lspconfig.tsserver.setup({
     capabilities = capabilities,
