@@ -1,3 +1,3 @@
 export QUIET_BREW_WRAPPER=1
 
-. "$HOME/.cargo/env"
+[ -f $HOME/.cargo/env ] && source "$HOME/.cargo/env" 

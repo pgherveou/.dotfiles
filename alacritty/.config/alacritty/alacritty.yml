@@ -10,6 +10,9 @@ dpi:
   x: 120.0
   y: 120.0
 
+env:
+  TERM: xterm-256color
+
 # Display tabs using this many cells (changes require restart)
 draw_bold_text_with_bright_colors: false
 

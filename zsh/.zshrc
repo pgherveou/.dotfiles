@@ -6,7 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # OSX antigen file
-source /usr/local/share/antigen/antigen.zsh
+source ~/antigen.zsh
 
 if [[ -z "${ANTIGEN_LOADED}" ]]; then
   # Load the oh-my-zsh's library.
