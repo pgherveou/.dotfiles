@@ -18,6 +18,26 @@ STOW_FOLDERS=(
 	"tmux"
 	"qmk"
 	"zsh"
+	"karabiner"
+)
+
+# list of globally installed npm packages
+NPM_PKGS=(
+	"@fsouza/prettierd"
+	"bash-language-server"
+	"eslint_d"
+	"neovim"
+	"prettier"
+	"serve"
+	"ts-node"
+	"typescript"
+	"typescript-language-server"
+	"vscode-langservers-extracted"
+)
+
+# list of globally installed lua packages
+LUA_PKGS=(
+	"luacheck"
 )
 
 for folder in "${STOW_FOLDERS[@]}"; do
@@ -42,12 +62,10 @@ if [ ! -d ~/qmk_firmware ]; then
 fi
 
 # install global npm packages
-IFS=' ' read -r -a NPM_PKGS_LIST <<<"$NPM_PKGS"
-npm install -g "${NPM_PKGS_LIST[@]}"
+npm install -g "${NPM_PKGS[@]}"
 
 # install global lua packages
-IFS=' ' read -r -a LUA_PKGS_LIST <<<"$LUA_PKGS"
-luarocks install "${LUA_PKGS_LIST[@]}"
+luarocks install "${LUA_PKGS[@]}"
 
 # install vimplug
 vimplug="$HOME/.local/share/nvim/site/autoload/plug.vim"

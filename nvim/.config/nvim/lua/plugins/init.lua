@@ -28,6 +28,11 @@ setup(function(import)
   -- Smooth scrolling
   import('psliwka/vim-smoothie')
 
+  -- treesitter scrolling
+  import('nvim-treesitter/nvim-treesitter-context', 'nvim-treesitter/nvim-treesitter').then_configure(function()
+    require('treesitter-context').setup()
+  end)
+
   -- Syntax / languages
   import('sheerun/vim-polyglot')
   import({ 'fatih/vim-go', { ['do'] = ':GoUpdateBinaries' } }).then_configure(function()

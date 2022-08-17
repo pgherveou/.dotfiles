@@ -33,6 +33,11 @@ M.setup = function()
       file_ignore_patterns = { '.git/' },
       -- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua#L9
       -- https://github.com/nvim-telescope/telescope.nvim#default-mappings
+
+      layout_config = {
+        horizontal = { width = 0.95 },
+      },
+
       mappings = {
         i = {
           ['<C-n>'] = actions.cycle_history_next,

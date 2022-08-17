@@ -47,26 +47,6 @@ export EDITOR=vim
 # clangd
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 
-# list of globally installed npm packages
-NPM_PKGS_LIST=(
-	"@fsouza/prettierd"
-	"bash-language-server"
-	"eslint_d"
-	"neovim"
-	"prettier"
-	"serve"
-	"ts-node"
-	"typescript"
-	"typescript-language-server"
-  "vscode-langservers-extracted"
-)
-export NPM_PKGS=$( IFS=" "; printf '%s' "${NPM_PKGS_LIST[*]}" )
-
-# list of globally installed lua packages
-LUA_PKGS_LIST=(
-	"luacheck"
-)
-export LUA_PKGS=$( IFS=" "; printf '%s' "${LUA_PKGS_LIST[*]}" )
 
 # Deno
 export DENO_INSTALL="$HOME/.deno"
@@ -78,6 +58,7 @@ export PATH="$HOME/go/bin:$PATH"
 # Rust
 export PATH="$HOME/.cargo/bin:$PATH"
 export CARGO_NET_GIT_FETCH_WITH_CLI=true
+
 
 # Kubectl
 [[ /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)
@@ -119,12 +100,12 @@ openx(){
 
 # bazel
 alias bazel=bazelisk
+compdef bazelisk=bazel
 
 # Envoy exports required for make_format 
 export BUILDIFIER_BIN=$(which buildifier)
 export BUILDOZER_BIN=$(which buildozer)
 export CLANG_FORMAT=$(which clang-format)
-
 
 # fzf config
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
