@@ -75,6 +75,13 @@ local setup_servers = function()
       adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path),
     },
     server = {
+      settings = {
+        ['rust-analyzer'] = {
+          checkOnSave = {
+            command = 'clippy',
+          },
+        },
+      },
       cargo = {
         allFeatures = true,
       },
@@ -108,6 +115,7 @@ local setup_servers = function()
   }))
 
   lspconfig.clangd.setup(default_config)
+  lspconfig.tailwindcss.setup(default_config)
   lspconfig.tsserver.setup({
     capabilities = capabilities,
     on_attach = function(client, bufnr)
@@ -130,6 +138,8 @@ end
 return function()
   -- Debugging
   -- vim.lsp.set_log_level("debug")
+  require('mason').setup()
+  require('mason-lspconfig').setup({ automatic_installation = true })
   setup_servers()
   require('plugins.lsp.null').setup(set_common_mappings)
 end

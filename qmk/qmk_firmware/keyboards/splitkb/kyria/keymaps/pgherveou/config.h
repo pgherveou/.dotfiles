@@ -17,8 +17,12 @@
 #pragma once
 
 #define RETRO_TAPPING_PER_KEY
-/* #define PERMISSIVE_HOLD */
-/* #define IGNORE_MOD_TAP_INTERRUPT */
+// #define HOLD_ON_OTHER_KEY_PRESS
+// #define PERMISSIVE_HOLD
+// #define IGNORE_MOD_TAP_INTERRUPT
+
+#undef DEBOUNCE
+#define DEBOUNCE 5
 
 #ifdef RGBLIGHT_ENABLE
 #define RGBLIGHT_LIMIT_VAL 128

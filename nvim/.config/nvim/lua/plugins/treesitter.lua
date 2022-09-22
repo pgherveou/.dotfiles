@@ -9,10 +9,14 @@ return function()
   end
 
   require('nvim-treesitter.configs').setup({
+    autotag = {
+      enable = true,
+    },
     ensure_installed = {
       'go',
       'rust',
       'typescript',
+      'tsx',
       'c',
       'cpp',
       'vim',
@@ -33,6 +37,8 @@ return function()
         lookahead = true,
 
         keymaps = {
+          ['as'] = '@block.outer',
+          ['is'] = '@block.inner',
           ['af'] = '@function.outer',
           ['if'] = '@function.inner',
           ['ia'] = '@parameter.inner',

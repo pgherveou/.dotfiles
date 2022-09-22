@@ -10,8 +10,10 @@ setup(function(import)
   import('icatalina/vim-case-change')
 
   -- comment/uncomment binding
-  import('numToStr/Comment.nvim').then_configure(function()
-    require('Comment').setup()
+  import('numToStr/Comment.nvim', 'JoosepAlviste/nvim-ts-context-commentstring').then_configure(function()
+    require('Comment').setup({
+      pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+    })
   end)
 
   -- Auto close parens, braces, brackets, etc
@@ -29,9 +31,9 @@ setup(function(import)
   import('psliwka/vim-smoothie')
 
   -- treesitter scrolling
-  import('nvim-treesitter/nvim-treesitter-context', 'nvim-treesitter/nvim-treesitter').then_configure(function()
-    require('treesitter-context').setup()
-  end)
+  -- import('nvim-treesitter/nvim-treesitter-context', 'nvim-treesitter/nvim-treesitter').then_configure(function()
+  --   require('treesitter-context').setup()
+  -- end)
 
   -- Syntax / languages
   import('sheerun/vim-polyglot')
@@ -45,8 +47,11 @@ setup(function(import)
   -- search visually selected text
   import('nelstrom/vim-visual-star-search')
 
+  -- import('windwp/nvim-ts-autotag').then_configure(function()
+  --   require('nvim-ts-autotag').setup({ enable = true })
+  -- end)
   -- indent guidelines
-  import('lukas-reineke/indent-blankline.nvim').then_configure(function()
+  import('lukas-reineke/indent-blankline.nvim', 'tpope/vim-sleuth').then_configure(function()
     vim.opt.list = true
     require('indent_blankline').setup({
       show_current_context = true,
@@ -77,16 +82,12 @@ setup(function(import)
   -- highlight yanked text
   import('machakann/vim-highlightedyank')
 
-  -- auto select the root directory
-  -- import('airblade/vim-rooter').then_configure(function()
-  --   vim.g.rooter_patterns = { '.git', 'Cargo.lock' }
-  -- end)
-
   -- Treesitter ast / highlighting
   import(
     { 'nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' } },
     'nvim-treesitter/playground',
-    'nvim-treesitter/nvim-treesitter-textobjects'
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    'windwp/nvim-ts-autotag'
   ).then_configure(require('plugins.treesitter'))
 
   -- json navigation
@@ -118,6 +119,8 @@ setup(function(import)
   -- lsp ts setup
   import(
     'neovim/nvim-lspconfig',
+    'williamboman/mason.nvim',
+    'williamboman/mason-lspconfig.nvim',
     'nvim-lua/plenary.nvim',
     'hrsh7th/cmp-nvim-lsp',
     'jose-elias-alvarez/nvim-lsp-ts-utils',

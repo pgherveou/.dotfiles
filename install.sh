@@ -23,31 +23,13 @@ STOW_FOLDERS=(
 
 # list of globally installed npm packages
 NPM_PKGS=(
-	"@fsouza/prettierd"
-	"bash-language-server"
-	"eslint_d"
 	"neovim"
-	"prettier"
 	"serve"
-	"ts-node"
-	"typescript"
-	"typescript-language-server"
-	"vscode-langservers-extracted"
 )
-
-# list of globally installed lua packages
-LUA_PKGS=(
-	"luacheck"
-)
-
-for folder in "${STOW_FOLDERS[@]}"; do
-	stow -D "$folder"
-	stow "$folder"
-done
 
 # clone tmux plugin manager
 if [ ! -d ~/.tmux/plugins ]; then
-	mkdir -p ~/.tmux
+	mkdir -p ~/.tmux/plugins
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 
@@ -61,11 +43,13 @@ if [ ! -d ~/qmk_firmware ]; then
 	ln -s ~/qmk_firmware/compile_commands.json "$PWD"
 fi
 
+for folder in "${STOW_FOLDERS[@]}"; do
+	stow -D "$folder"
+	stow "$folder"
+done
+
 # install global npm packages
 npm install -g "${NPM_PKGS[@]}"
-
-# install global lua packages
-luarocks install "${LUA_PKGS[@]}"
 
 # install vimplug
 vimplug="$HOME/.local/share/nvim/site/autoload/plug.vim"
