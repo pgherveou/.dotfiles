@@ -76,7 +76,7 @@ M.setup = function()
   -- mappings
   vim.cmd([[
   :nnoremap <Leader>fb :lua require('telescope.builtin').buffers{}<CR>
-  :nnoremap <Leader>fe :lua require('plugins.telescope').file_browser{}<CR>
+  :nnoremap <Leader>fe :Telescope file_browser hidden=true path=%:p:h respect_gitignore=false<CR>
   :nnoremap <Leader>ff :lua require('plugins.telescope').find_files{}<CR>
   :nnoremap <Leader>fg :lua require('telescope.builtin').live_grep{}<CR>
   :vnoremap <leader>fs "zy:Telescope grep_string search=<C-r>z<CR>

@@ -12,3 +12,10 @@ DEBOUNCE_TYPE = sym_eager_pk
 # https://github.com/qmk/qmk_firmware/issues/5585
 NO_USB_STARTUP_CHECK = yes
 SRC += encoder.c
+
+# # use qmk compile -e NO_SECRETS=yes to force compilation without secrets
+ifneq ($(strip $(NO_SECRETS)), yes)
+    ifneq ("$(wildcard keyboards/splitkb/kyria/keymaps/pgherveou/secrets.c)","")
+    SRC += secrets.c
+    endif
+endif

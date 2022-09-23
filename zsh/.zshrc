@@ -109,6 +109,11 @@ export CLANG_FORMAT=$(which clang-format)
 
 # fzf config
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --exclude .git'
+# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+# export FZF_COMPLETION_TRIGGER=''
+# bindkey '^T' fzf-completion
+# bindkey '^I' $fzf_default_completion
 
 # work config
 [ -f ~/.private/init.zsh ] && source ~/.private/init.zsh

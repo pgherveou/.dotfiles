@@ -20,4 +20,6 @@ enum custom_keycodes {
   // Encoder keys
   ENC_L,
   ENC_R,
+  // secrets
+  KC_SECRET_1,
 };
