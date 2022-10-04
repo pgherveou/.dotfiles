@@ -4,6 +4,7 @@ local u = require('utils')
 local set_common_mappings = function(client, bufnr)
   u.buf_nmap(bufnr, '<Leader>f', ':lua vim.lsp.buf.formatting()<CR>')
   u.buf_nmap(bufnr, 'K', ':ShowDocumentation<CR>')
+  u.buf_nmap(bufnr, 'gs', ':SymbolsOutline<CR>')
 
   u.buf_nmap(bufnr, 'gd', ':LspDef<CR>')
   u.buf_nmap(bufnr, 'gr', ':LspRename<CR>')

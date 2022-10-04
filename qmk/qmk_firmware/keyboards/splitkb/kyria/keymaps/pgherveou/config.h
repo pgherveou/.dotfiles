@@ -35,6 +35,9 @@
 #endif
 
 #ifdef ENCODER_ENABLE
-#define ENCODER_DIRECTION_FLIP
 #define ENCODER_RESOLUTION 2
+#endif
+
+#ifdef KYRIA_V1
+#define ENCODER_DIRECTION_FLIP
 #endif

@@ -93,7 +93,7 @@ nnoremap <M-Right> :vertical resize -1<cr>
 nmap <leader><leader> <c-^>
 
 " Toggle edit between the header and cc file
-map <leader>s :e %:p:s,.h$,.X123X,:s,.cc$,.h,:s,.X123X$,.cc,<CR>
+" map <leader>s :e %:p:s,.h$,.X123X,:s,.cc$,.h,:s,.X123X$,.cc,<CR>
 
 " fix gx to open files
 nnoremap gx :call netrw#BrowseX(expand('<cfile>'), 0)<CR>

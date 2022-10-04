@@ -120,6 +120,7 @@ setup(function(import)
   import(
     'neovim/nvim-lspconfig',
     'williamboman/mason.nvim',
+
     'williamboman/mason-lspconfig.nvim',
     'nvim-lua/plenary.nvim',
     'hrsh7th/cmp-nvim-lsp',
@@ -128,8 +129,12 @@ setup(function(import)
     'ThePrimeagen/refactoring.nvim',
     'RRethy/vim-illuminate',
     'simrat39/rust-tools.nvim',
-    'b0o/schemastore.nvim'
-  ).then_configure(require('plugins.lsp.servers'))
+    'b0o/schemastore.nvim',
+    'simrat39/symbols-outline.nvim'
+  ).then_configure(function()
+    require('symbols-outline').setup()
+    require('plugins.lsp.servers')()
+  end)
 
   -- lsp progress
   import('j-hui/fidget.nvim').then_configure(function()
@@ -148,8 +153,6 @@ setup(function(import)
     'hrsh7th/cmp-cmdline',
     'L3MON4D3/LuaSnip',
     'saadparwaiz1/cmp_luasnip'
-    -- 'hrsh7th/cmp-vsnip',
-    -- 'hrsh7th/vim-vsnip'
   ).then_configure(require('plugins.lsp.cmp'))
 
   -- lsp signatures

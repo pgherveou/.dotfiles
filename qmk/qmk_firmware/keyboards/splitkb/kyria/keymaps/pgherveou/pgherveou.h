@@ -22,4 +22,6 @@ enum custom_keycodes {
   ENC_R,
   // secrets
   KC_SECRET_1,
+  KC_SECRET_2,
+  KC_SECRET_3,
 };

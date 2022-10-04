@@ -1,10 +1,9 @@
 #include QMK_KEYBOARD_H
 #include "pgherveou.h"
-
-#if (__has_include("secrets.h") && !defined(NO_SECRETS))
+#if defined(WITH_SECRETS)
 #include "secrets.h"
 #else
-static const char *const secrets[] = {"test"};
+static const char *const secrets[] = {"one", "two", "three"};
 #endif
 
 #ifndef MACRO_TIMER
@@ -13,7 +12,7 @@ static const char *const secrets[] = {"test"};
 
 bool process_record_secrets(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-  case KC_SECRET_1:
+  case KC_SECRET_1 ... KC_SECRET_3:
     if (record->event.pressed) {
       clear_mods();
       clear_oneshot_mods();

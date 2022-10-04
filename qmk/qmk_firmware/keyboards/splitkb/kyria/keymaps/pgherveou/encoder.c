@@ -5,17 +5,19 @@
 #include "pgherveou.h"
 
 enum enc_mode_t {
-  TAB,
+  SCROLL,
+  CHROME,
   ZOOM,
   SLACK,
-  CHROME,
   VOLUME,
   BRIGHTNESS,
   VIM_QF,
+  TAB,
   AFTER_LAST_MODE
 };
 
 enum enc_mode_t enc_current_mode = 0;
+bool scroll_fast = true;
 
 const char *get_enc_str(void) {
   switch (enc_current_mode) {
@@ -23,6 +25,12 @@ const char *get_enc_str(void) {
     return "TAB";
   case ZOOM:
     return "Zoom";
+  case SCROLL:
+    if (scroll_fast) {
+      return "Scroll page";
+    } else {
+      return "Scroll";
+    }
   case SLACK:
     return "Slack";
   case CHROME:
@@ -99,6 +107,35 @@ void chrome(enc_action_t action) {
   case ENC_CCW:
     tap_code16(LAG(KC_LEFT));
     break;
+  default:
+    break;
+    ;
+  }
+}
+
+void scroll(enc_action_t action) {
+  switch (action & ENC_MSK) {
+  case ENC_CW:
+    if (scroll_fast) {
+      tap_code16(KC_PGDN);
+    } else {
+      tap_code16(KC_DOWN);
+      tap_code16_delay(KC_DOWN, 10);
+      tap_code16_delay(KC_DOWN, 10);
+    }
+    break;
+  case ENC_CCW:
+    if (scroll_fast) {
+      tap_code16(KC_PGUP);
+    } else {
+      tap_code16(KC_UP);
+      tap_code16_delay(KC_UP, 10);
+      tap_code16_delay(KC_UP, 10);
+    }
+
+    break;
+  case ENC_DOWN:
+    scroll_fast = !scroll_fast;
   default:
     break;
     ;
@@ -208,6 +245,9 @@ void exec_mode(enc_action_t action) {
     break;
   case ZOOM:
     zoom(action);
+    break;
+  case SCROLL:
+    scroll(action);
     break;
   case SLACK:
     slack(action);
