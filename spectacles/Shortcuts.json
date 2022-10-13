@@ -1,7 +1,7 @@
 [
   {
     "shortcut_key_binding" : null,
-    "shortcut_name" : "MoveToPreviousThird"
+    "shortcut_name" : "RedoLastMove"
   },
   {
     "shortcut_key_binding" : "ctrl+alt+shift+cmd+'",
@@ -9,22 +9,22 @@
   },
   {
     "shortcut_key_binding" : null,
-    "shortcut_name" : "RedoLastMove"
+    "shortcut_name" : "MoveToUpperLeft"
   },
   {
     "shortcut_key_binding" : null,
     "shortcut_name" : "MoveToUpperRight"
   },
   {
-    "shortcut_key_binding" : "ctrl+alt+shift+cmd+j",
+    "shortcut_key_binding" : "ctrl+alt+shift+j",
     "shortcut_name" : "MoveToBottomHalf"
   },
   {
-    "shortcut_key_binding" : "ctrl+alt+shift+cmd+n",
+    "shortcut_key_binding" : "ctrl+alt+shift+n",
     "shortcut_name" : "MoveToNextDisplay"
   },
   {
-    "shortcut_key_binding" : "ctrl+alt+shift+cmd+k",
+    "shortcut_key_binding" : "ctrl+alt+shift+k",
     "shortcut_name" : "MoveToTopHalf"
   },
   {
@@ -36,7 +36,7 @@
     "shortcut_name" : "MakeLarger"
   },
   {
-    "shortcut_key_binding" : "ctrl+alt+shift+cmd+p",
+    "shortcut_key_binding" : "ctrl+alt+shift+p",
     "shortcut_name" : "MoveToPreviousDisplay"
   },
   {
@@ -44,7 +44,7 @@
     "shortcut_name" : "UndoLastMove"
   },
   {
-    "shortcut_key_binding" : "ctrl+alt+shift+cmd+f",
+    "shortcut_key_binding" : "ctrl+alt+shift+f",
     "shortcut_name" : "MoveToFullscreen"
   },
   {
@@ -52,23 +52,23 @@
     "shortcut_name" : "MoveToNextThird"
   },
   {
-    "shortcut_key_binding" : "ctrl+alt+shift+cmd+h",
+    "shortcut_key_binding" : "ctrl+alt+shift+h",
     "shortcut_name" : "MoveToLeftHalf"
   },
   {
-    "shortcut_key_binding" : "ctrl+alt+shift+cmd+z",
+    "shortcut_key_binding" : "ctrl+alt+shift+z",
     "shortcut_name" : "MoveToCenter"
   },
   {
-    "shortcut_key_binding" : "ctrl+alt+shift+cmd+l",
+    "shortcut_key_binding" : "ctrl+alt+shift+l",
     "shortcut_name" : "MoveToRightHalf"
   },
   {
     "shortcut_key_binding" : null,
-    "shortcut_name" : "MoveToLowerRight"
+    "shortcut_name" : "MoveToPreviousThird"
   },
   {
     "shortcut_key_binding" : null,
-    "shortcut_name" : "MoveToUpperLeft"
+    "shortcut_name" : "MoveToLowerRight"
   }
 ]

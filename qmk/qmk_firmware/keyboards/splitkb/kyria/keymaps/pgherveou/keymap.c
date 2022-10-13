@@ -319,15 +319,24 @@ void keyboard_post_init_user(void) {
 #endif
 
 #ifdef COMBO_ENABLE
+const uint16_t PROGMEM COMBO_AS_KEYS[] = {KC_A, KC_S, COMBO_END};
 const uint16_t PROGMEM COMBO_JK_KEYS[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM COMBO_ER_KEYS[] = {KC_E, KC_R, COMBO_END};
 const uint16_t PROGMEM COMBO_DF_KEYS[] = {KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM COMBO_CV_KEYS[] = {KC_C, KC_V, COMBO_END};
 
-enum combo_events { COMBO_JK, COMBO_ER, COMBO_DF, COMBO_CV, COMBO_LENGTH };
+enum combo_events {
+  COMBO_AS,
+  COMBO_JK,
+  COMBO_ER,
+  COMBO_DF,
+  COMBO_CV,
+  COMBO_LENGTH
+};
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 combo_t key_combos[] = {
+    [COMBO_AS] = COMBO_ACTION(COMBO_AS_KEYS),
     [COMBO_JK] = COMBO_ACTION(COMBO_JK_KEYS),
     [COMBO_ER] = COMBO_ACTION(COMBO_ER_KEYS),
     [COMBO_DF] = COMBO_ACTION(COMBO_DF_KEYS),
@@ -336,6 +345,12 @@ combo_t key_combos[] = {
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
   switch (combo_index) {
+  // as -> GUI+SHIFT+A
+  case COMBO_AS:
+    if (pressed) {
+      tap_code16(S(G(KC_A)));
+    }
+    break;
   // jk -> escape
   case COMBO_JK:
     if (pressed) {

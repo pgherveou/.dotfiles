@@ -2,23 +2,23 @@ local u = require('utils')
 
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 local set_common_mappings = function(client, bufnr)
-  u.buf_nmap(bufnr, '<Leader>f', ':lua vim.lsp.buf.formatting()<CR>')
   u.buf_nmap(bufnr, 'K', ':ShowDocumentation<CR>')
   u.buf_nmap(bufnr, 'gs', ':SymbolsOutline<CR>')
 
   u.buf_nmap(bufnr, 'gd', ':LspDef<CR>')
+  u.buf_nmap(bufnr, 'gf', ':LspRefs<CR>')
   u.buf_nmap(bufnr, 'gr', ':LspRename<CR>')
   u.buf_nmap(bufnr, 'gy', ':LspTypeDef<CR>')
   u.buf_nmap(bufnr, 'K', ':LspHover<CR>')
   u.buf_nmap(bufnr, '[a', '":LspDiagPrev<CR>')
   u.buf_nmap(bufnr, ']a', ':LspDiagNext<CR>')
   u.buf_nmap(bufnr, 'ga', ':lua vim.lsp.buf.code_action()<CR>')
-  u.buf_nmap(bufnr, 'go', ':Telescope lsp_references<CR>')
   u.buf_nmap(bufnr, 'gl', ':LspDiagLine<CR>')
+  u.buf_nmap(bufnr, 'go', ':Telescope lsp_references<CR>')
   u.buf_imap(bufnr, '<C-x><C-x>', '<cmd> LspSignatureHelp<CR>')
 
   u.lua_command('LspDef', 'vim.lsp.buf.definition()')
-  u.lua_command('LspFormatting', 'vim.lsp.buf.formatting()')
+  u.lua_command('LspFormatting', 'vim.lsp.buf.format()')
   u.lua_command('LspCodeAction', 'vim.lsp.buf.code_action()')
   u.lua_command('LspHover', 'vim.lsp.buf.hover()')
   u.lua_command('LspRename', 'vim.lsp.buf.rename()')
@@ -31,11 +31,11 @@ local set_common_mappings = function(client, bufnr)
   u.lua_command('LspSignatureHelp', 'vim.lsp.buf.signature_help()')
   u.lua_command('LspDiagQuickfix', 'vim.diagnostic.setqflist()')
 
-  if client.resolved_capabilities.document_formatting then
+  if client.server_capabilities.documentFormattingProvider then
     vim.cmd([[
       augroup lsp_buf_format
         au! BufWritePre <buffer>
-        autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()
+        autocmd BufWritePre <buffer> :lua vim.lsp.buf.format()
       augroup END
     ]])
   end
@@ -51,8 +51,8 @@ local setup_servers = function()
 
   -- most languages use a custom formatter to format the code
   local disable_formatting = function(client)
-    client.resolved_capabilities.document_formatting = false
-    client.resolved_capabilities.document_range_formatting = false
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
   end
 
   local on_attach = function(client, bufnr)
@@ -115,6 +115,7 @@ local setup_servers = function()
     end,
   }))
 
+  lspconfig.pyright.setup(default_config)
   lspconfig.clangd.setup(default_config)
   lspconfig.tailwindcss.setup(default_config)
   lspconfig.tsserver.setup({
@@ -129,7 +130,6 @@ local setup_servers = function()
       })
       ts_utils.setup_client(client)
 
-      u.buf_nmap(bufnr, 'gs', ':TSLspOrganize<CR>')
       u.buf_nmap(bufnr, 'gI', ':TSLspImportAll<CR>')
       u.buf_nmap(bufnr, 'gR', ':TSLspRenameFile<CR>')
     end,

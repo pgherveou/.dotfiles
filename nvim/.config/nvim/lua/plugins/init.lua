@@ -2,6 +2,9 @@ local setup = require('plugins.setup')
 require('plugins.globals')
 
 setup(function(import)
+  import('lewis6991/impatient.nvim').then_configure(function()
+    require('impatient')
+  end)
   -- Surround text.
   -- import('tpope/vim-surround')
   import('machakann/vim-sandwich')
@@ -130,7 +133,8 @@ setup(function(import)
     'RRethy/vim-illuminate',
     'simrat39/rust-tools.nvim',
     'b0o/schemastore.nvim',
-    'simrat39/symbols-outline.nvim'
+    'simrat39/symbols-outline.nvim',
+    'mfussenegger/nvim-jdtls'
   ).then_configure(function()
     require('symbols-outline').setup()
     require('plugins.lsp.servers')()

@@ -120,3 +120,8 @@ export CLANG_FORMAT=$(which clang-format)
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+PATH=$PATH:/Users/pgherveou/.spcli/bin
+
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
