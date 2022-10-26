@@ -14,6 +14,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "action_code.h"
+#include "action_util.h"
 #include "keycode.h"
 #include <string.h>
 #pragma GCC diagnostic ignored "-Wattributes"
@@ -161,6 +163,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return false;
   }
 
+  uint8_t mod_state = get_mods();
+  uint8_t alt_mask = MOD_BIT(KC_LEFT_ALT);
+  if (((mod_state & alt_mask) == alt_mask) && record->event.pressed) {
+    if (keycode == KC_H) {
+      unregister_code16(KC_LEFT_ALT);
+      tap_code16(KC_ESC);
+      tap_code16(KC_B);
+      register_code16(KC_LEFT_ALT);
+      return false;
+    } else if (keycode == KC_L) {
+      unregister_code16(KC_LEFT_ALT);
+      tap_code16(KC_ESC);
+      tap_code16(KC_F);
+      register_code16(KC_LEFT_ALT);
+      return false;
+    }
+  }
+
   switch (keycode) {
   case SPC_NAV:
   case HYP_A:
@@ -188,7 +208,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     break;
   case NAV_O:
     if (record->event.pressed) {
-      uint8_t mod_state = get_mods();
       unregister_mods(MOD_MASK_SHIFT);
       mod_state &MOD_MASK_SHIFT
           ? SEND_STRING(SS_TAP(X_HOME) SS_TAP(X_ENTER) SS_TAP(X_UP))

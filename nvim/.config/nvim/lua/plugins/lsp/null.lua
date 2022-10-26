@@ -35,7 +35,9 @@ local sources = {
     },
   }),
   builtins.formatting.gofmt,
-  builtins.formatting.clang_format,
+  builtins.formatting.clang_format.with({
+    disabled_filetypes = { 'java' },
+  }),
   builtins.formatting.prettierd.with({
     condition = function(utils)
       return utils.root_has_file({ '.prettierrc', '.prettierrc.js' })
@@ -62,6 +64,7 @@ local sources = {
   }),
   builtins.diagnostics.flake8,
   -- builtins.diagnostics.pylint,
+  builtins.formatting.autopep8,
   builtins.diagnostics.mypy,
   builtins.formatting.sql_formatter,
   builtins.code_actions.eslint_d.with(eslintConfig),

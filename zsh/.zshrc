@@ -73,7 +73,7 @@ gh-pr-view(){
   gh pr view --web
 } 
 
-gh-pr-checkout(){
+gh-pr-co(){
   SELECTED_PR=$(gh pr list | fzf)
   PR=$(echo $SELECTED_PR | awk '{print $1;}')
   gh pr checkout $PR
@@ -109,11 +109,12 @@ export CLANG_FORMAT=$(which clang-format)
 
 # fzf config
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-# export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --exclude .git'
-# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-# export FZF_COMPLETION_TRIGGER=''
-# bindkey '^T' fzf-completion
-# bindkey '^I' $fzf_default_completion
+# https://medium.com/@_ahmed_ab/crazy-super-fast-fuzzy-search-9d44c29e14f
+# export FZF_DEFAULT_OPTS='--height=70% --preview="less {}" --bind shift-up:preview-page-up --preview-window=right:60%:wrap' 
+# export FZF_DEFAULT_OPTS='--height=70% --preview="bat --color=always --style=numbers {}" --preview-window=right:60%:wrap' # --bind control-d:preview-page-down control-u:preview-page-up' 
+export FZF_DEFAULT_OPTS="--preview='bat --color=always --style=numbers {}' --bind ctrl-u:preview-page-up,ctrl-d:preview-page-down"
+export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --exclude .git'
+export FZF_CTRL_T_COMMAND='rg --no-messages --files'
 
 # work config
 [ -f ~/.private/init.zsh ] && source ~/.private/init.zsh
@@ -125,3 +126,19 @@ PATH=$PATH:/Users/pgherveou/.spcli/bin
 
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
+        . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

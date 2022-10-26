@@ -46,7 +46,7 @@ local setup_servers = function()
   local lspconfig = require('lspconfig')
   local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-  capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+  capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
   capabilities.offsetEncoding = { 'utf-16' }
 
   -- most languages use a custom formatter to format the code
@@ -115,6 +115,7 @@ local setup_servers = function()
     end,
   }))
 
+  lspconfig.jsonnet_ls.setup(default_config)
   lspconfig.pyright.setup(default_config)
   lspconfig.clangd.setup(default_config)
   lspconfig.tailwindcss.setup(default_config)

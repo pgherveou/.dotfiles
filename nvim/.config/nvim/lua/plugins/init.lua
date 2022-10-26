@@ -136,7 +136,6 @@ setup(function(import)
     'simrat39/symbols-outline.nvim',
     'mfussenegger/nvim-jdtls'
   ).then_configure(function()
-    require('symbols-outline').setup()
     require('plugins.lsp.servers')()
   end)
 
