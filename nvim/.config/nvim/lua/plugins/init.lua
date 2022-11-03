@@ -2,9 +2,11 @@ local setup = require('plugins.setup')
 require('plugins.globals')
 
 setup(function(import)
+  -- faster bootrsrap
   import('lewis6991/impatient.nvim').then_configure(function()
     require('impatient')
   end)
+
   -- Surround text.
   -- import('tpope/vim-surround')
   import('machakann/vim-sandwich')
@@ -47,6 +49,14 @@ setup(function(import)
     vim.g.go_term_mode = 'split'
     vim.g.go_test_timeout = '5s'
   end)
+
+  import('narutoxy/silicon.lua', 'nvim-lua/plenary.nvim').then_configure(function()
+    require('silicon').setup({})
+    vim.api.nvim_set_keymap('v', '<leader>s', ':lua require("silicon").visualise_api({ to_clip = true })<cr>', {
+      noremap = true,
+    })
+  end)
+
   -- search visually selected text
   import('nelstrom/vim-visual-star-search')
 
@@ -180,5 +190,15 @@ setup(function(import)
   -- debugger
   import('mfussenegger/nvim-dap', 'rcarriga/nvim-dap-ui', 'simrat39/rust-tools.nvim').then_configure(function()
     require('dapui').setup()
+  end)
+
+  -- use obsidian from nvim
+  import('epwalsh/obsidian.nvim').then_configure(function()
+    require('obsidian').setup({
+      dir = '~/Documents/notes',
+      completion = {
+        nvim_cmp = true, -- if using nvim-cmp, otherwise set to false
+      },
+    })
   end)
 end)

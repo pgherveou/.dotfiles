@@ -1,0 +1,23 @@
+[user]
+	name = PG herveou
+	email = pgherveou@lyft.com
+[rerere]
+	enabled = true
+[pull]
+	rebase = true
+[advice]
+	skippedCherryPicks = false
+[branch "main"]
+	pushRemote = NOPE
+[pile]
+	cleanupRemoteOnSubmitFailure = true
+[mergetool "fugitive"]
+	cmd = nvim -f -c \"Gvdiffsplit!\" \"$MERGED\"
+[merge]
+	tool = fugitive
+[alias]
+	hd = rev-parse --verify HEAD
+[init]
+	defaultBranch = main
+[core]
+	excludesFile = ~/.gitignore

@@ -12,6 +12,7 @@ fi
 # create deeplinks to the home folder
 STOW_FOLDERS=(
 	"alacritty"
+	"git"
 	"ideavim"
 	"nvim"
 	"codespell"
