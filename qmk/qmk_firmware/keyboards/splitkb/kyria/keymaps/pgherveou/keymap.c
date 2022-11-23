@@ -164,8 +164,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
 
   uint8_t mod_state = get_mods();
-  uint8_t alt_mask = MOD_BIT(KC_LEFT_ALT);
-  if (((mod_state & alt_mask) == alt_mask) && record->event.pressed) {
+  if ((MOD_BIT(KC_LEFT_ALT) == mod_state) && record->event.pressed) {
     if (keycode == KC_H) {
       unregister_code16(KC_LEFT_ALT);
       tap_code16(KC_ESC);

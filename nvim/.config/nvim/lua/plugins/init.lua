@@ -129,6 +129,11 @@ setup(function(import)
   -- harpoon navigation
   import('nvim-lua/plenary.nvim', 'ThePrimeagen/harpoon').then_configure(require('plugins.harpoon').setup)
 
+  -- snippets
+  import('L3MON4D3/LuaSnip').then_configure(function()
+    require('plugins.luasnip')
+  end)
+
   -- lsp ts setup
   import(
     'neovim/nvim-lspconfig',
@@ -146,6 +151,7 @@ setup(function(import)
     'simrat39/symbols-outline.nvim',
     'mfussenegger/nvim-jdtls'
   ).then_configure(function()
+    require('symbols-outline').setup()
     require('plugins.lsp.servers')()
   end)
 

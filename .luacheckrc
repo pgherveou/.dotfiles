@@ -1,2 +1,2 @@
 max_line_length = false
-globals = { 'vim' }
+globals = { 'vim', 'P', 'RELOAD', 'R' }

@@ -1,35 +1,55 @@
 local u = require('utils')
 
+-- lsp commands
+u.lua_command('LspDef', 'vim.lsp.buf.definition()')
+u.lua_command('LspFormatting', 'vim.lsp.buf.format()')
+u.lua_command('LspCodeAction', 'vim.lsp.buf.code_action()')
+u.lua_command('LspHover', 'vim.lsp.buf.hover()')
+u.lua_command('LspRename', 'vim.lsp.buf.rename()')
+u.lua_command('LspRefs', 'vim.lsp.buf.references()')
+u.lua_command('LspTypeDef', 'vim.lsp.buf.type_definition()')
+u.lua_command('LspImplementation', 'vim.lsp.buf.implementation()')
+u.lua_command('LspDiagPrev', 'vim.diagnostic.goto_prev()')
+u.lua_command('LspDiagNext', 'vim.diagnostic.goto_next()')
+u.lua_command('LspDiagLine', 'vim.diagnostic.open_float()')
+u.lua_command('LspSignatureHelp', 'vim.lsp.buf.signature_help()')
+u.lua_command('LspDiagQuickfix', 'vim.diagnostic.setqflist()')
+
+-- open / close dap ui, automatically when debugging
+-- see https://github.com/rcarriga/nvim-dap-ui#usage
+-- todo look for more keymaps from tj config here: https://github.com/tjdevries/config_manager/blob/master/xdg_config/nvim/after/plugin/dap.lua
+local dap, dapui = require('dap'), require('dapui')
+dap.listeners.after.event_initialized['dapui_config'] = function()
+  dapui.open()
+end
+dap.listeners.before.event_terminated['dapui_config'] = function()
+  dapui.close()
+end
+dap.listeners.before.event_exited['dapui_config'] = function()
+  dapui.close()
+end
+
+-- default lsp mappings
+local nmap_default_mappings = {
+  ['gs'] = ':SymbolsOutline<CR>',
+  ['gd'] = ':LspDef<CR>',
+  ['gf'] = ':LspRefs<CR>',
+  ['gr'] = ':LspRename<CR>',
+  ['gy'] = ':LspTypeDef<CR>',
+  ['K'] = ':LspHover<CR>',
+  ['H'] = ':LspSignatureHelp<CR>',
+  ['[a'] = ':LspDiagPrev<CR>',
+  [']a'] = ':LspDiagNext<CR>',
+  ['ga'] = ':lua vim.lsp.buf.code_action()<CR>',
+  ['gl'] = ':LspDiagLine<CR>',
+  ['go'] = ':Telescope lsp_references<CR>',
+}
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-local set_common_mappings = function(client, bufnr)
-  u.buf_nmap(bufnr, 'K', ':ShowDocumentation<CR>')
-  u.buf_nmap(bufnr, 'gs', ':SymbolsOutline<CR>')
-
-  u.buf_nmap(bufnr, 'gd', ':LspDef<CR>')
-  u.buf_nmap(bufnr, 'gf', ':LspRefs<CR>')
-  u.buf_nmap(bufnr, 'gr', ':LspRename<CR>')
-  u.buf_nmap(bufnr, 'gy', ':LspTypeDef<CR>')
-  u.buf_nmap(bufnr, 'K', ':LspHover<CR>')
-  u.buf_nmap(bufnr, '[a', '":LspDiagPrev<CR>')
-  u.buf_nmap(bufnr, ']a', ':LspDiagNext<CR>')
-  u.buf_nmap(bufnr, 'ga', ':lua vim.lsp.buf.code_action()<CR>')
-  u.buf_nmap(bufnr, 'gl', ':LspDiagLine<CR>')
-  u.buf_nmap(bufnr, 'go', ':Telescope lsp_references<CR>')
-  u.buf_imap(bufnr, '<C-x><C-x>', '<cmd> LspSignatureHelp<CR>')
-
-  u.lua_command('LspDef', 'vim.lsp.buf.definition()')
-  u.lua_command('LspFormatting', 'vim.lsp.buf.format()')
-  u.lua_command('LspCodeAction', 'vim.lsp.buf.code_action()')
-  u.lua_command('LspHover', 'vim.lsp.buf.hover()')
-  u.lua_command('LspRename', 'vim.lsp.buf.rename()')
-  u.lua_command('LspRefs', 'vim.lsp.buf.references()')
-  u.lua_command('LspTypeDef', 'vim.lsp.buf.type_definition()')
-  u.lua_command('LspImplementation', 'vim.lsp.buf.implementation()')
-  u.lua_command('LspDiagPrev', 'vim.diagnostic.goto_prev()')
-  u.lua_command('LspDiagNext', 'vim.diagnostic.goto_next()')
-  u.lua_command('LspDiagLine', 'vim.diagnostic.open_float()')
-  u.lua_command('LspSignatureHelp', 'vim.lsp.buf.signature_help()')
-  u.lua_command('LspDiagQuickfix', 'vim.diagnostic.setqflist()')
+local set_mappings = function(client, bufnr, nmap_mappings)
+  local mappings = vim.tbl_extend('force', nmap_default_mappings, nmap_mappings or {})
+  for key, command in pairs(mappings) do
+    u.buf_nmap(bufnr, key, command)
+  end
 
   if client.server_capabilities.documentFormattingProvider then
     vim.cmd([[
@@ -57,7 +77,7 @@ local setup_servers = function()
 
   local on_attach = function(client, bufnr)
     disable_formatting(client)
-    set_common_mappings(client, bufnr)
+    set_mappings(client, bufnr)
   end
 
   local default_flags = { debounce_text_changes = 100 }
@@ -68,12 +88,22 @@ local setup_servers = function()
   }
 
   -- setup rust via rust-tools
-  local extension_path = vim.env.HOME .. '/.vscode/extensions/vadimcn.vscode-lldb-1.7.0/'
+  local extension_path = vim.env.HOME .. '/.vscode/extensions/vadimcn.vscode-lldb-1.8.1/'
   local codelldb_path = extension_path .. 'adapter/codelldb'
   local liblldb_path = extension_path .. 'lldb/lib/liblldb.dylib'
   require('rust-tools').setup({
     dap = {
       adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path),
+    },
+    tools = {
+      runnables = {
+        use_telescope = true,
+      },
+      inlay_hints = {
+        show_parameter_hints = false,
+        parameter_hints_prefix = '',
+        other_hints_prefix = '',
+      },
     },
     server = {
       settings = {
@@ -89,8 +119,11 @@ local setup_servers = function()
       flags = default_flags,
       capabilities = capabilities,
       on_attach = function(client, bufnr)
-        on_attach(client, bufnr)
-        u.buf_nmap(bufnr, '<leader>t', ':RustTest<CR>')
+        disable_formatting(client)
+        set_mappings(client, bufnr, {
+          ['K'] = ':lua require("rust-tools").hover_actions.hover_actions()<CR>',
+          ['<leader>t'] = ':RustTest<CR>',
+        })
       end,
     },
   })
@@ -143,5 +176,5 @@ return function()
   require('mason').setup()
   require('mason-lspconfig').setup({ automatic_installation = true })
   setup_servers()
-  require('plugins.lsp.null').setup(set_common_mappings)
+  require('plugins.lsp.null').setup(set_mappings)
 end
