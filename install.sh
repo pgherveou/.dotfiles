@@ -3,11 +3,12 @@ set -euo pipefail
 
 pushd "$HOME/.dotfiles"
 
+# TODO(pg) mac only
 # install brew and the brewfile
-if ! command -v brew &>/dev/null; then
-	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-	brew bundle install --file=Brewfile
-fi
+# if ! command -v brew &>/dev/null; then
+# 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# 	brew bundle install --file=Brewfile
+# fi
 
 # create deeplinks to the home folder
 STOW_FOLDERS=(
@@ -51,7 +52,7 @@ for folder in "${STOW_FOLDERS[@]}"; do
 done
 
 # install global npm packages
-npm install -g "${NPM_PKGS[@]}"
+sudo npm install -g "${NPM_PKGS[@]}"
 
 # install vimplug
 vimplug="$HOME/.local/share/nvim/site/autoload/plug.vim"
@@ -59,7 +60,8 @@ if [ ! -f vimplug ]; then
 	curl -fLo "$vimplug" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
+# TODO(pg) mac only
 # setup spectacle
-cp -r spectacles/Shortcuts.json "$HOME/Library/Application Support/Spectacle/Shortcuts.json" 2>/dev/null
+# cp -r spectacles/Shortcuts.json "$HOME/Library/Application Support/Spectacle/Shortcuts.json" 2>/dev/null
 
 popd
