@@ -47,6 +47,8 @@ local nmap_default_mappings = {
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 local set_mappings = function(client, bufnr, nmap_mappings)
   local mappings = vim.tbl_extend('force', nmap_default_mappings, nmap_mappings or {})
+  P(client.name)
+  P(mappings)
   for key, command in pairs(mappings) do
     u.buf_nmap(bufnr, key, command)
   end
@@ -176,5 +178,5 @@ return function()
   require('mason').setup()
   require('mason-lspconfig').setup({ automatic_installation = true })
   setup_servers()
-  require('plugins.lsp.null').setup(set_mappings)
+  require('plugins.lsp.null').setup()
 end
