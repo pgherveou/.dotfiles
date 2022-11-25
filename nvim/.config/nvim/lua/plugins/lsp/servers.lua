@@ -17,18 +17,18 @@ u.lua_command('LspDiagQuickfix', 'vim.diagnostic.setqflist()')
 
 -- default lsp mappings
 local default_lsp_mappings = {
-  ['gs'] = { cmd = ':SymbolsOutline<CR>', desc = 'Display Symbols outline' },
-  ['gd'] = { cmd = ':LspDef<CR>', desc = 'Go to definition' },
-  ['gf'] = { cmd = ':LspRefs<CR>', desc = 'Go to references' },
-  ['gr'] = { cmd = ':LspRename<CR>', desc = 'Rename symbol' },
-  ['gy'] = { cmd = ':LspTypeDef<CR>', desc = 'Go to type definition' },
-  ['K'] = { cmd = ':LspHover<CR>', desc = 'Display hover informations' },
-  ['H'] = { cmd = ':LspSignatureHelp<CR>', desc = 'Display signature' },
-  ['[a'] = { cmd = ':LspDiagPrev<CR>', desc = 'Go to previous diagnostic' },
-  [']a'] = { cmd = ':LspDiagNext<CR>', desc = 'Go to next diagnostic' },
-  ['ga'] = { cmd = ':lua vim.lsp.buf.code_action()<CR>', desc = 'Display code actions' },
-  ['gl'] = { cmd = ':LspDiagLine<CR>', desc = 'Display diagnostic line' },
-  ['go'] = { cmd = ':Telescope lsp_references<CR>', desc = 'Display lsp references' },
+  ['gs'] = ':SymbolsOutline<CR>',
+  ['gd'] = ':LspDef<CR>',
+  ['gf'] = ':LspRefs<CR>',
+  ['gr'] = ':LspRename<CR>',
+  ['gy'] = ':LspTypeDef<CR>',
+  ['K'] = ':LspHover<CR>',
+  ['H'] = ':LspSignatureHelp<CR>',
+  ['[a'] = ':LspDiagPrev<CR>',
+  [']a'] = ':LspDiagNext<CR>',
+  ['ga'] = ':lua vim.lsp.buf.code_action()<CR>',
+  ['gl'] = ':LspDiagLine<CR>',
+  ['go'] = ':Telescope lsp_references<CR>',
 }
 
 local format_on_save = function(client)
@@ -45,8 +45,10 @@ end
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 local set_mappings = function(client, bufnr, nmap_mappings)
   local mappings = vim.tbl_extend('force', default_lsp_mappings, nmap_mappings or {})
-  for key, item in pairs(mappings) do
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', key, item.cmd, { desc = item.desc, noremap = true, silent = true })
+  P(client.name)
+  P(mappings)
+  for key, command in pairs(mappings) do
+    u.buf_nmap(bufnr, key, command)
   end
 
   format_on_save(client)
@@ -81,9 +83,9 @@ local setup_servers = function()
   -- setup rust via rust-tools
   local mason_registry = require('mason-registry')
   local codelldb = mason_registry.get_package('codelldb')
-  local extension_path = codelldb:get_install_path() .. '/extension'
+  local extension_path = codelldb:get_install_path() .. '/extension/'
   local codelldb_path = extension_path .. 'adapter/codelldb'
-  local liblldb_path = extension_path .. 'lldb/lib/liblldb.dylib'
+  local liblldb_path = extension_path .. 'lldb/lib/liblldb.so'
 
   require('rust-tools').setup({
     dap = {
@@ -115,11 +117,8 @@ local setup_servers = function()
       on_attach = function(client, bufnr)
         -- disable_formatting(client)
         set_mappings(client, bufnr, {
-          ['K'] = {
-            cmd = ':lua require("rust-tools").hover_actions.hover_actions()<CR>',
-            desc = 'Display hover actions',
-          },
-          ['<leader>t'] = { cmd = ':RustTest<CR>', desc = 'Run tests' },
+          ['K'] = ':lua require("rust-tools").hover_actions.hover_actions()<CR>',
+          ['<leader>t'] = ':RustTest<CR>',
         })
       end,
     },
