@@ -121,7 +121,7 @@ local setup_servers = function()
       flags = default_flags,
       capabilities = capabilities,
       on_attach = function(client, bufnr)
-        disable_formatting(client)
+        -- disable_formatting(client)
         set_mappings(client, bufnr, {
           ['K'] = ':lua require("rust-tools").hover_actions.hover_actions()<CR>',
           ['<leader>t'] = ':RustTest<CR>',
