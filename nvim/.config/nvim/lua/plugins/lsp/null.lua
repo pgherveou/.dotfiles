@@ -78,10 +78,11 @@ local sources = {
 
 local M = {}
 
-M.setup = function()
+M.setup = function(on_attach)
   null_ls.setup({
     -- debug = true,
     sources = sources,
+    on_attach = on_attach,
     should_attach = function(bufnr)
       return vim.api.nvim_buf_line_count(bufnr) < 10000
     end,

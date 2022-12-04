@@ -15,22 +15,8 @@ u.lua_command('LspDiagLine', 'vim.diagnostic.open_float()')
 u.lua_command('LspSignatureHelp', 'vim.lsp.buf.signature_help()')
 u.lua_command('LspDiagQuickfix', 'vim.diagnostic.setqflist()')
 
--- open / close dap ui, automatically when debugging
--- see https://github.com/rcarriga/nvim-dap-ui#usage
--- todo look for more keymaps from tj config here: https://github.com/tjdevries/config_manager/blob/master/xdg_config/nvim/after/plugin/dap.lua
-local dap, dapui = require('dap'), require('dapui')
-dap.listeners.after.event_initialized['dapui_config'] = function()
-  dapui.open()
-end
-dap.listeners.before.event_terminated['dapui_config'] = function()
-  dapui.close()
-end
-dap.listeners.before.event_exited['dapui_config'] = function()
-  dapui.close()
-end
-
 -- default lsp mappings
-local nmap_default_mappings = {
+local default_lsp_mappings = {
   ['gs'] = ':SymbolsOutline<CR>',
   ['gd'] = ':LspDef<CR>',
   ['gf'] = ':LspRefs<CR>',
@@ -44,15 +30,8 @@ local nmap_default_mappings = {
   ['gl'] = ':LspDiagLine<CR>',
   ['go'] = ':Telescope lsp_references<CR>',
 }
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-local set_mappings = function(client, bufnr, nmap_mappings)
-  local mappings = vim.tbl_extend('force', nmap_default_mappings, nmap_mappings or {})
-  P(client.name)
-  P(mappings)
-  for key, command in pairs(mappings) do
-    u.buf_nmap(bufnr, key, command)
-  end
 
+local format_on_save = function(client)
   if client.server_capabilities.documentFormattingProvider then
     vim.cmd([[
       augroup lsp_buf_format
@@ -61,6 +40,18 @@ local set_mappings = function(client, bufnr, nmap_mappings)
       augroup END
     ]])
   end
+end
+
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+local set_mappings = function(client, bufnr, nmap_mappings)
+  local mappings = vim.tbl_extend('force', default_lsp_mappings, nmap_mappings or {})
+  P(client.name)
+  P(mappings)
+  for key, command in pairs(mappings) do
+    u.buf_nmap(bufnr, key, command)
+  end
+
+  format_on_save(client)
   require('illuminate').on_attach(client)
 end
 
@@ -178,5 +169,5 @@ return function()
   require('mason').setup()
   require('mason-lspconfig').setup({ automatic_installation = true })
   setup_servers()
-  require('plugins.lsp.null').setup()
+  require('plugins.lsp.null').setup(format_on_save)
 end

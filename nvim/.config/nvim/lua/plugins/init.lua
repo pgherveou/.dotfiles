@@ -60,11 +60,8 @@ setup(function(import)
   -- search visually selected text
   import('nelstrom/vim-visual-star-search')
 
-  -- import('windwp/nvim-ts-autotag').then_configure(function()
-  --   require('nvim-ts-autotag').setup({ enable = true })
-  -- end)
-  -- indent guidelines
-  import('lukas-reineke/indent-blankline.nvim', 'tpope/vim-sleuth').then_configure(function()
+  -- TODO disable for large file
+  import('lukas-reineke/indent-blankline.nvim', 'tpohttps://github.com/lukas-reineke/indent-blankline.nvim/issues/440#issuecomment-1310520274pe/vim-sleuth').then_configure(function()
     vim.opt.list = true
     require('indent_blankline').setup({
       show_current_context = true,
@@ -194,9 +191,7 @@ setup(function(import)
   end)
 
   -- debugger
-  import('mfussenegger/nvim-dap', 'rcarriga/nvim-dap-ui', 'simrat39/rust-tools.nvim').then_configure(function()
-    require('dapui').setup()
-  end)
+  import('mfussenegger/nvim-dap', 'rcarriga/nvim-dap-ui', 'simrat39/rust-tools.nvim').then_configure(require('plugins.dap'))
 
   -- use obsidian from nvim
   import('epwalsh/obsidian.nvim').then_configure(function()
