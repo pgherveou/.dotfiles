@@ -13,6 +13,7 @@ vnoremap p "_dP
 " better vertical movement for wrapped lines
 nnoremap j gj
 nnoremap k gk
+nnoremap G Gzz
 
 "act like other capitalized actions
 nnoremap Y yg$

@@ -40,7 +40,7 @@ local sources = {
   }),
   builtins.formatting.prettierd.with({
     condition = function(utils)
-      return utils.root_has_file({ '.prettierrc', '.prettierrc.js' })
+      return utils.root_has_file({ '.prettierrc', '.prettierrc.js', '.prettierrc.json' })
     end,
   }),
   builtins.formatting.stylua.with({

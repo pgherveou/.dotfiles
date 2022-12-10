@@ -94,6 +94,7 @@ colors: *tokyo-night-storm
 
 key_bindings:
   - { key: Escape, mods: Command, action: ToggleFullscreen }
+  - { key: Space, mods: Control, chars: "\x00" }
   - { key: V, mods: Command, action: Paste }
   - { key: C, mods: Command, action: Copy }
   - { key: K, mods: Command, chars: "\x02k" } # clear terminal 

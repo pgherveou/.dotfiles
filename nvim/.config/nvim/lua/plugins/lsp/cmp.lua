@@ -2,6 +2,12 @@ return function()
   local cmp = require('cmp')
   local compare = require('cmp.config.compare')
   local types = require('cmp.types')
+  local luasnip = require('luasnip')
+
+  local function has_words_before()
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
+  end
 
   local get_bufnrs = function()
     local buf = vim.api.nvim_get_current_buf()
@@ -36,23 +42,68 @@ return function()
     end
   end
 
+  -- hide copilot suggestions  when cmp menu is opened
+
+  cmp.event:on('menu_opened', function()
+    vim.b.copilot_suggestion_hidden = true
+  end)
+
+  cmp.event:on('menu_closed', function()
+    vim.b.copilot_suggestion_hidden = false
+  end)
+
   cmp.setup({
     snippet = {
       expand = function(args)
-        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        luasnip.lsp_expand(args.body) -- For `luasnip` users.
       end,
     },
     mapping = cmp.mapping.preset.insert({
+      ['<CR>'] = cmp.mapping.confirm({
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      }),
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
       ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+      ['<Tab>'] = cmp.mapping(function(fallback)
+        if require('copilot.suggestion').is_visible() then
+          require('copilot.suggestion').accept()
+          cmp.select_next_item()
+        elseif cmp.visible() then
+          cmp.select_next_item()
+        elseif luasnip.expandable() then
+          luasnip.expand()
+        elseif luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
+        elseif has_words_before() then
+          cmp.complete()
+        else
+          fallback()
+        end
+      end, {
+        'i',
+        's',
+      }),
+      ['<S-Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        elseif luasnip.jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end, {
+        'i',
+        's',
+      }),
     }),
     experimental = {
       ghost_text = true,
     },
     sources = cmp.config.sources({
+      { name = 'copilot' },
       { name = 'nvim_lsp' },
       { name = 'nvim_lua' },
       { name = 'luasnip' },

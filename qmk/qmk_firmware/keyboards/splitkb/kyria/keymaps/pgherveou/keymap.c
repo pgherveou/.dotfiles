@@ -193,6 +193,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   case NAV_V:
     if (record->event.pressed) {
       SEND_STRING(SS_LGUI(SS_TAP(X_LEFT)) SS_LGUI(SS_LSFT(SS_TAP(X_RIGHT))));
+      register_code16(KC_LSHIFT);
+    } else {
+      unregister_code16(KC_LSHIFT);
     }
     break;
   case NAV_CAPS:
