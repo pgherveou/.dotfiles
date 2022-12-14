@@ -1,7 +1,11 @@
-runtime ./functions.vim
-runtime ./options.vim
-runtime ./autocmds.vim
-runtime ./keymaps.vim
+" runtime ./functions.vim
+" runtime ./options.vim
+" runtime ./autocmds.vim
+" runtime ./keymaps.vim
+luafile ~/.config/nvim/commands.lua
+luafile ~/.config/nvim/options.lua
+luafile ~/.config/nvim/autocmds.lua
+luafile ~/.config/nvim/keymaps.lua
 
 augroup vimrc
   autocmd!
@@ -14,13 +18,9 @@ function s:RemoveNetrwMap()
   endif
 endfunction
 
-" runtime ./fold.vim
-
 if exists('g:vscode')
-  " ~/.config/nvim/lua/plugins/vscode.lua
   lua require('plugins.vscode')
 else
-  " ~/.config/nvim/lua/plugins/init.lua
   lua require('plugins')
 endif
 
