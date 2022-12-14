@@ -17,18 +17,18 @@ u.lua_command('LspDiagQuickfix', 'vim.diagnostic.setqflist()')
 
 -- default lsp mappings
 local default_lsp_mappings = {
-  ['gs'] = ':SymbolsOutline<CR>',
-  ['gd'] = ':LspDef<CR>',
-  ['gf'] = ':LspRefs<CR>',
-  ['gr'] = ':LspRename<CR>',
-  ['gy'] = ':LspTypeDef<CR>',
-  ['K'] = ':LspHover<CR>',
-  ['H'] = ':LspSignatureHelp<CR>',
-  ['[a'] = ':LspDiagPrev<CR>',
-  [']a'] = ':LspDiagNext<CR>',
-  ['ga'] = ':lua vim.lsp.buf.code_action()<CR>',
-  ['gl'] = ':LspDiagLine<CR>',
-  ['go'] = ':Telescope lsp_references<CR>',
+  ['gs'] = { cmd = ':SymbolsOutline<CR>', desc = 'Display Symbols outline' },
+  ['gd'] = { cmd = ':LspDef<CR>', desc = 'Go to definition' },
+  ['gf'] = { cmd = ':LspRefs<CR>', desc = 'Go to references' },
+  ['gr'] = { cmd = ':LspRename<CR>', desc = 'Rename symbol' },
+  ['gy'] = { cmd = ':LspTypeDef<CR>', desc = 'Go to type definition' },
+  ['K'] = { cmd = ':LspHover<CR>', desc = 'Display hover informations' },
+  ['H'] = { cmd = ':LspSignatureHelp<CR>', desc = 'Display signature' },
+  ['[a'] = { cmd = ':LspDiagPrev<CR>', desc = 'Go to previous diagnostic' },
+  [']a'] = { cmd = ':LspDiagNext<CR>', desc = 'Go to next diagnostic' },
+  ['ga'] = { cmd = ':lua vim.lsp.buf.code_action()<CR>', desc = 'Display code actions' },
+  ['gl'] = { cmd = ':LspDiagLine<CR>', desc = 'Display diagnostic line' },
+  ['go'] = { cmd = ':Telescope lsp_references<CR>', desc = 'Display lsp references' },
 }
 
 local format_on_save = function(client)
@@ -47,8 +47,8 @@ local set_mappings = function(client, bufnr, nmap_mappings)
   local mappings = vim.tbl_extend('force', default_lsp_mappings, nmap_mappings or {})
   P(client.name)
   P(mappings)
-  for key, command in pairs(mappings) do
-    u.buf_nmap(bufnr, key, command)
+  for key, item in pairs(mappings) do
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', key, item.cmd, { desc = item.desc, noremap = true, silent = true })
   end
 
   format_on_save(client)
@@ -114,8 +114,11 @@ local setup_servers = function()
       on_attach = function(client, bufnr)
         -- disable_formatting(client)
         set_mappings(client, bufnr, {
-          ['K'] = ':lua require("rust-tools").hover_actions.hover_actions()<CR>',
-          ['<leader>t'] = ':RustTest<CR>',
+          ['K'] = {
+            cmd = ':lua require("rust-tools").hover_actions.hover_actions()<CR>',
+            desc = 'Display hover actions',
+          },
+          ['<leader>t'] = { cmd = ':RustTest<CR>', desc = 'Run tests' },
         })
       end,
     },

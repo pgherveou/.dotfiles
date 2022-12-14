@@ -20,6 +20,7 @@ vim.api.nvim_create_user_command('Delete', function()
   local file = vim.fn.expand('%')
   local confirm = vim.fn.input('Delete ' .. file .. '? (y/N) ')
   if confirm == 'y' then
+    vim.cmd('bd')
     vim.fn.delete(file)
   end
 end, {})

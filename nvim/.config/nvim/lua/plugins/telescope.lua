@@ -73,24 +73,27 @@ M.setup = function()
   telescope.load_extension('ui-select')
   telescope.load_extension('refactoring')
 
-  -- mappings
-  vim.cmd([[
-  :nnoremap <Leader>fb :lua require('telescope.builtin').buffers{}<CR>
-  :nnoremap <Leader>fe :Telescope file_browser hidden=true path=%:p:h respect_gitignore=false<CR>
-  :nnoremap <Leader>ff :lua require('plugins.telescope').find_files{}<CR>
-  :nnoremap <Leader>fg :lua require('telescope.builtin').live_grep{}<CR>
-  :vnoremap <leader>fs "zy:Telescope grep_string search=<C-r>z<CR>
-  :nnoremap <Leader>fs :lua require('telescope.builtin').grep_string{}<CR>
-  :nnoremap <Leader>fc :lua require('telescope.builtin').command_history{}<CR>
-  :nnoremap <Leader>fh :lua require('telescope.builtin').search_history{}<CR>
-  :nnoremap <Leader>fo :lua require('telescope.builtin').oldfiles{}<CR>
-  :nnoremap <Leader>fr :Telescope resume<CR>
-  :nnoremap <leader>f/ :lua require("telescope").extensions.live_grep_args.live_grep_args()<CR>
-  :nnoremap <leader>wt :lua require("telescope").extensions.git_worktree.git_worktrees()<CR>
-  :nnoremap <leader>cw :lua require("telescope").extensions.git_worktree.create_git_worktree()<CR>
-
-  :vnoremap <leader>rr :lua require("telescope").extensions.refactoring.refactors()<CR>
-  ]])
+  -- stylua: ignore start
+  local mappings = {
+    ['<Leader>fb'] = { mode = 'n', cmd = ':lua require("telescope.builtin").buffers{}<CR>', desc = 'Search buffers' },
+    ['<Leader>fe'] = { mode = 'n', cmd = ':Telescope file_browser hidden=true path=%:p:h respect_gitignore=false<CR>', desc = 'Open file browser', },
+    ['<Leader>ff'] = { mode = 'n', cmd = ':lua require("plugins.telescope").find_files{}<CR>', desc = 'Search files' },
+    ['<Leader>fg'] = { mode = 'n', cmd = ':lua require("telescope.builtin").live_grep{}<CR>', desc = 'Search with Live grep' },
+    ['<leader>fs'] = { mode = 'v', cmd = '"zy:Telescope grep_string search=<C-r>z<CR>', desc = 'Search from selection' },
+    ['<Leader>fs'] = { mode = 'n', cmd = ':lua require("telescope.builtin").grep_string{}<CR>', desc = 'Search from word under cursor' },
+    ['<Leader>fc'] = { mode = 'n', cmd = ':lua require("telescope.builtin").command_history{}<CR>', desc = 'Search command history', },
+    ['<Leader>fh'] = { mode = 'n', cmd = ':lua require("telescope.builtin").search_history{}<CR>', desc = 'Search history', },
+    ['<Leader>fo'] = { mode = 'n', cmd = ':lua require("telescope.builtin").oldfiles{}<CR>', desc = 'Search recent files', },
+    ['<Leader>fr'] = { mode = 'n', cmd = ':Telescope resume<CR>', desc = 'Resume search' },
+    ['<leader>f/'] = { mode = 'n', cmd = ':lua require("telescope").extensions.live_grep_args.live_grep_args()<CR>', desc = 'Search with raw grep', },
+    ['<leader>wt'] = { mode = 'n', cmd = ':lua require("telescope").extensions.git_worktree.git_worktrees()<CR>', desc = 'Search git worktree', },
+    ['<leader>cw'] = { mode = 'n', cmd = ':lua require("telescope").extensions.git_worktree.create_git_worktree()<CR>', desc = 'Create git worktree', },
+    ['<leader>rr'] = { mode = 'v', cmd = ':lua require("telescope").extensions.refactoring.refactors()<CR>', desc = 'Search refactors' },
+  }
+  -- stylua: ignore end
+  for key, item in pairs(mappings) do
+    vim.api.nvim_set_keymap(item.mode, key, item.cmd, { desc = item.desc, noremap = true, silent = true })
+  end
 end
 
 return M

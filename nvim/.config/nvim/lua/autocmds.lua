@@ -23,3 +23,18 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
     require('plugins.formatter').bzl_formatter()
   end,
 })
+
+-- create vimrc augroup
+vim.api.nvim_create_augroup('vimrc', { clear = true })
+
+-- remove netrw map autocmd
+vim.api.nvim_create_autocmd('FileType', {
+  group = 'vimrc',
+  pattern = 'netrw',
+  callback = function()
+    print('triggered 0')
+    if vim.fn.hasmapto('<Plug>NetrwRefresh') > 0 then
+      vim.api.nvim_buf_del_keymap(0, 'n', '<C-l>')
+    end
+  end,
+})
