@@ -1,6 +1,3 @@
--- Use space as leader!
-vim.g.mapleader = ' '
-
 -- Remove search highlight.
 vim.api.nvim_set_keymap(
   'n',

@@ -24,6 +24,7 @@ return function()
       'bash',
       'json',
       'yaml',
+      'help',
     },
     highlight = {
       enable = true,

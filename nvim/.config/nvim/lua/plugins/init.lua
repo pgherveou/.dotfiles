@@ -22,6 +22,12 @@ end
 
 local load_plugins = function(use)
   use({
+    'mrjones2014/legendary.nvim',
+    config = function()
+      require('plugins.legendary')
+    end,
+  })
+  use({
     'zbirenbaum/copilot.lua',
     event = 'VimEnter',
     config = function()
@@ -75,7 +81,6 @@ local load_plugins = function(use)
   })
 
   -- Auto close parens, braces, brackets, etc
-  -- use('jiangmiao/auto-pairs')
   use({
     'windwp/nvim-autopairs',
     config = function()
@@ -112,14 +117,17 @@ local load_plugins = function(use)
     end,
   })
 
+  -- take screenshots
   use({
     'narutoxy/silicon.lua',
     requires = 'nvim-lua/plenary.nvim',
+    after = { 'legendary.nvim' },
     config = function()
-      require('silicon').setup({})
-      vim.api.nvim_set_keymap('v', '<leader>s', ':lua require("silicon").visualise_api({ to_clip = true })<cr>', {
-        noremap = true,
-      })
+      local silicon = require('silicon')
+      silicon.setup({})
+      require('plugins.legendary').keymap('v', '<leader>s', function()
+        silicon.visualise_api({ to_clip = true })
+      end, { noremap = true, silent = true })
     end,
   })
 
@@ -141,9 +149,11 @@ local load_plugins = function(use)
     end,
   })
 
+  use('https://github.com/tpope/vim-sleuth')
+
   -- git integration
   use('ruanyl/vim-gh-line') -- gh links for text
-  use({ 'tpope/vim-fugitive', config = require('plugins.fugitive') })
+  use({ 'tpope/vim-fugitive', after = { 'legendary.nvim' }, config = require('plugins.fugitive') })
   use({
     'lewis6991/gitsigns.nvim',
     requires = { 'nvim-lua/plenary.nvim' },
@@ -192,11 +202,21 @@ local load_plugins = function(use)
       'ThePrimeagen/harpoon',
       { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
     },
-    config = require('plugins.telescope').setup,
+    after = { 'legendary.nvim' },
+    config = function()
+      require('plugins.telescope').setup()
+    end,
   })
 
   -- harpoon navigation
-  use({ 'ThePrimeagen/harpoon', requires = { 'nvim-lua/plenary.nvim' }, config = require('plugins.harpoon').setup })
+  use({
+    'ThePrimeagen/harpoon',
+    requires = { 'nvim-lua/plenary.nvim' },
+    after = { 'legendary.nvim' },
+    config = function()
+      require('plugins.harpoon')
+    end,
+  })
 
   -- snippets
   use({

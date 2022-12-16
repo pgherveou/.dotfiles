@@ -19,6 +19,7 @@ M.find_files = function()
 end
 
 M.setup = function()
+  local l = require('plugins.legendary')
   local telescope = require('telescope')
   local themes = require('telescope.themes')
   local actions = require('telescope.actions')
@@ -74,7 +75,7 @@ M.setup = function()
   telescope.load_extension('refactoring')
 
   -- stylua: ignore start
-  local mappings = {
+  l.keymaps({
     ['<Leader>fb'] = { mode = 'n', cmd = ':lua require("telescope.builtin").buffers{}<CR>', desc = 'Search buffers' },
     ['<Leader>fe'] = { mode = 'n', cmd = ':Telescope file_browser hidden=true path=%:p:h respect_gitignore=false<CR>', desc = 'Open file browser', },
     ['<Leader>ff'] = { mode = 'n', cmd = ':lua require("plugins.telescope").find_files{}<CR>', desc = 'Search files' },
@@ -89,11 +90,8 @@ M.setup = function()
     ['<leader>wt'] = { mode = 'n', cmd = ':lua require("telescope").extensions.git_worktree.git_worktrees()<CR>', desc = 'Search git worktree', },
     ['<leader>cw'] = { mode = 'n', cmd = ':lua require("telescope").extensions.git_worktree.create_git_worktree()<CR>', desc = 'Create git worktree', },
     ['<leader>rr'] = { mode = 'v', cmd = ':lua require("telescope").extensions.refactoring.refactors()<CR>', desc = 'Search refactors' },
-  }
+  })
   -- stylua: ignore end
-  for key, item in pairs(mappings) do
-    vim.api.nvim_set_keymap(item.mode, key, item.cmd, { desc = item.desc, noremap = true, silent = true })
-  end
 end
 
 return M
