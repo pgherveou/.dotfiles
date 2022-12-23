@@ -31,7 +31,6 @@ vim.opt.signcolumn = 'yes' -- always show the gutter
 vim.opt.relativenumber = true -- relative number
 vim.opt.pumheight = 10 -- maximum number of item to show in the completion menu
 
-vim.opt.isfname:remove('=') -- Remove characters from filenames for gf
 -- Ignore these folders for completions
 vim.o.wildignore = vim.o.wildignore
   .. ',.hg,.git,.svn' -- Version control

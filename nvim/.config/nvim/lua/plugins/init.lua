@@ -1,32 +1,48 @@
+require('mason-null-ls').setup({
+  ensure_installed = { 'stylua', 'jq' },
+})
 require('plugins.globals')
 
---automatically call :PackerCompile when this file is updated
-vim.cmd([[
-    augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost init.lua source <afile> | PackerCompile
-  augroup end
-]])
-
--- automatically install and se up packer.nvim
-local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
-    vim.cmd([[packadd packer.nvim]])
-    return true
-  end
-  return false
-end
-
 local load_plugins = function(use)
+  -- faster bootrsrap
   use({
-    'mrjones2014/legendary.nvim',
+    'lewis6991/impatient.nvim',
     config = function()
-      require('plugins.legendary')
+      require('impatient')
     end,
   })
+
+  -- file explorer
+  use({
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = 'v2.x',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+      'MunifTanjim/nui.nvim',
+    },
+    config = function()
+      vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle<cr>', { desc = 'Open file explorer' })
+      require('neo-tree').setup({
+        close_if_last_window = true,
+        enable_git_status = false,
+      })
+    end,
+  })
+
+  -- cheatsheet for keymaps
+  use({
+    'folke/which-key.nvim',
+    config = function()
+      require('which-key').setup({
+        window = {
+          border = 'rounded',
+          padding = { 2, 2, 2, 2 },
+        },
+      })
+    end,
+  })
+
   use({
     'zbirenbaum/copilot.lua',
     event = 'VimEnter',
@@ -52,14 +68,6 @@ local load_plugins = function(use)
     after = { 'copilot.lua' },
     config = function()
       require('copilot_cmp').setup()
-    end,
-  })
-
-  -- faster bootrsrap
-  use({
-    'lewis6991/impatient.nvim',
-    config = function()
-      require('impatient')
     end,
   })
 
@@ -121,13 +129,12 @@ local load_plugins = function(use)
   use({
     'narutoxy/silicon.lua',
     requires = 'nvim-lua/plenary.nvim',
-    after = { 'legendary.nvim' },
     config = function()
       local silicon = require('silicon')
       silicon.setup({})
-      require('plugins.legendary').keymap('v', '<leader>s', function()
+      vim.keymap.set('v', '<leader>s', function()
         silicon.visualise_api({ to_clip = true })
-      end, { noremap = true, silent = true })
+      end, { silent = true })
     end,
   })
 
@@ -153,7 +160,7 @@ local load_plugins = function(use)
 
   -- git integration
   use('ruanyl/vim-gh-line') -- gh links for text
-  use({ 'tpope/vim-fugitive', after = { 'legendary.nvim' }, config = require('plugins.fugitive') })
+  use({ 'tpope/vim-fugitive', config = require('plugins.fugitive') })
   use({
     'lewis6991/gitsigns.nvim',
     requires = { 'nvim-lua/plenary.nvim' },
@@ -202,9 +209,8 @@ local load_plugins = function(use)
       'ThePrimeagen/harpoon',
       { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
     },
-    after = { 'legendary.nvim' },
     config = function()
-      require('plugins.telescope').setup()
+      require('plugins.telescope')()
     end,
   })
 
@@ -212,10 +218,7 @@ local load_plugins = function(use)
   use({
     'ThePrimeagen/harpoon',
     requires = { 'nvim-lua/plenary.nvim' },
-    after = { 'legendary.nvim' },
-    config = function()
-      require('plugins.harpoon')
-    end,
+    config = require('plugins.harpoon'),
   })
 
   -- snippets
@@ -236,6 +239,7 @@ local load_plugins = function(use)
       'hrsh7th/cmp-nvim-lsp',
       'jose-elias-alvarez/nvim-lsp-ts-utils',
       'jose-elias-alvarez/null-ls.nvim',
+      'jayp0521/mason-null-ls.nvim',
       'RRethy/vim-illuminate',
       'simrat39/rust-tools.nvim',
       'b0o/schemastore.nvim',
@@ -246,6 +250,9 @@ local load_plugins = function(use)
     config = function()
       require('symbols-outline').setup()
       require('plugins.lsp.servers')()
+      require('mason-null-ls').setup({
+        ensure_installed = { 'stylua', 'jq', 'codespell' },
+      })
     end,
   })
 
@@ -305,7 +312,14 @@ local load_plugins = function(use)
   })
 
   -- debugger
-  use({ 'mfussenegger/nvim-dap', 'rcarriga/nvim-dap-ui', 'simrat39/rust-tools.nvim', config = require('plugins.dap') })
+  use({
+    'mfussenegger/nvim-dap',
+    requires = {
+      'rcarriga/nvim-dap-ui',
+      'simrat39/rust-tools.nvim',
+    },
+    config = require('plugins.dap'),
+  })
 
   -- use obsidian from nvim
   use({
@@ -319,6 +333,18 @@ local load_plugins = function(use)
       })
     end,
   })
+end
+
+-- automatically install and se up packer.nvim
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+    vim.cmd([[packadd packer.nvim]])
+    return true
+  end
+  return false
 end
 
 -- https://github.com/wbthomason/packer.nvim#bootstrapping

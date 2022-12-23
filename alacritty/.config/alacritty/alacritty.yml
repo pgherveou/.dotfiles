@@ -28,7 +28,8 @@ window:
 
 font:
   normal:
-    family: "MesloLGS NF"
+    # grap font name from: fc-list
+    family: "MesloLGMNerdFontComplete Nerd Font"
   size: 14
 
 bell:

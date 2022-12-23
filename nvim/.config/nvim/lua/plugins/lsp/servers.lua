@@ -45,8 +45,6 @@ end
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 local set_mappings = function(client, bufnr, nmap_mappings)
   local mappings = vim.tbl_extend('force', default_lsp_mappings, nmap_mappings or {})
-  P(client.name)
-  P(mappings)
   for key, item in pairs(mappings) do
     vim.api.nvim_buf_set_keymap(bufnr, 'n', key, item.cmd, { desc = item.desc, noremap = true, silent = true })
   end
@@ -81,9 +79,16 @@ local setup_servers = function()
   }
 
   -- setup rust via rust-tools
-  local extension_path = vim.env.HOME .. '/.vscode/extensions/vadimcn.vscode-lldb-1.8.1/'
+  -- local extension_path = vim.env.HOME .. '/.vscode/extensions/vadimcn.vscode-lldb-1.8.1/'
+  -- local codelldb_path = extension_path .. 'adapter/codelldb'
+  -- local liblldb_path = extension_path .. 'lldb/lib/liblldb.dylib'
+
+  local mason_registry = require('mason-registry')
+  local codelldb = mason_registry.get_package('codelldb')
+  local extension_path = codelldb:get_install_path() .. '/extension/'
   local codelldb_path = extension_path .. 'adapter/codelldb'
   local liblldb_path = extension_path .. 'lldb/lib/liblldb.dylib'
+
   require('rust-tools').setup({
     dap = {
       adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path),

@@ -6,6 +6,13 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufRead', 'FileType *' }, {
   end,
 })
 
+-- Execute PackeCompile when this file is updated
+vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
+  pattern = vim.fn.expand('~') .. '/.dotfiles/nvim/.config/nvim/lua/plugins/init.lua',
+  callback = function()
+    require('packer').compile()
+  end,
+})
 -- run keymapviz for keymap.c files
 vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
   pattern = vim.fn.expand('~') .. '/.dotfiles/qmk/**/keymap.c',
@@ -32,7 +39,6 @@ vim.api.nvim_create_autocmd('FileType', {
   group = 'vimrc',
   pattern = 'netrw',
   callback = function()
-    print('triggered 0')
     if vim.fn.hasmapto('<Plug>NetrwRefresh') > 0 then
       vim.api.nvim_buf_del_keymap(0, 'n', '<C-l>')
     end
