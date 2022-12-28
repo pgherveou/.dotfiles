@@ -3,12 +3,15 @@ set -euo pipefail
 
 pushd "$HOME/.dotfiles"
 
-# TODO(pg) mac only
-# install brew and the brewfile
-# if ! command -v brew &>/dev/null; then
-# 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-# 	brew bundle install --file=Brewfile
-# fi
+# mac only
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	# install brew if running from macos
+	if ! command -v brew &>/dev/null; then
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	fi
+	# setup spectacle
+	cp -r spectacles/Shortcuts.json "$HOME/Library/Application Support/Spectacle/Shortcuts.json" 2>/dev/null
+fi
 
 # create deeplinks to the home folder
 STOW_FOLDERS=(
@@ -22,12 +25,6 @@ STOW_FOLDERS=(
 	"qmk"
 	"zsh"
 	"karabiner"
-)
-
-# list of globally installed npm packages
-NPM_PKGS=(
-	"neovim"
-	"serve"
 )
 
 # clone tmux plugin manager
@@ -51,17 +48,23 @@ for folder in "${STOW_FOLDERS[@]}"; do
 	stow "$folder"
 done
 
-# install global npm packages
-sudo npm install -g "${NPM_PKGS[@]}"
+# list of globally installed npm packages
+NPM_PKGS=(
+	"neovim"
+	"serve"
+)
+
+# install global npm packages using sudo on linux
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+	sudo npm install -g "${NPM_PKGS[@]}"
+else
+	npm install -g "${NPM_PKGS[@]}"
+fi
 
 # install vimplug
 vimplug="$HOME/.local/share/nvim/site/autoload/plug.vim"
 if [ ! -f vimplug ]; then
 	curl -fLo "$vimplug" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
-
-# TODO(pg) mac only
-# setup spectacle
-# cp -r spectacles/Shortcuts.json "$HOME/Library/Application Support/Spectacle/Shortcuts.json" 2>/dev/null
 
 popd
