@@ -1,6 +1,3 @@
-require('mason-null-ls').setup({
-  ensure_installed = { 'stylua', 'jq' },
-})
 require('plugins.globals')
 
 local load_plugins = function(use)

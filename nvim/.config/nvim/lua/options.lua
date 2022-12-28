@@ -30,6 +30,8 @@ vim.opt.ttyfast = true -- Set that we have a fast terminal
 vim.opt.signcolumn = 'yes' -- always show the gutter
 vim.opt.relativenumber = true -- relative number
 vim.opt.pumheight = 10 -- maximum number of item to show in the completion menu
+vim.opt.laststatus = 3 -- always show the status line
+vim.opt.cmdheight = 0 -- height of the command line
 
 -- Ignore these folders for completions
 vim.o.wildignore = vim.o.wildignore
