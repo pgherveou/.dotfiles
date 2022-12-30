@@ -7,7 +7,7 @@ COMBO_ENABLE = yes
 MOUSEKEY_ENABLE = no
 RAW_ENABLE = no
 WPM_ENABLE = no
-CONSOLE_ENABLE = yes
+CONSOLE_ENABLE = no
 
 DEBOUNCE_TYPE = sym_eager_pk
 # https://github.com/qmk/qmk_firmware/issues/5585
