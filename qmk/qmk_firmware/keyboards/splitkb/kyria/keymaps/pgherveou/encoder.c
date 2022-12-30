@@ -3,7 +3,6 @@
 #include "encoder.h"
 #include "keycode.h"
 #include "pgherveou.h"
-#include "print.h"
 
 enum enc_mode_t {
   SCROLL,
@@ -227,11 +226,9 @@ const uint16_t alt_tab_timeout = 500;
 #define ALT_TAB_KEY KC_LALT
 #endif
 void window(enc_action_t action) {
-  print("window...\n");
   uint16_t kc;
   switch (action & ENC_MSK) {
   case ENC_TICK:
-    uprintf("tick %s", is_alt_tab_active ? "true" : "false");
     if (is_alt_tab_active && timer_elapsed(alt_tab_timer) > alt_tab_timeout) {
       unregister_code(ALT_TAB_KEY);
       is_alt_tab_active = false;

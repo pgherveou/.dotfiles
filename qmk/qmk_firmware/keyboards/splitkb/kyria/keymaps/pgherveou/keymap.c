@@ -304,8 +304,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   return state;
 }
 
-void matrix_init_user(void) { matrix_init_enc(); }
-
 void matrix_scan_rgb(void) {
   uint8_t mods = mod_config(get_mods());
   rgblight_set_layer_state(4, mods & MOD_MASK_SHIFT);
@@ -314,19 +312,20 @@ void matrix_scan_rgb(void) {
   rgblight_set_layer_state(7, mods & MOD_MASK_GUI);
 }
 
-void matrix_scan_user(void) {
-  print("matrix scan user\n");
-  matrix_scan_enc();
-  matrix_scan_rgb();
-}
-
 void keyboard_post_init_user(void) {
   rgblight_layers = my_rgb_layers;
-
-  // rgblight_set_layer_state(3, true);
   rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
 }
 #endif
+
+void matrix_init_user(void) { matrix_init_enc(); }
+
+void matrix_scan_user(void) {
+  matrix_scan_enc();
+#ifdef RGBLIGHT_LAYERS
+  matrix_scan_rgb();
+#endif
+}
 
 #ifdef COMBO_ENABLE
 const uint16_t PROGMEM COMBO_AS_KEYS[] = {KC_A, KC_S, COMBO_END};
