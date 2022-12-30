@@ -94,17 +94,17 @@ schemes:
 colors: *tokyo-night-storm
 
 key_bindings:
+  # macos
   - { key: Escape, mods: Command, action: ToggleFullscreen }
-  - { key: Space, mods: Control, chars: "\x00" }
-  - { key: V, mods: Command, action: Paste }
-  - { key: C, mods: Command, action: Copy }
-  - { key: K, mods: Command, chars: "\x02k" } # clear terminal 
-  - { key: I, mods: Command, chars: "\x02[" } # tmux edit mod
-  - { key: H, mods: Command, chars: "\x1bb"}
-  - { key: L, mods: Command, chars: "\x1bf"}
+  - { key: V, mods: Control, action: Paste }
+  - { key: C, mods: Control, action: Copy }
+  - { key: Semicolon, mods: Control, chars: "\x02k" } # clear terminal 
+  - { key: I, mods: Super, chars: "\x02[" } # tmux edit mod
+  - { key: Key0, mods: Control, action: ResetFontSize }
   - { key: J, mods: Alt, chars: "\x1bj" }
   - { key: K, mods: Alt, chars: "\x1bk" }
   - { key: L, mods: Alt, chars: "\x1BF" }
   - { key: H, mods: Alt, chars: "\x1BB" }
+
 mouse_bindings:
   - { mouse: Middle, action: PasteSelection }
