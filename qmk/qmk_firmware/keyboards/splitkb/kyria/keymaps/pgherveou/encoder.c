@@ -12,17 +12,14 @@ enum enc_mode_t {
   VOLUME,
   BRIGHTNESS,
   VIM_QF,
-  TAB,
   AFTER_LAST_MODE
 };
 
 enum enc_mode_t enc_current_mode = 0;
-bool scroll_fast = true;
+bool scroll_fast = false;
 
 const char *get_enc_str(void) {
   switch (enc_current_mode) {
-  case TAB:
-    return "TAB";
   case ZOOM:
     return "Zoom";
   case SCROLL:
@@ -217,45 +214,8 @@ void media(enc_action_t action) {
   }
 }
 
-bool is_alt_tab_active = false;
-uint16_t alt_tab_timer = 0;
-const uint16_t alt_tab_timeout = 500;
-#if defined(__APPLE__)
-#define ALT_TAB_KEY KC_LGUI
-#else
-#define ALT_TAB_KEY KC_LALT
-#endif
-void window(enc_action_t action) {
-  uint16_t kc;
-  switch (action & ENC_MSK) {
-  case ENC_TICK:
-    if (is_alt_tab_active && timer_elapsed(alt_tab_timer) > alt_tab_timeout) {
-      unregister_code(ALT_TAB_KEY);
-      is_alt_tab_active = false;
-    }
-    return;
-  case ENC_CW:
-    kc = KC_TAB;
-    break;
-  case ENC_CCW:
-    kc = S(KC_TAB);
-    break;
-  default:
-    return;
-  }
-  if (!is_alt_tab_active) {
-    register_code(ALT_TAB_KEY);
-  }
-  tap_code16(kc);
-  is_alt_tab_active = true;
-  alt_tab_timer = timer_read();
-}
-
 void exec_mode(enc_action_t action) {
   switch (enc_current_mode) {
-  case TAB:
-    window(action);
-    break;
   case ZOOM:
     zoom(action);
     break;
@@ -297,7 +257,7 @@ void encoder_execute(uint8_t index, enc_action_t action) {
 
 // Some actions have a timeout, so they
 // need to get a tick every so often
-void matrix_scan_enc(void) { window(ENC_TICK); }
+void matrix_scan_enc(void) {}
 
 bool pressed[2];
 bool encoder_update_user(uint8_t index, bool clockwise) {

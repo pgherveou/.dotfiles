@@ -11,11 +11,15 @@ CONSOLE_ENABLE = no
 
 DEBOUNCE_TYPE = sym_eager_pk
 # https://github.com/qmk/qmk_firmware/issues/5585
-NO_USB_STARTUP_CHECK = yes
+# NO_USB_STARTUP_CHECK = yes
 SRC += encoder.c
 
 ifeq ($(strip $(WITH_SECRETS)), yes)
     OPT_DEFS += -DWITH_SECRETS
+endif
+
+ifeq ($(strip $(APPLE)), yes)
+    OPT_DEFS += -D__APPLE__
 endif
 
 # kyria v1 board

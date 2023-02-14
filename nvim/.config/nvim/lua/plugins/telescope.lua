@@ -61,6 +61,8 @@ return function()
         ['<Leader>fg'] = { function() require("telescope.builtin").live_grep() end, desc = 'Search with Live grep' },
         ['<Leader>fs'] = { function() require("telescope.builtin").grep_string() end, desc = 'Search from word under cursor' },
         ['<Leader>fo'] = { function() require("telescope.builtin").oldfiles() end, desc = 'Search recent files', },
+        ['<Leader>fl'] = { function() require("telescope.builtin").lsp_document_symbols() end, desc = 'List lsp symbols for current buffer', },
+        ['<Leader>s'] = { function() require("telescope.builtin").lsp_document_symbols() end, desc = 'List lsp symbols for current buffer', },
         ['<Leader>fr'] = { function() require("telescope.builtin").resume() end, desc = 'Resume search' },
         ['<leader>f/'] = { function() require("telescope").extensions.live_grep_args.live_grep_args() end, desc = 'Search with raw grep', },
       },

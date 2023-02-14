@@ -20,6 +20,7 @@ local load_plugins = function(use)
     },
     config = function()
       vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle<cr>', { desc = 'Open file explorer' })
+      vim.keymap.set('n', '<leader>E', '<cmd>NeotreeReveal<cr>', { desc = 'Reveal current file in neo-tree' })
       require('neo-tree').setup({
         close_if_last_window = true,
         enable_git_status = false,
@@ -28,17 +29,17 @@ local load_plugins = function(use)
   })
 
   -- cheatsheet for keymaps
-  use({
-    'folke/which-key.nvim',
-    config = function()
-      require('which-key').setup({
-        window = {
-          border = 'rounded',
-          padding = { 2, 2, 2, 2 },
-        },
-      })
-    end,
-  })
+  -- use({
+  --   'folke/which-key.nvim',
+  --   config = function()
+  --     require('which-key').setup({
+  --       window = {
+  --         border = 'rounded',
+  --         padding = { 2, 2, 2, 2 },
+  --       },
+  --     })
+  --   end,
+  -- })
 
   use({
     'zbirenbaum/copilot.lua',
@@ -46,15 +47,17 @@ local load_plugins = function(use)
     config = function()
       vim.defer_fn(function()
         require('copilot').setup({
-          suggestion = {
-            auto_trigger = true,
-            keymap = {
-              accept = '<M-l>',
-              next = '<M-]>',
-              prev = '<M-[>',
-              dismiss = '<C-]>',
-            },
-          },
+          suggestion = { enabled = false },
+          panel = { enabled = false },
+          -- suggestion = {
+          --   auto_trigger = true,
+          --   keymap = {
+          --     accept = '<M-l>',
+          --     next = '<M-]>',
+          --     prev = '<M-[>',
+          --     dismiss = '<C-]>',
+          --   },
+          -- },
         })
       end, 100)
     end,
@@ -153,7 +156,8 @@ local load_plugins = function(use)
     end,
   })
 
-  use('https://github.com/tpope/vim-sleuth')
+  use('tpope/vim-sleuth')
+  use('tpope/vim-abolish')
 
   -- git integration
   use('ruanyl/vim-gh-line') -- gh links for text

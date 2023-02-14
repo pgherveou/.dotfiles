@@ -1,14 +1,16 @@
 return function()
   local dap, dapui = require('dap'), require('dapui')
   dapui.setup()
+
   -- stylua: ignore start
   require('utils').keymaps({
       ['n'] = {
         ['<F1>'] = { require('dap').step_back, desc = '[DAP] step back' },
-        ['<F2>'] = { require('dap').step_into, desc = '[DAP] step into' },
-        ['<F3>'] = { require('dap').step_over, desc = '[DAP] step over' },
-        ['<F4>'] = { require('dap').step_out, desc = '[DAP] step out' },
+        ['<F2>'] = { require('dap').step_out, desc = '[DAP] step out' },
+        ['<F3>'] = { require('dap').step_into, desc = '[DAP] step into' },
+        ['<F4>'] = { require('dap').step_over, desc = '[DAP] step over' },
         ['<F5>'] = { require('dap').continue, desc = '[DAP] continue' },
+        ['<leader>dc'] = { require('dap').clear_breakpoints, desc = '[DAP] open repl' },
         ['<leader>dr'] = { require('dap').repl.open, desc = '[DAP] open repl' },
         ['<leader>db'] = { require('dap').toggle_breakpoint, desc = '[DAP] toggle breakpoint' },
         ['<leader>dB'] = { function() require('dap').set_breakpoint(vim.fn.input('[DAP] Condition > ')) end, desc = '[DAP] set breakpoint with condition', },

@@ -98,7 +98,7 @@ local setup_servers = function()
         use_telescope = true,
       },
       inlay_hints = {
-        show_parameter_hints = false,
+        show_parameter_hints = true,
         parameter_hints_prefix = '',
         other_hints_prefix = '',
       },
@@ -107,7 +107,8 @@ local setup_servers = function()
       settings = {
         ['rust-analyzer'] = {
           checkOnSave = {
-            command = 'clippy',
+            -- TODO restore later
+            -- command = 'clippy',
           },
         },
       },
@@ -124,6 +125,7 @@ local setup_servers = function()
             desc = 'Display hover actions',
           },
           ['<leader>t'] = { cmd = ':RustTest<CR>', desc = 'Run tests' },
+          ['<leader>gt'] = { cmd = ':RustTest<CR>', desc = 'Run tests' },
         })
       end,
     },

@@ -25,8 +25,10 @@ return function()
     },
   })
 
+  -- require('plugins.snips.rust')
   for _, ft_path in ipairs(vim.api.nvim_get_runtime_file('lua/plugins/snips/*.lua', true)) do
-    loadfile(ft_path)()
+    local ft = ft_path:match('snips/(.*)%.lua$')
+    require('plugins.snips.' .. ft)
   end
 end
 

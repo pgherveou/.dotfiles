@@ -15,6 +15,9 @@ local mappings = {
     ['Y'] = { 'yg$' },
     ['YY'] = { ':%y<cr>' },
 
+    -- select copied text
+    ['<leader>vp'] = { '`[v`]' },
+
     -- qq to record, Q to replay
     ['Q'] = { '@q', desc = 'Replay macro' },
 
@@ -25,7 +28,7 @@ local mappings = {
     ['c<Tab>'] = { [[:let @/=expand('<cword>')<cr>cgn]], desc = 'Use cgn using the current word under the cursor' },
 
     -- source vim
-    ['<leader>sv'] = { ':source $MYVIMRC<CR>', desc = 'Source vim' },
+    ['<leader>SV'] = { ':source $MYVIMRC<CR>', desc = 'Source vim' },
 
     -- navigate quicklist and location list
     ['<Tab>j'] = { ':cnext<CR>zz', desc = 'Go to next item in quicklist' },
