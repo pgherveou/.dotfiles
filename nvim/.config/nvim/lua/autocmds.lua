@@ -20,7 +20,7 @@ vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
   pattern = '*.bzl,*.bazel,WORKSPACE,BUILD',
   callback = function()
-    require('plugins.formatter').bzl_formatter()
+    require('utils.formatter').bzl_formatter()
   end,
 })
 

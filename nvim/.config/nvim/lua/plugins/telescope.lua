@@ -1,4 +1,4 @@
-return function()
+local config = function()
   local telescope = require('telescope')
   local themes = require('telescope.themes')
   local actions = require('telescope.actions')
@@ -73,3 +73,18 @@ return function()
   })
   -- stylua: ignore end
 end
+
+return {
+  'nvim-telescope/telescope.nvim',
+  dependencies = {
+    'nvim-telescope/telescope-live-grep-args.nvim',
+    'nvim-telescope/telescope-file-browser.nvim',
+    'nvim-telescope/telescope-github.nvim',
+    'nvim-telescope/telescope-ui-select.nvim',
+    'ThePrimeagen/git-worktree.nvim',
+    'ThePrimeagen/refactoring.nvim',
+    'ThePrimeagen/harpoon',
+    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+  },
+  config = config,
+}

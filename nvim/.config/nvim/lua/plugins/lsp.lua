@@ -174,12 +174,33 @@ local setup_servers = function()
   })
 end
 
-return function()
-  -- Debugging
-  -- vim.lsp.set_log_level("debug")
-  require('neodev').setup({})
-  require('mason').setup()
-  require('mason-lspconfig').setup({ automatic_installation = true })
-  setup_servers()
-  require('plugins.lsp.null').setup(format_on_save)
-end
+return {
+  'neovim/nvim-lspconfig',
+  dependencies = {
+    'williamboman/mason.nvim',
+    'williamboman/mason-lspconfig.nvim',
+    'nvim-lua/plenary.nvim',
+    'hrsh7th/cmp-nvim-lsp',
+    'jose-elias-alvarez/nvim-lsp-ts-utils',
+    'jose-elias-alvarez/null-ls.nvim',
+    'jayp0521/mason-null-ls.nvim',
+    'RRethy/vim-illuminate',
+    'simrat39/rust-tools.nvim',
+    'b0o/schemastore.nvim',
+    'simrat39/symbols-outline.nvim',
+    'mfussenegger/nvim-jdtls',
+    'ThePrimeagen/refactoring.nvim',
+    'folke/neodev.nvim',
+  },
+  config = function()
+    require('symbols-outline').setup()
+    require('neodev').setup({})
+    require('mason').setup()
+    require('mason-lspconfig').setup({ automatic_installation = true })
+    setup_servers()
+    require('plugins.lsp.null').setup(format_on_save)
+    require('mason-null-ls').setup({
+      ensure_installed = { 'stylua', 'jq', 'codespell' },
+    })
+  end,
+}

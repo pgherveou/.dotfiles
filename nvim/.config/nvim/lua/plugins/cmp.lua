@@ -1,4 +1,4 @@
-return function()
+local config = function()
   local cmp = require('cmp')
   local compare = require('cmp.config.compare')
   local types = require('cmp.types')
@@ -147,3 +147,20 @@ return function()
     }),
   })
 end
+
+return {
+  'hrsh7th/nvim-cmp',
+  dependencies = {
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-nvim-lua',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-path',
+    'hrsh7th/cmp-cmdline',
+    'L3MON4D3/LuaSnip',
+    'saadparwaiz1/cmp_luasnip',
+    'neovim/nvim-lspconfig',
+    'nvim-lua/lsp_extensions.nvim',
+    'zbirenbaum/copilot.lua',
+  },
+  config = config,
+}

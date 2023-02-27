@@ -1,9 +1,15 @@
-return function()
-  local dap, dapui = require('dap'), require('dapui')
-  dapui.setup()
+return {
+  'mfussenegger/nvim-dap',
+  dependencies = {
+    'rcarriga/nvim-dap-ui',
+    'simrat39/rust-tools.nvim',
+  },
+  config = function()
+    local dap, dapui = require('dap'), require('dapui')
+    dapui.setup()
 
-  -- stylua: ignore start
-  require('utils').keymaps({
+    -- stylua: ignore start
+    require('utils').keymaps({
       ['n'] = {
         ['<F1>'] = { require('dap').step_back, desc = '[DAP] step back' },
         ['<F2>'] = { require('dap').step_out, desc = '[DAP] step out' },
@@ -17,19 +23,20 @@ return function()
         ['<leader>de'] = { require('dapui').eval, desc = '[DAP] eval' },
         ['<leader>dE'] = { function() require('dapui').eval(vim.fn.input('[DAP] Expression > ')) end, desc = '[DAP] eval expression', },
       }
-  })
-  -- stylua: ignore end
+    })
+    -- stylua: ignore end
 
-  -- open / close dap ui, automatically when debugging
-  -- see https://github.com/rcarriga/nvim-dap-ui#usage
-  -- todo look for more keymaps from tj config here: https://github.com/tjdevries/config_manager/blob/master/xdg_config/nvim/after/plugin/dap.lua
-  dap.listeners.after.event_initialized['dapui_config'] = function()
-    dapui.open()
-  end
-  dap.listeners.before.event_terminated['dapui_config'] = function()
-    dapui.close()
-  end
-  dap.listeners.before.event_exited['dapui_config'] = function()
-    dapui.close()
-  end
-end
+    -- open / close dap ui, automatically when debugging
+    -- see https://github.com/rcarriga/nvim-dap-ui#usage
+    -- todo look for more keymaps from tj config here: https://github.com/tjdevries/config_manager/blob/master/xdg_config/nvim/after/plugin/dap.lua
+    dap.listeners.after.event_initialized['dapui_config'] = function()
+      dapui.open()
+    end
+    dap.listeners.before.event_terminated['dapui_config'] = function()
+      dapui.close()
+    end
+    dap.listeners.before.event_exited['dapui_config'] = function()
+      dapui.close()
+    end
+  end,
+}

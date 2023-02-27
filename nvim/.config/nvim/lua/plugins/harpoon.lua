@@ -1,4 +1,7 @@
-return function()
+return {
+  'ThePrimeagen/harpoon',
+  dependencies = { 'nvim-lua/plenary.nvim' },
+  config = function()
   -- stylua: ignore start
   require('utils').keymaps({
       ['n'] = {
@@ -11,5 +14,6 @@ return function()
         ['<leader>;'] = { function() require("harpoon.ui").nav_file(4) end, desc = 'Navigate to file 4' },
       }
 })
-  -- stylua: ignore end
-end
+    -- stylua: ignore end
+  end,
+}
