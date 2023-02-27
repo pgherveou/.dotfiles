@@ -85,13 +85,22 @@ return {
   {
     'narutoxy/silicon.lua',
     dependencies = 'nvim-lua/plenary.nvim',
+    build = './install.sh',
     lazy = true,
+    keys = {
+      {
+        '<leader>s',
+        function()
+          require('silicon').visualise_api({ to_clip = true })
+        end,
+        mode = 'v',
+        silent = true,
+        desc = 'Screenshot selected text',
+      },
+    },
     config = function()
       local silicon = require('silicon')
       silicon.setup({})
-      vim.keymap.set('v', '<leader>s', function()
-        silicon.visualise_api({ to_clip = true })
-      end, { silent = true })
     end,
   },
 
