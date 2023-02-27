@@ -107,8 +107,7 @@ local setup_servers = function()
       settings = {
         ['rust-analyzer'] = {
           checkOnSave = {
-            -- TODO restore later
-            -- command = 'clippy',
+            command = 'clippy',
           },
         },
       },
