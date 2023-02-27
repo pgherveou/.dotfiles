@@ -141,6 +141,8 @@ local setup_servers = function()
     },
   })
 
+  lspconfig.lua_ls.setup(default_config)
+
   lspconfig.bashls.setup(default_config)
   lspconfig.golangci_lint_ls.setup(default_config)
   lspconfig.gopls.setup(vim.tbl_extend('force', default_config, {
@@ -175,6 +177,7 @@ end
 return function()
   -- Debugging
   -- vim.lsp.set_log_level("debug")
+  require('neodev').setup({})
   require('mason').setup()
   require('mason-lspconfig').setup({ automatic_installation = true })
   setup_servers()

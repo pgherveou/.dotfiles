@@ -1,9 +1,4 @@
 return function()
-  -- vim.cmd([[
-  -- set foldmethod=expr
-  -- set foldexpr=nvim_treesitter#foldexpr()
-  -- ]])
-
   local function disable(_, bufnr)
     return vim.api.nvim_buf_line_count(bufnr) > 10000
   end
