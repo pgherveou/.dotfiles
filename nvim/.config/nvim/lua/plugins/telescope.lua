@@ -1,4 +1,4 @@
-return function()
+local config = function()
   local telescope = require('telescope')
   local themes = require('telescope.themes')
   local actions = require('telescope.actions')
@@ -61,6 +61,8 @@ return function()
         ['<Leader>fg'] = { function() require("telescope.builtin").live_grep() end, desc = 'Search with Live grep' },
         ['<Leader>fs'] = { function() require("telescope.builtin").grep_string() end, desc = 'Search from word under cursor' },
         ['<Leader>fo'] = { function() require("telescope.builtin").oldfiles() end, desc = 'Search recent files', },
+        ['<Leader>fl'] = { function() require("telescope.builtin").lsp_document_symbols() end, desc = 'List lsp symbols for current buffer', },
+        ['<Leader>s'] = { function() require("telescope.builtin").lsp_document_symbols() end, desc = 'List lsp symbols for current buffer', },
         ['<Leader>fr'] = { function() require("telescope.builtin").resume() end, desc = 'Resume search' },
         ['<leader>f/'] = { function() require("telescope").extensions.live_grep_args.live_grep_args() end, desc = 'Search with raw grep', },
       },
@@ -71,3 +73,18 @@ return function()
   })
   -- stylua: ignore end
 end
+
+return {
+  'nvim-telescope/telescope.nvim',
+  dependencies = {
+    'nvim-telescope/telescope-live-grep-args.nvim',
+    'nvim-telescope/telescope-file-browser.nvim',
+    'nvim-telescope/telescope-github.nvim',
+    'nvim-telescope/telescope-ui-select.nvim',
+    'ThePrimeagen/git-worktree.nvim',
+    'ThePrimeagen/refactoring.nvim',
+    'ThePrimeagen/harpoon',
+    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+  },
+  config = config,
+}

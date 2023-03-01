@@ -12,17 +12,14 @@ enum enc_mode_t {
   VOLUME,
   BRIGHTNESS,
   VIM_QF,
-  TAB,
   AFTER_LAST_MODE
 };
 
 enum enc_mode_t enc_current_mode = 0;
-bool scroll_fast = true;
+bool scroll_fast = false;
 
 const char *get_enc_str(void) {
   switch (enc_current_mode) {
-  case TAB:
-    return "TAB";
   case ZOOM:
     return "Zoom";
   case SCROLL:
@@ -86,10 +83,10 @@ void brightness(enc_action_t action) {
 void slack(enc_action_t action) {
   switch (action & ENC_MSK) {
   case ENC_CW:
-    tap_code16(G(KC_RBRC));
+    tap_code16(CMD(KC_RBRC));
     break;
   case ENC_CCW:
-    tap_code16(G(KC_LBRC));
+    tap_code16(CMD(KC_LBRC));
     break;
   case ENC_DOWN:
     tap_code16(LSG(KC_T)); // go to thread
@@ -102,10 +99,18 @@ void slack(enc_action_t action) {
 void chrome(enc_action_t action) {
   switch (action & ENC_MSK) {
   case ENC_CW:
+#if defined(__APPLE__)
     tap_code16(LAG(KC_RIGHT));
+#else
+    tap_code16(C(KC_TAB));
+#endif
     break;
   case ENC_CCW:
+#if defined(__APPLE__)
     tap_code16(LAG(KC_LEFT));
+#else
+    tap_code16(C(S(KC_TAB)));
+#endif
     break;
   default:
     break;
@@ -164,13 +169,13 @@ void vim_quickfix(enc_action_t action) {
 void zoom(enc_action_t action) {
   switch (action & ENC_MSK) {
   case ENC_CW:
-    tap_code16(G(KC_EQUAL));
+    tap_code16(CMD(KC_EQUAL));
     break;
   case ENC_CCW:
-    tap_code16(G(KC_MINUS));
+    tap_code16(CMD(KC_MINUS));
     break;
   case ENC_DOWN:
-    tap_code16(G(KC_0));
+    tap_code16(CMD(KC_0));
     break;
   default:
     break;
@@ -209,40 +214,8 @@ void media(enc_action_t action) {
   }
 }
 
-bool is_alt_tab_active = false;
-uint16_t alt_tab_timer = 0;
-const uint16_t alt_tab_timeout = 500;
-void window(enc_action_t action) {
-  uint16_t kc;
-  switch (action & ENC_MSK) {
-  case ENC_TICK:
-    if (is_alt_tab_active && timer_elapsed(alt_tab_timer) > alt_tab_timeout) {
-      unregister_code(KC_LGUI);
-      is_alt_tab_active = false;
-    }
-    return;
-  case ENC_CW:
-    kc = KC_TAB;
-    break;
-  case ENC_CCW:
-    kc = S(KC_TAB);
-    break;
-  default:
-    return;
-  }
-  if (!is_alt_tab_active) {
-    register_code(KC_LGUI);
-  }
-  tap_code16(kc);
-  is_alt_tab_active = true;
-  alt_tab_timer = timer_read();
-}
-
 void exec_mode(enc_action_t action) {
   switch (enc_current_mode) {
-  case TAB:
-    window(action);
-    break;
   case ZOOM:
     zoom(action);
     break;
@@ -284,7 +257,7 @@ void encoder_execute(uint8_t index, enc_action_t action) {
 
 // Some actions have a timeout, so they
 // need to get a tick every so often
-void matrix_scan_enc(void) { window(ENC_TICK); }
+void matrix_scan_enc(void) {}
 
 bool pressed[2];
 bool encoder_update_user(uint8_t index, bool clockwise) {

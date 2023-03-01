@@ -6,13 +6,6 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufRead', 'FileType *' }, {
   end,
 })
 
--- Execute PackeCompile when this file is updated
-vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
-  pattern = vim.fn.expand('~') .. '/.dotfiles/nvim/.config/nvim/lua/plugins/init.lua',
-  callback = function()
-    require('packer').compile()
-  end,
-})
 -- run keymapviz for keymap.c files
 vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
   pattern = vim.fn.expand('~') .. '/.dotfiles/qmk/**/keymap.c',
@@ -27,7 +20,7 @@ vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
   pattern = '*.bzl,*.bazel,WORKSPACE,BUILD',
   callback = function()
-    require('plugins.formatter').bzl_formatter()
+    require('utils.formatter').bzl_formatter()
   end,
 })
 

@@ -41,12 +41,10 @@ alias v=nvim
 alias ..="cd .."
 alias ...="cd ../.."
 alias vimrc="vim ~/.config/nvim/init.vim"
-alias vimbbl="vim ~/src/bbl"
 export EDITOR=vim
 
 # clangd
 export PATH="/usr/local/opt/llvm/bin:$PATH"
-
 
 # Deno
 export DENO_INSTALL="$HOME/.deno"
@@ -59,10 +57,8 @@ export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export CARGO_NET_GIT_FETCH_WITH_CLI=true
 
-
 # Kubectl
-[[ /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)
-
+[[ -f /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)
 
 # Use a prefix with git-pile
 # see https://github.com/keith/git-pile#optional
@@ -100,7 +96,7 @@ openx(){
 
 # bazel
 alias bazel=bazelisk
-compdef bazelisk=bazel
+# compdef bazelisk=bazel
 
 # Envoy exports required for make_format 
 export BUILDIFIER_BIN=$(which buildifier)
@@ -108,7 +104,8 @@ export BUILDOZER_BIN=$(which buildozer)
 export CLANG_FORMAT=$(which clang-format)
 
 # fzf config
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
 # https://medium.com/@_ahmed_ab/crazy-super-fast-fuzzy-search-9d44c29e14f
 # export FZF_DEFAULT_OPTS='--height=70% --preview="less {}" --bind shift-up:preview-page-up --preview-window=right:60%:wrap' 
 # export FZF_DEFAULT_OPTS='--height=70% --preview="bat --color=always --style=numbers {}" --preview-window=right:60%:wrap' # --bind control-d:preview-page-down control-u:preview-page-up' 
@@ -122,23 +119,5 @@ export FZF_CTRL_T_COMMAND='rg --no-messages --files'
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-PATH=$PATH:/Users/pgherveou/.spcli/bin
 
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
-        . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 

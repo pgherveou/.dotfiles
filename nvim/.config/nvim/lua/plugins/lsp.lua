@@ -98,7 +98,7 @@ local setup_servers = function()
         use_telescope = true,
       },
       inlay_hints = {
-        show_parameter_hints = false,
+        show_parameter_hints = true,
         parameter_hints_prefix = '',
         other_hints_prefix = '',
       },
@@ -124,6 +124,7 @@ local setup_servers = function()
             desc = 'Display hover actions',
           },
           ['<leader>t'] = { cmd = ':RustTest<CR>', desc = 'Run tests' },
+          ['<leader>gt'] = { cmd = ':RustTest<CR>', desc = 'Run tests' },
         })
       end,
     },
@@ -139,6 +140,8 @@ local setup_servers = function()
       },
     },
   })
+
+  lspconfig.lua_ls.setup(default_config)
 
   lspconfig.bashls.setup(default_config)
   lspconfig.golangci_lint_ls.setup(default_config)
@@ -171,11 +174,33 @@ local setup_servers = function()
   })
 end
 
-return function()
-  -- Debugging
-  -- vim.lsp.set_log_level("debug")
-  require('mason').setup()
-  require('mason-lspconfig').setup({ automatic_installation = true })
-  setup_servers()
-  require('plugins.lsp.null').setup(format_on_save)
-end
+return {
+  'neovim/nvim-lspconfig',
+  dependencies = {
+    'williamboman/mason.nvim',
+    'williamboman/mason-lspconfig.nvim',
+    'nvim-lua/plenary.nvim',
+    'hrsh7th/cmp-nvim-lsp',
+    'jose-elias-alvarez/nvim-lsp-ts-utils',
+    'jose-elias-alvarez/null-ls.nvim',
+    'jayp0521/mason-null-ls.nvim',
+    'RRethy/vim-illuminate',
+    'simrat39/rust-tools.nvim',
+    'b0o/schemastore.nvim',
+    'simrat39/symbols-outline.nvim',
+    'mfussenegger/nvim-jdtls',
+    'ThePrimeagen/refactoring.nvim',
+    'folke/neodev.nvim',
+  },
+  config = function()
+    require('symbols-outline').setup()
+    require('neodev').setup({})
+    require('mason').setup()
+    require('mason-lspconfig').setup({ automatic_installation = true })
+    setup_servers()
+    require('plugins.lsp.null').setup(format_on_save)
+    require('mason-null-ls').setup({
+      ensure_installed = { 'stylua', 'jq', 'codespell' },
+    })
+  end,
+}
