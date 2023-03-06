@@ -1,3 +1,15 @@
+local builtin = function(fn, args)
+  return function()
+    pcall(require('telescope.builtin')[fn], args)
+  end
+end
+
+local extension = function(name, fn, args)
+  return function()
+    pcall(require('telescope').extensions[name][fn], args)
+  end
+end
+
 local config = function()
   local telescope = require('telescope')
   local themes = require('telescope.themes')
@@ -50,28 +62,9 @@ local config = function()
   telescope.load_extension('gh')
   telescope.load_extension('harpoon')
   telescope.load_extension('ui-select')
-  telescope.load_extension('refactoring')
 
-  -- stylua: ignore start
-  require('utils').keymaps({
-      ['n'] = {
-        ['<Leader>fb'] = { function() require("telescope.builtin").buffers() end, desc = 'Search buffers' },
-        ['<Leader>fe'] = { function() require('telescope').extensions.file_browser.file_browser({ path = '%:p:h', hidden = true }) end, desc = 'Browse files' },
-        ['<Leader>ff'] = { function() require('telescope.builtin').find_files({ follow = true, hidden = true }) end, desc = 'Search files' },
-        ['<Leader>fg'] = { function() require("telescope.builtin").live_grep() end, desc = 'Search with Live grep' },
-        ['<Leader>fs'] = { function() require("telescope.builtin").grep_string() end, desc = 'Search from word under cursor' },
-        ['<Leader>fo'] = { function() require("telescope.builtin").oldfiles() end, desc = 'Search recent files', },
-        ['<Leader>fl'] = { function() require("telescope.builtin").lsp_document_symbols() end, desc = 'List lsp symbols for current buffer', },
-        ['<Leader>s'] = { function() require("telescope.builtin").lsp_document_symbols() end, desc = 'List lsp symbols for current buffer', },
-        ['<Leader>fr'] = { function() require("telescope.builtin").resume() end, desc = 'Resume search' },
-        ['<leader>f/'] = { function() require("telescope").extensions.live_grep_args.live_grep_args() end, desc = 'Search with raw grep', },
-      },
-      ['v'] = {
-        ['<leader>fs'] = { function() require("telescope.builtin").grep_string({ search =  vim.fn.expand('<cword>') }) end, desc = 'Search from selection' },
-        ['<leader>rr'] = { function() require("telescope").extensions.refactoring.refactors() end, desc = 'Search refactors' },
-      }
-  })
-  -- stylua: ignore end
+  require('refactoring').setup({})
+  telescope.load_extension('refactoring')
 end
 
 return {
@@ -87,4 +80,30 @@ return {
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
   },
   config = config,
+  layzy = true,
+  keys = {
+    -- normal
+    { '<Leader>fb', builtin('buffers'), desc = 'Search buffers' },
+    {
+      '<Leader>fe',
+      extension('file_browser', 'file_browser', { path = '%:p:h', hidden = true }),
+      desc = 'Browse files',
+    },
+    { '<Leader>ff', builtin('find_files', { follow = true, hidden = true }), desc = 'Search files' },
+    { '<Leader>fg', builtin('live_grep'), desc = 'Search with Live grep' },
+    { '<Leader>fs', builtin('grep_string'), desc = 'Search from word under cursor' },
+    { '<Leader>fo', builtin('oldfiles'), desc = 'Search recent files' },
+    { '<Leader>fl', builtin('lsp_document_symbols'), desc = 'List lsp symbols for current buffer' },
+    { '<Leader>s', builtin('lsp_document_symbols'), desc = 'List lsp symbols for current buffer' },
+    { '<Leader>fr', builtin('resume'), desc = 'Resume search' },
+    { '<leader>f/', extension('live_grep_args', 'live_grep_args'), desc = 'Search with raw grep' },
+    -- visual
+    {
+      '<leader>fs',
+      builtin('grep_string', { search = vim.fn.expand('<cword>') }),
+      mode = 'v',
+      desc = 'Search from selection',
+    },
+    { '<leader>rr', extension('refactoring', 'refactors'), mode = 'v', desc = 'Search refactors' },
+  },
 }

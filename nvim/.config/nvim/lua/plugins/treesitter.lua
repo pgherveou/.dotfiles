@@ -11,6 +11,8 @@ local config = function()
       'go',
       'rust',
       'typescript',
+      'markdown',
+      'markdown_inline',
       'tsx',
       'c',
       'cpp',
@@ -23,6 +25,7 @@ local config = function()
     },
     highlight = {
       enable = true,
+      additional_vim_regex_highlighting = { 'markdown' },
       disable = disable,
     },
     textobjects = {

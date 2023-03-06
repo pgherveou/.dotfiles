@@ -87,7 +87,14 @@ local setup_servers = function()
   local codelldb = mason_registry.get_package('codelldb')
   local extension_path = codelldb:get_install_path() .. '/extension/'
   local codelldb_path = extension_path .. 'adapter/codelldb'
-  local liblldb_path = extension_path .. 'lldb/lib/liblldb.dylib'
+
+  -- use .dylib if running on macos .so if running on linux
+  local liblldb_path = extension_path .. 'lldb/lib/liblldb'
+  if vim.fn.has('mac') == 1 then
+    liblldb_path = liblldb_path .. '.dylib'
+  else
+    liblldb_path = liblldb_path .. '.so'
+  end
 
   require('rust-tools').setup({
     dap = {
@@ -188,7 +195,6 @@ return {
     'simrat39/rust-tools.nvim',
     'b0o/schemastore.nvim',
     'simrat39/symbols-outline.nvim',
-    'mfussenegger/nvim-jdtls',
     'ThePrimeagen/refactoring.nvim',
     'folke/neodev.nvim',
   },

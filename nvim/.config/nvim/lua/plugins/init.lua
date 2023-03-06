@@ -56,6 +56,9 @@ return {
     end,
   },
 
+  -- better buffer deletion
+  'ojroques/nvim-bufdel',
+
   -- Move to and from Tmux panes and Vim panes
   'christoomey/vim-tmux-navigator',
 
@@ -69,6 +72,7 @@ return {
   {
     'fatih/vim-go',
     build = ':GoUpdateBinaries',
+    ft = { 'go' },
     config = function()
       vim.g.go_term_reuse = 1
       vim.g.go_term_enabled = 1
@@ -137,21 +141,6 @@ return {
 
   -- highlight yanked text
   'machakann/vim-highlightedyank',
-
-  -- json navigation
-  {
-    'theprimeagen/jvim.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
-  },
-
-  -- lsp refactoring
-  {
-    'ThePrimeagen/refactoring.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
-    config = function()
-      require('refactoring').setup({})
-    end,
-  },
 
   -- lsp progress
   {
