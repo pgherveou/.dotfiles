@@ -18,6 +18,7 @@ vim.opt.wrap = false -- No line wrapping
 vim.opt.number = true -- Set line Numbers
 vim.opt.shiftround = true -- Round << and >> to multiples of shiftwidth
 vim.opt.shiftwidth = 2 -- The space << and >> moves the lines
+vim.opt.showmode = false -- Hide mode
 vim.opt.showcmd = true -- Show command information on the right side of the command line
 vim.opt.smartcase = true -- Ignore case if search is lowercase, otherwise case-sensitive
 vim.opt.smartindent = true -- Smart auto-indent when creating a new line

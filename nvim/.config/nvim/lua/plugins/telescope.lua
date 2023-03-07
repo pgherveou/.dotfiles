@@ -62,6 +62,7 @@ local config = function()
   telescope.load_extension('gh')
   telescope.load_extension('harpoon')
   telescope.load_extension('ui-select')
+  telescope.load_extension('advanced_git_search')
 
   require('refactoring').setup({})
   telescope.load_extension('refactoring')
@@ -73,14 +74,15 @@ return {
     'nvim-telescope/telescope-live-grep-args.nvim',
     'nvim-telescope/telescope-file-browser.nvim',
     'nvim-telescope/telescope-github.nvim',
+    'aaronhallaert/advanced-git-search.nvim',
     'nvim-telescope/telescope-ui-select.nvim',
-    'ThePrimeagen/git-worktree.nvim',
     'ThePrimeagen/refactoring.nvim',
     'ThePrimeagen/harpoon',
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
   },
   config = config,
   layzy = true,
+  cmd = 'Telescope',
   keys = {
     -- normal
     { '<Leader>fb', builtin('buffers'), desc = 'Search buffers' },
