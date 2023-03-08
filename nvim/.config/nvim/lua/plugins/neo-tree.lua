@@ -7,9 +7,9 @@ return {
     'MunifTanjim/nui.nvim',
   },
   keys = {
-    { '<leader>e', '<cmd>Neotree toggle<cr>', desc = 'Open file explorer' },
-    { '<leader>E', '<cmd>NeotreeReveal<cr>', desc = 'Reveal current file in neo-tree' },
+    { '<leader>e', '<cmd>Neotree toggle reveal<cr>', desc = 'Open file explorer' },
   },
+  cmd = { 'Neotree', 'NeotreeReveal' },
   config = function()
     require('neo-tree').setup({
       close_if_last_window = true,
