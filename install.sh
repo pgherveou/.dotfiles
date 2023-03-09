@@ -25,6 +25,7 @@ STOW_FOLDERS=(
 	"qmk"
 	"zsh"
 	"karabiner"
+	"bin"
 )
 
 # clone tmux plugin manager
@@ -59,12 +60,6 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 	sudo npm install -g "${NPM_PKGS[@]}"
 else
 	npm install -g "${NPM_PKGS[@]}"
-fi
-
-# install vimplug
-vimplug="$HOME/.local/share/nvim/site/autoload/plug.vim"
-if [ ! -f vimplug ]; then
-	curl -fLo "$vimplug" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
 popd

@@ -40,8 +40,10 @@ alias vim=nvim
 alias v=nvim
 alias ..="cd .."
 alias ...="cd ../.."
-alias vimrc="vim ~/.config/nvim/init.vim"
-export EDITOR=vim
+export EDITOR=nvim
+
+# local scripts
+export PATH=$PATH:~/.local/scripts
 
 # clangd
 export PATH="/usr/local/opt/llvm/bin:$PATH"
@@ -106,9 +108,6 @@ export CLANG_FORMAT=$(which clang-format)
 # fzf config
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
-# https://medium.com/@_ahmed_ab/crazy-super-fast-fuzzy-search-9d44c29e14f
-# export FZF_DEFAULT_OPTS='--height=70% --preview="less {}" --bind shift-up:preview-page-up --preview-window=right:60%:wrap' 
-# export FZF_DEFAULT_OPTS='--height=70% --preview="bat --color=always --style=numbers {}" --preview-window=right:60%:wrap' # --bind control-d:preview-page-down control-u:preview-page-up' 
 export FZF_CTRL_T_OPTS="--preview='bat --color=always --style=numbers {}' --bind ctrl-u:preview-page-up,ctrl-d:preview-page-down"
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --exclude .git'
 export FZF_CTRL_T_COMMAND='rg --no-messages --files'
