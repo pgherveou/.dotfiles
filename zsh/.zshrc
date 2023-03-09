@@ -6,7 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # OSX antigen file
-source ~/antigen.zsh
+source ~/.antigen.zsh
 
 if [[ -z "${ANTIGEN_LOADED}" ]]; then
   # Load the oh-my-zsh's library.
@@ -37,6 +37,7 @@ if [[ -z "${ANTIGEN_LOADED}" ]]; then
 fi
 
 alias vim=nvim
+alias code=codium
 alias v=nvim
 alias ..="cd .."
 alias ...="cd ../.."
@@ -56,7 +57,6 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 
 # Rust
-export PATH="$HOME/.cargo/bin:$PATH"
 export CARGO_NET_GIT_FETCH_WITH_CLI=true
 
 # Kubectl

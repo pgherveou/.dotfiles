@@ -1,5 +1,5 @@
-nvim/.config/nvim/plugged
-nvim/.config/nvim/plugin/packer_compiled.lua
+bin/.local/state
+bin/.local/share
 .ccls-cache
 compile_commands.json
 *.bac
@@ -7,4 +7,3 @@ compile_commands.json
 qmk/.cache
 .DS_Store
 alfred/Alfred.alfredpreferences/workflows
-packer_compiled.lua

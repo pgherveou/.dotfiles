@@ -9,8 +9,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	if ! command -v brew &>/dev/null; then
 		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 	fi
-	# setup spectacle
-	cp -r spectacles/Shortcuts.json "$HOME/Library/Application Support/Spectacle/Shortcuts.json" 2>/dev/null
+
+  ln -s /opt/homebrew/share/antigen/antigen.zsh ~/.antigen.zsh
+	brew bundle install
 fi
 
 # create deeplinks to the home folder

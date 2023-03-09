@@ -99,7 +99,6 @@ key_bindings:
   - { key: V, mods: Command, action: Paste }
   - { key: C, mods: Command, action: Copy }
   - { key: Semicolon, mods: Control, chars: "\x02k" } # clear terminal 
-  - { key: K, mods: Command, chars: "\x02k" } # clear terminal 
   - { key: I, mods: Super, chars: "\x02[" } # tmux edit mod
   - { key: Key0, mods: Control, action: ResetFontSize }
   - { key: J, mods: Alt, chars: "\x1bj" }
