@@ -10,8 +10,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 	fi
 
-  ln -s /opt/homebrew/share/antigen/antigen.zsh ~/.antigen.zsh
-	brew bundle install
+
+	# ln -s /opt/homebrew/share/antigen/antigen.zsh ~/.antigen.zsh
+	# brew bundle install
 fi
 
 # create deeplinks to the home folder
@@ -27,6 +28,8 @@ STOW_FOLDERS=(
 	"zsh"
 	"karabiner"
 	"bin"
+	"yabai"
+	"skhdrc"
 )
 
 # clone tmux plugin manager
