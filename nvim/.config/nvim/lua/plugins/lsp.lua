@@ -17,7 +17,6 @@ u.lua_command('LspDiagQuickfix', 'vim.diagnostic.setqflist()')
 
 -- default lsp mappings
 local default_lsp_mappings = {
-  ['gs'] = { cmd = ':SymbolsOutline<CR>', desc = 'Display Symbols outline' },
   ['gd'] = { cmd = ':LspDef<CR>', desc = 'Go to definition' },
   ['gf'] = { cmd = ':LspRefs<CR>', desc = 'Go to references' },
   ['gr'] = { cmd = ':LspRename<CR>', desc = 'Rename symbol' },
@@ -113,8 +112,12 @@ local setup_servers = function()
     server = {
       settings = {
         ['rust-analyzer'] = {
+          rustfmt = {
+            extraArgs = { '+nightly' },
+          },
           checkOnSave = {
             command = 'clippy',
+            extraArgs = { '--profile', 'rust-analyzer' },
           },
         },
       },
@@ -194,12 +197,10 @@ return {
     'RRethy/vim-illuminate',
     'simrat39/rust-tools.nvim',
     'b0o/schemastore.nvim',
-    'simrat39/symbols-outline.nvim',
     'ThePrimeagen/refactoring.nvim',
     'folke/neodev.nvim',
   },
   config = function()
-    require('symbols-outline').setup()
     require('neodev').setup({})
     require('mason').setup()
     require('mason-lspconfig').setup({ automatic_installation = true })

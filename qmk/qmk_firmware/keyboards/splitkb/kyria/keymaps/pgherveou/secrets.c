@@ -12,7 +12,7 @@ static const char *const secrets[] = {"one", "two", "three"};
 
 bool process_record_secrets(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-  case KC_SECRET_1 ... KC_SECRET_3:
+  case KC_SECRET_1 ... KC_SECRET_4:
     if (record->event.pressed) {
       clear_mods();
       clear_oneshot_mods();
