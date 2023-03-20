@@ -85,7 +85,9 @@ hyper - k : yabai -m window --focus north || yabai -m display --focus north
 hyper - l : yabai -m window --focus east|| yabai -m display --focus east
 
 hyper - n : cur_window=$(yabai_cur_window_id) && \
-            yabai_is_zoomed_or_solo && yabai -m window --display $(yabai_next_display) --focus ${cur_window} --toggle zoom-fullscreen || yabai -m window --display $(yabai_next_display) --focus ${cur_window}
+            yabai_is_zoomed && yabai -m window --display $(yabai_next_display) --focus ${cur_window} --toggle zoom-fullscreen || yabai -m window --display $(yabai_next_display) --focus ${cur_window}
+hyper - p : cur_window=$(yabai_cur_window_id) && \
+            yabai_is_zoomed && yabai -m window --display $(yabai_prev_display) --focus ${cur_window} --toggle zoom-fullscreen || yabai -m window --display $(yabai_next_display) --focus ${cur_window}
 
 # swap managed window
 # shift + alt - h : yabai -m window --swap north
