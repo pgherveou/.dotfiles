@@ -30,7 +30,7 @@ font:
   normal:
     # grap font name from: fc-list
     family: "MesloLGMNerdFontComplete Nerd Font"
-  size: 14
+  size: 16
 
 bell:
   duration: 0
