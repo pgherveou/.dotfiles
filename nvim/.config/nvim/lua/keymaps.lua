@@ -65,6 +65,9 @@ local mappings = {
 
     -- Replay last command in tmux pane, by calling tmux send-keys -t bottom Up Enter
     ['<leader>tk'] = { ':silent :!tmux send-keys -t bottom Up Enter<CR>', desc = 'Replay last command in tmux pane' },
+
+    -- open the pull request
+    ['<leader>gv'] = { ':!gh pr view --web<CR>', desc = 'Open the pull request with gh in the web browser' },
   },
   v = {
     -- Don't copy the contents of an overwritten selection.

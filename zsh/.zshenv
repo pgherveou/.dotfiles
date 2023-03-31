@@ -2,7 +2,7 @@
 . "$HOME/.cargo/env"
 
 # https://developer.1password.com/docs/ssh/get-started#step-4-configure-your-ssh-or-git-client
-export SSH_AUTH_SOCK=~/.1password/agent.sock
+# export SSH_AUTH_SOCK=~/.1password/agent.sock
 
 # returns if the current window is zoomed
 function yabai_is_zoomed {

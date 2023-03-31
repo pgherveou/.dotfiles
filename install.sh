@@ -66,4 +66,19 @@ else
 	npm install -g "${NPM_PKGS[@]}"
 fi
 
-popd
+# install cargo binaries
+CARGO_BIN=(
+	"ra-multiplex"
+	"bacon"
+	"cargo-watch"
+	"evcxr"
+)
+
+for bin in "${CARGO_BIN[@]}"; do
+	cargo install "$bin"
+done
+
+# link launchd services
+sudo stow -t /Library/LaunchDaemons launchdd
+
+pop

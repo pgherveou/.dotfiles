@@ -110,6 +110,7 @@ local setup_servers = function()
       },
     },
     server = {
+      cmd = { '/Users/pg/github/ra-multiplex/target/release/ra-multiplex' },
       settings = {
         ['rust-analyzer'] = {
           rustfmt = {
@@ -133,8 +134,7 @@ local setup_servers = function()
             cmd = ':lua require("rust-tools").hover_actions.hover_actions()<CR>',
             desc = 'Display hover actions',
           },
-          ['<leader>t'] = { cmd = ':RustTest<CR>', desc = 'Run tests' },
-          ['<leader>gt'] = { cmd = ':RustTest<CR>', desc = 'Run tests' },
+          ['<leader>l'] = { cmd = ':RustLast<CR>', desc = 'Run or Debug last runnable' },
         })
       end,
     },

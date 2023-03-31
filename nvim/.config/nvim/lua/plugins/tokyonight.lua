@@ -9,10 +9,18 @@ return {
     'nvim-tree/nvim-web-devicons',
   },
   config = function()
+    require('tokyonight').setup({
+
+      style = 'storm',
+      -- on_highlights = function(hl)
+      --   hl.DiffDelete = { bg = '#3f2d3d', fg = '#3f2d3d' }
+      -- end,
+    })
+
     vim.cmd('colorscheme tokyonight')
-    vim.g.tokyonight_style = 'storm'
-    vim.g.tokyonight_italic_functions = true
-    vim.g.tokyonight_italic_comments = true
+    -- vim.g.tokyonight_style = 'storm'
+    -- vim.g.tokyonight_italic_functions = true
+    -- vim.g.tokyonight_italic_comments = true
 
     require('nvim-web-devicons').setup({
       default = true,

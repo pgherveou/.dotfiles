@@ -38,19 +38,5 @@ return {
       end,
       desc = 'Navigate to file 2',
     },
-    {
-      '<leader>l',
-      function()
-        require('harpoon.ui').nav_file(3)
-      end,
-      desc = 'Navigate to file 3',
-    },
-    {
-      '<leader>;',
-      function()
-        require('harpoon.ui').nav_file(4)
-      end,
-      desc = 'Navigate to file 4',
-    },
   },
 }

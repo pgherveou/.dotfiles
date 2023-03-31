@@ -24,3 +24,13 @@ vim.api.nvim_create_user_command('Delete', function()
     vim.fn.delete(file)
   end
 end, {})
+
+-- reload the current file by calling :BufDel first
+vim.api.nvim_create_user_command('BufReload', function()
+  local current_file = vim.fn.expand('%')
+  local current_position = vim.fn.getpos('.')
+
+  vim.cmd(':bd')
+  vim.cmd('edit ' .. current_file)
+  vim.fn.setpos('.', current_position)
+end, {})

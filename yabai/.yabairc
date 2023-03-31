@@ -53,14 +53,16 @@ yabai -m config \
 
 managed_apps=$(
 	cat <<EOF
+1Password
 Alacritty
 Element
 Finder
 Google Chrome
 Ledger Live
-SchildiChat
-1Password
+Microsoft Edge
 Notes
+Notion
+Spotify
 EOF
 )
 

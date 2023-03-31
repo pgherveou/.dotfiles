@@ -46,6 +46,9 @@ export EDITOR=nvim
 # local scripts
 export PATH=$PATH:~/.local/scripts
 
+# mason bin
+export PATH=$PATH:~/.local/share/nvim/mason/bin
+
 # clangd
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 

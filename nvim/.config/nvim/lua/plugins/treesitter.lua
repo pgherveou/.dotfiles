@@ -10,6 +10,7 @@ local config = function()
     ensure_installed = {
       'go',
       'rust',
+      'diff',
       'typescript',
       'markdown',
       'markdown_inline',
