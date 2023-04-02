@@ -68,13 +68,29 @@ local config = function()
   })
 end
 
-return {
+local ts_autotag = {
+  'windwp/nvim-ts-autotag',
+  dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  lazy = true,
+  ft = { 'html', 'xml', 'javascript', 'javascriptreact', 'typescriptreact', 'svelte', 'vue' },
+  setup = true,
+}
+
+local playground = {
+  'nvim-treesitter/playground',
+  dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  lazy = true,
+  cmd = { 'TSPlaygroundToggle' },
+  setup = true,
+}
+
+local ts = {
   'nvim-treesitter/nvim-treesitter',
   dependencies = {
-    'nvim-treesitter/playground',
     'nvim-treesitter/nvim-treesitter-textobjects',
-    'windwp/nvim-ts-autotag',
   },
   build = ':TSUpdate',
   config = config,
 }
+
+return { ts, ts_autotag, playground }

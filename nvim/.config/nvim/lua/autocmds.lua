@@ -37,3 +37,15 @@ vim.api.nvim_create_autocmd('FileType', {
     end
   end,
 })
+
+-- start rust-analyzer
+vim.api.nvim_create_augroup('rust-analyzer', { clear = true })
+vim.api.nvim_create_autocmd('BufRead', {
+  group = 'rust-analyzer',
+  pattern = '*.rs',
+  callback = function()
+    if vim.fn.executable('ra-multiplex-server') == 1 then
+      os.execute('ra-multiplex-server >/tmp/ra-multiplex-server.log 2>/tmp/ra-multiplex-server-error.log &')
+    end
+  end,
+})

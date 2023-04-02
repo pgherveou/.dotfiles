@@ -79,6 +79,6 @@ for bin in "${CARGO_BIN[@]}"; do
 done
 
 # link launchd services
-sudo stow -t /Library/LaunchDaemons launchdd
+# sudo stow -t /Library/LaunchDaemons launchdd
 
 pop

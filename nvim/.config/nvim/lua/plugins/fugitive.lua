@@ -1,7 +1,7 @@
 return {
   'tpope/vim-fugitive',
   lazy = true,
-  cmd = { 'Gvdiffsplit' },
+  cmd = { 'GlLog', 'Gvdiffsplit' },
   keys = {
     { '<leader>gs', ':vertical G<cr>', desc = '[Git] status window' },
     { '<leader>gj', ':diffget //3<cr>', desc = '[Git] Pick diffget 3' },
