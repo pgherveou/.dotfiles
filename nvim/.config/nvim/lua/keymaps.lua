@@ -1,7 +1,7 @@
 local mappings = {
   n = {
     -- Remove search highlight.
-    ['<Esc><Esc>'] = { ':nohl<CR>', desc = 'Remove search highlight' },
+    ['<Esc>'] = { ':nohl<CR>:echo<CR>', desc = 'Remove search highlight' },
 
     -- Repeat last command
     ['<leader>r'] = { '@:', desc = 'Repeat last command' },
@@ -15,8 +15,8 @@ local mappings = {
     ['Y'] = { 'yg$' },
     ['YY'] = { ':%y<cr>' },
 
-    -- select copied text
-    ['<leader>vp'] = { '`[v`]' },
+    -- select yanked text
+    ['<leader>y'] = { '`[v`]' },
 
     -- qq to record, Q to replay
     ['Q'] = { '@q', desc = 'Replay macro' },
@@ -93,6 +93,14 @@ local mappings = {
     ['<M-k>'] = { '<Esc>:m .-2<CR>==gi', desc = 'Move line up' },
   },
 }
+
+-- delete empty lines with dd, go to the black hole register
+vim.keymap.set('n', 'dd', function()
+  if vim.fn.getline('.') == '' then
+    return '"_dd'
+  end
+  return 'dd'
+end, { expr = true })
 
 -- Add undo breakpoints, useful when used in combination with C-o u (one shot command + undo)
 for _, v in ipairs({ '<Del>', '!', '(', ')', ',', '.', '?', '[', '[' }) do

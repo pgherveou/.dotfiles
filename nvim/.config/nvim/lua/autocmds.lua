@@ -38,14 +38,25 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
--- start rust-analyzer
-vim.api.nvim_create_augroup('rust-analyzer', { clear = true })
-vim.api.nvim_create_autocmd('BufRead', {
-  group = 'rust-analyzer',
-  pattern = '*.rs',
+-- wat use lisp for syntax highlighting
+vim.api.nvim_create_autocmd('BufRead,BufNewFile', {
+  group = 'vimrc',
+  pattern = '*.wat',
   callback = function()
-    if vim.fn.executable('ra-multiplex-server') == 1 then
-      os.execute('ra-multiplex-server >/tmp/ra-multiplex-server.log 2>/tmp/ra-multiplex-server-error.log &')
-    end
+    vim.bo.filetype = 'lisp'
   end,
 })
+
+-- kill rust-analyzer
+local kill_rust_analyzer = function()
+  os.execute('kill -9 $(ps -ef | grep rust-analyzer | grep -v grep | awk \'{print $2}\')')
+end
+
+vim.api.nvim_create_user_command('KillRustAnalyzer', kill_rust_analyzer, {})
+
+vim.api.nvim_create_user_command('RestartRustAnalyzer', function()
+  vim.cmd('LspStop')
+  kill_rust_analyzer()
+  vim.cmd('BufReload')
+  vim.cmd('LspRestart')
+end, {})

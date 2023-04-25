@@ -5,6 +5,10 @@ pushd "$HOME/.dotfiles"
 
 # mac only
 if [[ "$OSTYPE" == "darwin"* ]]; then
+	# keyboard repeat rate
+	defaults write -g KeyRepeat -int 1
+	defaults write -g InitialKevRepeat -int 13
+
 	# install brew if running from macos
 	if ! command -v brew &>/dev/null; then
 		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -30,6 +34,7 @@ STOW_FOLDERS=(
 	"yabai"
 	"skhdrc"
 	"cargo"
+	"ra-multiplex"
 )
 
 # clone tmux plugin manager

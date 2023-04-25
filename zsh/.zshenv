@@ -36,3 +36,27 @@ function yabai_prev_display {
   echo $prev_display
 }
 
+# Function to focus and move a window by application name
+function yabai_move_or_launch_app() {
+  app_name="$1"
+  target_space="$2"
+  shift 2
+  app_args="$*"
+
+  app_running=$(pgrep "$app_name")
+  if [ -n "$app_running" ]; then
+    app_window=$(yabai -m query --windows --display | jq -r "map(select(.app == \"$app_name\"))[0] | .id")
+    if [ -n "$app_window" ]; then
+      yabai -m window "$app_window" --space "$target_space"
+    else
+      yabai -m space --focus "$target_space"
+      open -a "$app_name" --args $app_args && sleep 1
+    fi
+  else
+    yabai -m space --focus "$target_space"
+    open -a "$app_name" --args $app_args && sleep 1
+  fi
+
+  yabai -m space --focus "$target_space"
+  yabai -m window --toggle zoom-fullscreen
+}

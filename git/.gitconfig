@@ -12,6 +12,8 @@
 	skippedCherryPicks = false
 [branch "main"]
 	pushRemote = NOPE
+[branch "master"]
+	pushRemote = NOPE
 [pile]
 	cleanupRemoteOnSubmitFailure = true
 [mergetool "fugitive"]

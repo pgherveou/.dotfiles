@@ -59,12 +59,6 @@ return {
   -- better buffer deletion
   'ojroques/nvim-bufdel',
 
-  -- Move to and from Tmux panes and Vim panes
-  'christoomey/vim-tmux-navigator',
-
-  -- Smooth scrolling
-  'psliwka/vim-smoothie',
-
   -- adjusts indentation based on filetype
   'tpope/vim-sleuth',
 

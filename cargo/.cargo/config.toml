@@ -1,3 +1,4 @@
+# https://github.com/rust-lang/rust-analyzer/issues/6007#issuecomment-1379342831
 [profile.rust-analyzer]
 inherits = "dev"
 

@@ -9,6 +9,7 @@ return {
   keys = {
     { '<leader>e', '<cmd>Neotree toggle reveal<cr>', desc = 'Open file explorer' },
   },
+  lazy = true,
   cmd = { 'Neotree', 'NeotreeReveal' },
   config = function()
     require('neo-tree').setup({

@@ -16,7 +16,7 @@ env:
 # Display tabs using this many cells (changes require restart)
 draw_bold_text_with_bright_colors: false
 
-alt_send_esc: false
+# alt_send_esc: false
 
 window:
   padding:
@@ -93,6 +93,9 @@ schemes:
 # "storm" uses a lighter BG color
 colors: *tokyo-night-storm
 
+window:
+  option_as_alt: Both
+
 key_bindings:
   # macos
   - { key: Escape, mods: Command, action: ToggleFullscreen }
@@ -100,10 +103,14 @@ key_bindings:
   - { key: C, mods: Command, action: Copy }
   - { key: I, mods: Super, chars: "\x02[" } # tmux edit mod
   - { key: Key0, mods: Control, action: ResetFontSize }
-  - { key: J, mods: Alt, chars: "\x1bj" }
-  - { key: K, mods: Alt, chars: "\x1bk" }
-  - { key: L, mods: Alt, chars: "\x1BF" }
-  - { key: H, mods: Alt, chars: "\x1BB" }
+  # - { key: J, mods: Alt, chars: "\x1bj" }
+  # - { key: K, mods: Alt, chars: "\x1bk" }
+  # - { key: L, mods: Alt, chars: "\x1BF" }
+  # - { key: H, mods: Alt, chars: "\x1BB" }
+  - { key: H, mods: Control|Shift, chars: "\x1b[72;6u" }
+  - { key: J, mods: Control|Shift, chars: "\x1b[74;6u" }
+  - { key: K, mods: Control|Shift, chars: "\x1b[75;6u" }
+  - { key: L, mods: Control|Shift, chars: "\x1b[76;6u" }
 
 mouse_bindings:
   - { mouse: Middle, action: PasteSelection }

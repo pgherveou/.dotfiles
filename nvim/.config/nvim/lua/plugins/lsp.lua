@@ -110,14 +110,16 @@ local setup_servers = function()
       },
     },
     server = {
-      cmd = { '/Users/pg/github/ra-multiplex/target/release/ra-multiplex' },
       settings = {
         ['rust-analyzer'] = {
+          diagnostics = {
+            disabled = { 'inactive-code' },
+          },
           rustfmt = {
             extraArgs = { '+nightly' },
           },
+          -- https://github.com/rust-lang/rust-analyzer/issues/6007#issuecomment-1379342831
           checkOnSave = {
-            command = 'clippy',
             extraArgs = { '--profile', 'rust-analyzer' },
           },
         },

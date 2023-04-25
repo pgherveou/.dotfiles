@@ -7,6 +7,7 @@ end
 return {
   'theprimeagen/jvim.nvim',
   ft = { 'json' },
+  lazy = true,
   keys = {
     { '<left>', jvim('to_parent'), desc = 'navigate to parent' },
     { '<right>', jvim('descend'), desc = 'navigate to child' },

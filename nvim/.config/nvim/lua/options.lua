@@ -14,7 +14,6 @@ vim.opt.lazyredraw = true -- Don't redraw vim in all situations
 vim.opt.mouse = 'a' -- Enable using the mouse if terminal emulator
 vim.opt.startofline = false -- Keep cursor in the same place after saves
 vim.opt.swapfile = false -- No swap file
-vim.opt.wrap = false -- No line wrapping
 vim.opt.number = true -- Set line Numbers
 vim.opt.shiftround = true -- Round << and >> to multiples of shiftwidth
 vim.opt.shiftwidth = 2 -- The space << and >> moves the lines
@@ -33,6 +32,11 @@ vim.opt.relativenumber = true -- relative number
 vim.opt.pumheight = 10 -- maximum number of item to show in the completion menu
 vim.opt.laststatus = 3 -- always show the status line
 -- vim.opt.cmdheight = 0 -- height of the command line
+-- :set fillchars-=diff
+vim.opt.fillchars = { diff = ' ' } -- no ~ at the end of the buffer
+
+-- no wrap
+vim.wo.wrap = false
 
 -- Ignore these folders for completions
 vim.o.wildignore = vim.o.wildignore

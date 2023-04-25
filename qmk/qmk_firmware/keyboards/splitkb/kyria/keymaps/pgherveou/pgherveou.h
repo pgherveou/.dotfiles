@@ -34,6 +34,7 @@ enum custom_keycodes {
 
 #define HYP_A MT(MOD_HYPR, KC_A)
 #define CTL_TAB MT(MOD_LCTL, KC_TAB)
+#define CTL_S_TILT MT(MOD_LSFT | MOD_LCTL, KC_GRV)
 #define SFT_PIP MT(MOD_LSFT, KC_PIPE)
 #define SFT_MIN MT(MOD_RSFT, KC_MINUS)
 #define GUI_DEL MT(MOD_LGUI, KC_DEL)

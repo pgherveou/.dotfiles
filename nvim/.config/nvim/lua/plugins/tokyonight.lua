@@ -26,16 +26,31 @@ return {
       default = true,
     })
 
+    local file_name = {
+      'filename',
+      file_status = true, -- displays file status (readonly status, modified status)
+      path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
+    }
     require('lualine').setup({
+      options = {
+        theme = 'tokyonight',
+        icons_enabled = true,
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
+        disabled_filetypes = { 'neo-tree', 'Outline', 'fugitive' },
+      },
+
       sections = {
         lualine_c = {
-          {
-            'filename',
-            file_status = true, -- displays file status (readonly status, modified status)
-            path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
-          },
+          file_name,
         },
         lualine_z = { get_progress },
+      },
+      winbar = {
+        lualine_c = { file_name },
+      },
+      inactive_winbar = {
+        lualine_c = { file_name },
       },
     })
   end,

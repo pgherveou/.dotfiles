@@ -1,3 +1,4 @@
+-- good example https://github.com/AlexSWall/dot-files/blob/main/neovim/lua/plugins/configs/dap.lua#L92
 local function dap_fn(fn)
   return function()
     pcall(require('dap')[fn])
@@ -18,9 +19,24 @@ return {
     { '<F3>', dap_fn('step_into'), desc = '[DAP] step into' },
     { '<F4>', dap_fn('step_over'), desc = '[DAP] step over' },
     { '<F5>', dap_fn('continue'), desc = '[DAP] continue' },
+    { '<F10>', dap_fn('run_last'), desc = '[DAP] run last' },
+    { '<F11>', dap_fn('terminate'), desc = '[DAP] terminate' },
     { '<leader>dc', dap_fn('clear_breakpoints'), desc = '[DAP] open repl' },
     { '<leader>dr', dap_fn('repl.open'), desc = '[DAP] open repl' },
     { '<leader>db', dap_fn('toggle_breakpoint'), desc = '[DAP] toggle breakpoint' },
+
+    { '<Leader>dk', dap_fn('up'), 'Go up a debugging frame' },
+    { '<Leader>dj', dap_fn('down'), 'Go down a debugging frame' },
+    { '<Leader>dl', dap_fn('focus_frame'), 'Go to the current debugger line for the current frame' },
+
+    {
+      '<Leader>d<Space>',
+      function()
+        require('dapui').toggle({ reset = true })
+      end,
+      'Toggle debugging REPL',
+    },
+
     {
       '<leader>dB',
       function()
@@ -46,7 +62,29 @@ return {
   config = function()
     local dap, dapui = require('dap'), require('dapui')
     dapui.setup()
-
+    -- dapui.setup({
+    --   layouts = {
+    --     {
+    --       elements = {
+    --         -- Elements can be strings or table with id and size keys.
+    --         { id = 'repl', size = 0.25 },
+    --         { id = 'watches', size = 0.25 },
+    --         { id = 'breakpoints', size = 0.20 },
+    --         { id = 'stacks', size = 0.30 },
+    --       },
+    --       size = 40,
+    --       position = 'left',
+    --     },
+    --     {
+    --       elements = {
+    --         { id = 'scopes', size = 0.60 },
+    --         { id = 'console', size = 0.40 },
+    --       },
+    --       size = 0.30,
+    --       position = 'bottom',
+    --     },
+    --   },
+    -- })
     -- open / close dap ui, automatically when debugging
     -- see https://github.com/rcarriga/nvim-dap-ui#usage
     -- todo look for more keymaps from tj config here: https://github.com/tjdevries/config_manager/blob/master/xdg_config/nvim/after/plugin/dap.lua

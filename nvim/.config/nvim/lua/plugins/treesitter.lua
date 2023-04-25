@@ -56,11 +56,10 @@ local config = function()
 
         set_jumps = true, -- whether to set jumps in the jumplist
         goto_next_start = {
-          [']f'] = '@function.outer',
-          [']a'] = '@parameter.outer',
+          ['<Down>'] = '@function.outer',
         },
         goto_previous_start = {
-          ['[f'] = '@function.outer',
+          ['<Up>'] = '@function.outer',
           ['[a'] = '@parameter.outer',
         },
       },
@@ -73,15 +72,7 @@ local ts_autotag = {
   dependencies = { 'nvim-treesitter/nvim-treesitter' },
   lazy = true,
   ft = { 'html', 'xml', 'javascript', 'javascriptreact', 'typescriptreact', 'svelte', 'vue' },
-  setup = true,
-}
-
-local playground = {
-  'nvim-treesitter/playground',
-  dependencies = { 'nvim-treesitter/nvim-treesitter' },
-  lazy = true,
-  cmd = { 'TSPlaygroundToggle' },
-  setup = true,
+  config = true,
 }
 
 local ts = {
@@ -93,4 +84,9 @@ local ts = {
   config = config,
 }
 
-return { ts, ts_autotag, playground }
+local ts_context = {
+  'nvim-treesitter/nvim-treesitter-context',
+  dependencies = { 'nvim-treesitter/nvim-treesitter' },
+}
+
+return { ts, ts_autotag, ts_context }

@@ -45,6 +45,11 @@ local config = function()
       },
     },
     pickers = {
+      live_grep = {
+        additional_args = function()
+          return { '--hidden' }
+        end,
+      },
       buffers = {
         path_display = { truncate = 3 },
       },
@@ -81,7 +86,7 @@ return {
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
   },
   config = config,
-  layzy = true,
+  lazy = true,
   cmd = 'Telescope',
   keys = {
     -- normal

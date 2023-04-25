@@ -7,8 +7,8 @@
 # see this wiki page for information:
 #  - https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#configure-scripting-addition
 #
-# yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
-# sudo yabai --load-sa
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+sudo yabai --load-sa
 #
 
 # global settings
@@ -46,27 +46,40 @@ yabai -m config \
 	mouse_action2 resize \
 	mouse_drop_action swap
 
+function setup_space {
+  local idx="$1"
+  local name="$2"
+  local space=
+  echo "setup space $idx : $name"
+
+  space=$(yabai -m query --spaces --space "$idx")
+  if [ -z "$space" ]; then
+    yabai -m space --create
+  fi
+
+  yabai -m space "$idx" --label "$name"
+}
+setup_space 1 alacritty
+setup_space 2 chrome
+setup_space 3 Element
+setup_space 4 youtube
+setup_space 5 other
+
+yabai -m rule --add app="^Alacritty$" space=1
+yabai -m rule --add app="^Google Chrome$" space=^2
+yabai -m rule --add app="^Element$" space=3
+yabai -m rule --add app="^Youtube$" space=^4
 # float system preferences. Most of these just disable Yabai form resizing them.
 # yabai -m rule --add app="^System Preferences$" sticky=on layer=above manage=off
 # yabai -m rule --add app="^Finder$" sticky=on layer=above manage=off
 # yabai -m rule --add app="^Activity Monitor$" sticky=on layer=above manage=off
 
-managed_apps=$(
+unmanaged_apps=$(
 	cat <<EOF
-1Password
-Alacritty
-Element
-Finder
-Google Chrome
-Ledger Live
-Microsoft Edge
-Notes
-Notion
-Spotify
 EOF
 )
 
-yabai -m rule --add app!="^($(echo "$managed_apps" | paste -sd '|' -))$" manage=off
+yabai -m rule --add app="^($(echo "$unmanaged_apps" | paste -sd '|' -))$" manage=off
 # yabai -m rule --add app!="^(Element|Ledger Live|Google Chrome|Alacritty|Finder|Notes)$" manage=off
 
 echo "yabai configuration loaded.."

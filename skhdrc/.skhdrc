@@ -5,79 +5,14 @@
 
 # A list of all built-in modifier and literal keywords can
 # be found at https://github.com/koekeishiya/skhd/issues/1
-#
-# A hotkey is written according to the following rules:
-#
-#   hotkey       = <mode> '<' <action> | <action>
-#
-#   mode         = 'name of mode' | <mode> ',' <mode>
-#
-#   action       = <keysym> '[' <proc_map_lst> ']' | <keysym> '->' '[' <proc_map_lst> ']'
-#                  <keysym> ':' <command>          | <keysym> '->' ':' <command>
-#                  <keysym> ';' <mode>             | <keysym> '->' ';' <mode>
-#
-#   keysym       = <mod> '-' <key> | <key>
-#
-#   mod          = 'modifier keyword' | <mod> '+' <mod>
-#
-#   key          = <literal> | <keycode>
-#
-#   literal      = 'single letter or built-in keyword'
-#
-#   keycode      = 'apple keyboard kVK_<Key> values (0x3C)'
-#
-#   proc_map_lst = * <proc_map>
-#
-#   proc_map     = <string> ':' <command> | <string>     '~' |
-#                  '*'      ':' <command> | '*'          '~'
-#
-#   string       = '"' 'sequence of characters' '"'
-#
-#   command      = command is executed through '$SHELL -c' and
-#                  follows valid shell syntax. if the $SHELL environment
-#                  variable is not set, it will default to '/bin/bash'.
-#                  when bash is used, the ';' delimiter can be specified
-#                  to chain commands.
-#
-#                  to allow a command to extend into multiple lines,
-#                  prepend '\' at the end of the previous line.
-#
-#                  an EOL character signifies the end of the bind.
-#
-#   ->           = keypress is not consumed by skhd
-#
-#   *            = matches every application not specified in <proc_map_lst>
-#
-#   ~            = application is unbound and keypress is forwarded per usual, when specified in a <proc_map>
-#
-# A mode is declared according to the following rules:
-#
-#   mode_decl = '::' <name> '@' ':' <command> | '::' <name> ':' <command> |
-#               '::' <name> '@'               | '::' <name>
-#
-#   name      = desired name for this mode,
-#
-#   @         = capture keypresses regardless of being bound to an action
-#
-#   command   = command is executed through '$SHELL -c' and
-#               follows valid shell syntax. if the $SHELL environment
-#               variable is not set, it will default to '/bin/bash'.
-#               when bash is used, the ';' delimiter can be specified
-#               to chain commands.
-#
-#               to allow a command to extend into multiple lines,
-#               prepend '\' at the end of the previous line.
-#
-#               an EOL character signifies the end of the bind.
-
- ############################################################### #
-# THE FOLLOWING SECTION CONTAIN SIMPLE MAPPINGS DEMONSTRATING HOW #
-# TO INTERACT WITH THE YABAI WM. THESE ARE SUPPOSED TO BE USED AS #
-# A REFERENCE ONLY, WHEN MAKING YOUR OWN CONFIGURATION..          #
-# ############################################################### #
 
 # app shortcuts 
-hyper - t: open -n -a 'Alacritty.app'
+hyper - a: ( yabai -m query --windows | jq -er 'map(select(.app == "Alacritty"))[0].space' ) | xargs -I{} yabai -m space --focus {}
+hyper - c: ( yabai -m query --windows | jq -er 'map(select(.app == "Google Chrome"))[0].space' ) | xargs -I{} yabai -m space --focus {}
+hyper - e: ( yabai -m query --windows | jq -er 'map(select(.app == "Element"))[0].space' ) | xargs -I{} yabai -m space --focus {}
+hyper - y: ( yabai -m query --windows | jq -er 'map(select(.app == "YouTube"))[0].space' ) | xargs -I{} yabai -m space --focus {}
+
+
 # focus window
 hyper - h : yabai -m window --focus west  || yabai -m display --focus west
 hyper - j : yabai -m window --focus south || yabai -m display --focus south
@@ -89,6 +24,21 @@ hyper - n : cur_window=$(yabai_cur_window_id) && \
 hyper - p : cur_window=$(yabai_cur_window_id) && \
             yabai_is_zoomed && yabai -m window --display $(yabai_prev_display) --focus ${cur_window} --toggle zoom-fullscreen || yabai -m window --display $(yabai_next_display) --focus ${cur_window}
 
+# toggle window zoom
+# alt - d : yabai -m window --toggle zoom-parent
+hyper - m : yabai -m window --toggle zoom-fullscreen
+
+# Launch or open Alacritty full screen on desktop 1
+# hyper - t : yabai_move_or_launch_app "Alacritty" 1
+#
+# # Launch or open Chrome on desktop 2 (full screen)
+# hyper - b : yabai_move_or_launch_app "Google Chrome" 2
+#
+# # Launch Element on desktop 3 (full screen)
+# hyper - a : yabai_move_or_launch_app "Element" 3
+#
+# # Launch a Chrome window with ChatGPT open (full screen) using the move_or_launch_app.sh script
+# hyper - c : yabai_move_or_launch_app "Google Chrome" 4 "--new --app=https://chat.openai.com/"
 # swap managed window
 # shift + alt - h : yabai -m window --swap north
 
@@ -141,9 +91,6 @@ hyper - p : cur_window=$(yabai_cur_window_id) && \
 # set insertion point in focused container
 # ctrl + alt - h : yabai -m window --insert west
 
-# toggle window zoom
-# alt - d : yabai -m window --toggle zoom-parent
-hyper - m : yabai -m window --toggle zoom-fullscreen
 
 # toggle window split type
 # alt - e : yabai -m window --toggle split
