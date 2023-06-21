@@ -12,6 +12,7 @@ local eslintConfig = {
 
 local sources = {
   builtins.formatting.shfmt,
+  builtins.formatting.markdownlint,
   builtins.diagnostics.codespell.with({
     disabled_filetypes = { 'log' },
     extra_args = {
@@ -48,8 +49,8 @@ local sources = {
   }),
   builtins.diagnostics.flake8,
   -- builtins.diagnostics.pylint,
-  builtins.formatting.autopep8,
-  builtins.diagnostics.mypy,
+  -- builtins.formatting.autopep8,
+  -- builtins.diagnostics.mypy,
   builtins.formatting.sql_formatter,
   builtins.code_actions.eslint_d.with(eslintConfig),
   builtins.diagnostics.eslint_d.with(eslintConfig),

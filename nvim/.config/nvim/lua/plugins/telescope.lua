@@ -22,7 +22,7 @@ local config = function()
     },
     defaults = {
       path_display = { 'truncate' },
-      file_ignore_patterns = { '.git/' },
+      file_ignore_patterns = { '.git/', 'target' },
       -- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua#L9
       -- https://github.com/nvim-telescope/telescope.nvim#default-mappings
 
@@ -45,11 +45,6 @@ local config = function()
       },
     },
     pickers = {
-      live_grep = {
-        additional_args = function()
-          return { '--hidden' }
-        end,
-      },
       buffers = {
         path_display = { truncate = 3 },
       },
@@ -72,6 +67,31 @@ local config = function()
   require('refactoring').setup({})
   telescope.load_extension('refactoring')
 end
+
+-- create a function that run a grep some queried text against the file from the quick fix list vim.fn.getqflist()
+
+-- create a custom picker that act as liv_grep but on the files from the quick fix list
+local quick_fix_search = function()
+  local quick_fix_list = vim.fn.getqflist()
+  local quick_fix_files = {}
+  for _, item in ipairs(quick_fix_list) do
+    local filename = vim.api.nvim_buf_get_name(item.bufnr)
+    if not vim.tbl_contains(quick_fix_files, filename) then
+      table.insert(quick_fix_files, filename)
+    end
+  end
+  P(quick_fix_files)
+
+  require('telescope.builtin').live_grep({
+    prompt_title = 'Quick fix files',
+    cwd = vim.fn.getcwd(),
+    search_dirs = quick_fix_files,
+  })
+end
+
+vim.api.nvim_create_user_command('QTEST', function()
+  quick_fix_search()
+end, {})
 
 return {
   'nvim-telescope/telescope.nvim',
@@ -98,6 +118,7 @@ return {
     },
     { '<Leader>ff', builtin('find_files', { follow = true, hidden = true }), desc = 'Search files' },
     { '<Leader>fg', builtin('live_grep'), desc = 'Search with Live grep' },
+    { '<Leader>fq', quick_fix_search, desc = 'Search file within the quick fix list' },
     { '<Leader>fs', builtin('grep_string'), desc = 'Search from word under cursor' },
     { '<Leader>fo', builtin('oldfiles'), desc = 'Search recent files' },
     { '<Leader>fl', builtin('lsp_document_symbols'), desc = 'List lsp symbols for current buffer' },

@@ -78,10 +78,6 @@ local setup_servers = function()
   }
 
   -- setup rust via rust-tools
-  -- local extension_path = vim.env.HOME .. '/.vscode/extensions/vadimcn.vscode-lldb-1.8.1/'
-  -- local codelldb_path = extension_path .. 'adapter/codelldb'
-  -- local liblldb_path = extension_path .. 'lldb/lib/liblldb.dylib'
-
   local mason_registry = require('mason-registry')
   local codelldb = mason_registry.get_package('codelldb')
   local extension_path = codelldb:get_install_path() .. '/extension/'
@@ -118,10 +114,16 @@ local setup_servers = function()
           rustfmt = {
             extraArgs = { '+nightly' },
           },
-          -- https://github.com/rust-lang/rust-analyzer/issues/6007#issuecomment-1379342831
-          checkOnSave = {
-            extraArgs = { '--profile', 'rust-analyzer' },
+
+          -- Too much disk space :(
+          server = {
+            extraEnv = {
+              CARGO_TARGET_DIR = 'target/rust-analyzer',
+            },
           },
+          -- check = {
+          --   extraArgs = { '--target-dir=target/rust-analyzer' },
+          -- },
         },
       },
       cargo = {
@@ -153,6 +155,7 @@ local setup_servers = function()
     },
   })
 
+  lspconfig.marksman.setup(default_config)
   lspconfig.lua_ls.setup(default_config)
 
   lspconfig.bashls.setup(default_config)
@@ -209,7 +212,7 @@ return {
     setup_servers()
     require('plugins.lsp.null').setup(format_on_save)
     require('mason-null-ls').setup({
-      ensure_installed = { 'stylua', 'jq', 'codespell' },
+      ensure_installed = { 'stylua', 'jq', 'codespell', 'markdownlint' },
     })
   end,
 }

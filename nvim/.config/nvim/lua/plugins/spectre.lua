@@ -10,5 +10,19 @@ return {
       end,
       desc = 'Replace in files (Spectre)',
     },
+    {
+      '<leader>sr',
+      function()
+        -- escape the visual selection and open spectre
+        local current_selection = vim.fn.getreg('s')
+        -- escape current selection so that we can search text with sed
+        local escaped_text = vim.fn.escape(current_selection, '( )')
+        vim.fn.setreg('s', escaped_text)
+
+        require('spectre').open_visual()
+      end,
+      mode = 'v',
+      desc = 'Replace selection in files (Spectre)',
+    },
   },
 }

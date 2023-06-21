@@ -27,7 +27,7 @@ yabai -m config \
 	insert_feedback_color 0xffd75f5f \
 	active_window_border_color 0xfffbb86c \
 	normal_window_border_color 0x00fbb86c \
-	window_border_width 6 \
+	window_border_width 3 \
 	window_border_radius 12 \
 	window_border_blur off \
 	window_border_hidpi on \
@@ -35,12 +35,14 @@ yabai -m config \
 	split_ratio 0.50 \
 	split_type auto \
 	auto_balance off \
-	top_padding 12 \
-	bottom_padding 12 \
-	left_padding 12 \
-	right_padding 12 \
+	top_padding 3 \
+	bottom_padding 3 \
+	left_padding 3 \
+	right_padding 3 \
 	window_gap 06 \
 	layout bsp \
+	# layout float \
+        
 	mouse_modifier fn \
 	mouse_action1 move \
 	mouse_action2 resize \
@@ -74,12 +76,6 @@ yabai -m rule --add app="^Youtube$" space=^4
 # yabai -m rule --add app="^Finder$" sticky=on layer=above manage=off
 # yabai -m rule --add app="^Activity Monitor$" sticky=on layer=above manage=off
 
-unmanaged_apps=$(
-	cat <<EOF
-EOF
-)
-
-yabai -m rule --add app="^($(echo "$unmanaged_apps" | paste -sd '|' -))$" manage=off
-# yabai -m rule --add app!="^(Element|Ledger Live|Google Chrome|Alacritty|Finder|Notes)$" manage=off
+# yabai -m rule --add app!="^(Finder|System)$" manage=off
 
 echo "yabai configuration loaded.."

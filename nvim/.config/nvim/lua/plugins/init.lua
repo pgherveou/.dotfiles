@@ -87,7 +87,7 @@ return {
     lazy = true,
     keys = {
       {
-        '<leader>s',
+        '<leader>sn',
         function()
           require('silicon').visualise_api({ to_clip = true })
         end,
@@ -139,6 +139,7 @@ return {
   -- lsp progress
   {
     'j-hui/fidget.nvim',
+    tag = 'legacy',
     config = function()
       require('fidget').setup({})
     end,

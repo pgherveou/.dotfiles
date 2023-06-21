@@ -39,6 +39,7 @@ fi
 alias vim=nvim
 alias code=codium
 alias v=nvim
+alias vv=nvim
 alias ..="cd .."
 alias ...="cd ../.."
 export EDITOR=nvim
@@ -120,9 +121,4 @@ export FZF_CTRL_T_COMMAND='rg --no-messages --files'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# Subsrate 
-run_bench(){
-  cargo benchmark --release -- pallet --steps=50 --repeat=10 --extrinsic="*" --execution=wasm --wasm-execution=compiled  --pallet=pallet_contracts --chain=dev --header=./HEADER-APACHE2 --output=./frame/contracts/src/weights.rs --template=./.maintain/frame-weight-template.hbs
-}
 

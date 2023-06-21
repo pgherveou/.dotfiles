@@ -26,6 +26,15 @@ async fn main() -> anyhow::Result<()> {{
   ),
 
   s(
+    'allow',
+    fmt([[
+#![allow(dead_code)]
+#![allow(unused_imports)]
+#![allow(unused_variables)]
+  ]])
+  ),
+
+  s(
     'main',
     fmt(
       [[
@@ -84,5 +93,5 @@ async fn main() -> anyhow::Result<()> {{
     t({ '', '}' }),
   }),
 
-  s('pd', fmt([[println!("{}: {{:?}}", {});]], { same(1), i(1) })),
+  s('pln', fmt([[println!("{}: {{:?}}", {});]], { same(1), i(1) })),
 })
