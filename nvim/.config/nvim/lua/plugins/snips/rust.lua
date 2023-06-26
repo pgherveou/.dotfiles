@@ -27,11 +27,14 @@ async fn main() -> anyhow::Result<()> {{
 
   s(
     'allow',
-    fmt([[
+    fmt(
+      [[
 #![allow(dead_code)]
 #![allow(unused_imports)]
 #![allow(unused_variables)]
-  ]])
+  ]],
+      {}
+    )
   ),
 
   s(
