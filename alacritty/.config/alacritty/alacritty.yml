@@ -29,7 +29,7 @@ window:
 font:
   normal:
     # grap font name from: fc-list
-    family: "MesloLGMNerdFontComplete Nerd Font"
+    family: "MesloLGL Nerd Font"
   size: 16
 
 bell:

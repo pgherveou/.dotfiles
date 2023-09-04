@@ -1,3 +1,15 @@
+local navigation_entries = {}
+
+for i = 1, 4 do
+  table.insert(navigation_entries, {
+    tostring(i),
+    function()
+      require('harpoon.ui').nav_file(i)
+    end,
+    desc = 'Navigate to file ' .. i,
+  })
+end
+
 return {
   'ThePrimeagen/harpoon',
   dependencies = { 'nvim-lua/plenary.nvim' },
@@ -24,19 +36,6 @@ return {
       end,
       desc = 'Toggle harpoon menu',
     },
-    {
-      '<leader>j',
-      function()
-        require('harpoon.ui').nav_file(1)
-      end,
-      desc = 'Navigate to file 1',
-    },
-    {
-      '<leader>k',
-      function()
-        require('harpoon.ui').nav_file(2)
-      end,
-      desc = 'Navigate to file 2',
-    },
+    unpack(navigation_entries),
   },
 }

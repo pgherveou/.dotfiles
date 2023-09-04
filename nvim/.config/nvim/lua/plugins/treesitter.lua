@@ -19,7 +19,7 @@ local config = function()
       'cpp',
       'vim',
       'lua',
-      'bash',
+      -- 'bash',
       'json',
       'yaml',
       'help',

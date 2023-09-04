@@ -189,8 +189,12 @@ local setup_servers = function()
   })
 end
 
+-- check if vim was called with --cmd 'let no_lsp=1'
+local enabled = vim.fn.exists('g:no_lsp') == 0
+
 return {
   'neovim/nvim-lspconfig',
+  enabled = enabled,
   dependencies = {
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',

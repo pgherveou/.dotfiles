@@ -61,7 +61,7 @@ local mappings = {
     ['<leader><leader>'] = { '<C-^>', desc = 'Edit the alternnate file' },
 
     -- fix gx to open files
-    ['gx'] = { ':call netrw#BrowseX(expand("<cfile>")', desc = 'Open file under cursor' },
+    ['gx'] = { ':!open <cfile><CR>', desc = 'Open file under cursor' },
 
     -- Replay last command in tmux pane, by calling tmux send-keys -t bottom Up Enter
     ['<leader>tk'] = { ':silent :!tmux send-keys -t bottom Up Enter<CR>', desc = 'Replay last command in tmux pane' },

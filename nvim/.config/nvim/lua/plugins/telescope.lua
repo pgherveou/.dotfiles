@@ -118,6 +118,7 @@ return {
     },
     { '<Leader>ff', builtin('find_files', { follow = true, hidden = true }), desc = 'Search files' },
     { '<Leader>fg', builtin('live_grep'), desc = 'Search with Live grep' },
+    { '<Leader>fm', builtin('marks'), desc = 'Search marks' },
     { '<Leader>fq', quick_fix_search, desc = 'Search file within the quick fix list' },
     { '<Leader>fs', builtin('grep_string'), desc = 'Search from word under cursor' },
     { '<Leader>fo', builtin('oldfiles'), desc = 'Search recent files' },

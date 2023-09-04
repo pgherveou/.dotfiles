@@ -1,12 +1,4 @@
 return {
-  -- zen-mode
-  {
-    'folke/zen-mode.nvim',
-    lazy = true,
-    config = function()
-      require('zen-mode').setup({})
-    end,
-  },
 
   {
     'zbirenbaum/copilot.lua',
@@ -75,6 +67,9 @@ return {
       vim.g.go_test_timeout = '5s'
     end,
   },
+
+  -- handlebars syntax
+  'mustache/vim-mustache-handlebars',
 
   -- see https://github.com/sheerun/vim-polyglot#language-packs
   -- for installing more language packs
