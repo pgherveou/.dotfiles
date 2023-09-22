@@ -25,4 +25,8 @@ return {
     { '<leader>gf', ':diffget //2<cr>', desc = '[Git] Pick diffget 2' },
     { '<leader>grc', ':G rebase --continue<cr>', desc = '[Git] Continue rebase' },
   },
+  config = function()
+    -- alias Gclog to Gclog -100 using cnoreabbrev
+    vim.cmd('cnoreabbrev Gclog Gclog -100')
+  end,
 }

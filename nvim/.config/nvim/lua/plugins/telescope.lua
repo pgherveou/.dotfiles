@@ -80,7 +80,6 @@ local quick_fix_search = function()
       table.insert(quick_fix_files, filename)
     end
   end
-  P(quick_fix_files)
 
   require('telescope.builtin').live_grep({
     prompt_title = 'Quick fix files',
@@ -88,10 +87,6 @@ local quick_fix_search = function()
     search_dirs = quick_fix_files,
   })
 end
-
-vim.api.nvim_create_user_command('QTEST', function()
-  quick_fix_search()
-end, {})
 
 return {
   'nvim-telescope/telescope.nvim',

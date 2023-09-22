@@ -2,7 +2,7 @@ local navigation_entries = {}
 
 for i = 1, 4 do
   table.insert(navigation_entries, {
-    tostring(i),
+    '<leader>' .. tostring(i),
     function()
       require('harpoon.ui').nav_file(i)
     end,

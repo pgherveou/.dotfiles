@@ -35,6 +35,7 @@ local mappings = {
     ['<Tab>k'] = { ':cprev<CR>zz', desc = 'Go to previous item in quicklist' },
     ['<Tab>K'] = { ':lprev<CR>zz', desc = 'Go to previous item in location list' },
     ['<Tab>J'] = { ':lnext<CR>zz', desc = 'Go to next item in location list' },
+    ['<leader>q'] = { ':AddToQuickFix', desc = 'Add current line to quick fix list' },
 
     -- navigate buffers
     ['<leader>o'] = { ':bprevious<CR>', desc = 'Go to previous buffer' },

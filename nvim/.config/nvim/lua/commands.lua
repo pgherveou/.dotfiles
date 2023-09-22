@@ -102,3 +102,16 @@ vim.api.nvim_create_user_command('KillAllFloats', function()
     end
   end
 end, {})
+
+-- create a command that add the current file to the quick fix list
+vim.api.nvim_create_user_command('AddToQuickFix', function()
+  local quick_fix_list = vim.fn.getqflist()
+  local current_bufnr = vim.fn.bufnr('%')
+  local current_filename = vim.fn.bufname(current_bufnr)
+  local current_line = vim.fn.getline('.')
+
+  local current_item =
+    { bufnr = current_bufnr, filename = current_filename, lnum = vim.fn.line('.'), text = current_line }
+  table.insert(quick_fix_list, current_item)
+  vim.fn.setqflist(quick_fix_list, 'r')
+end, {})

@@ -66,8 +66,7 @@ run_install() {
 		"zsh"
 		"karabiner"
 		"bin"
-		"yabai"
-		"skhdrc"
+		"hammerspoon"
 		"cargo"
 		"ra-multiplex"
 	)

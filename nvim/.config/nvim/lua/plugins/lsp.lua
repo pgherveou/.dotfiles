@@ -121,9 +121,9 @@ local setup_servers = function()
               CARGO_TARGET_DIR = 'target/rust-analyzer',
             },
           },
-          -- check = {
-          --   extraArgs = { '--target-dir=target/rust-analyzer' },
-          -- },
+          check = {
+            extraArgs = { '--target-dir=target/rust-analyzer' },
+          },
         },
       },
       cargo = {
@@ -156,7 +156,24 @@ local setup_servers = function()
   })
 
   lspconfig.marksman.setup(default_config)
-  lspconfig.lua_ls.setup(default_config)
+
+  lspconfig.lua_ls.setup(vim.tbl_extend('force', default_config, {
+    settings = {
+      Lua = {
+        telemetry = { enable = false },
+        workspace = {
+          checkThirdParty = false,
+          library = {
+            vim.env.VIMRUNTIME,
+            vim.env.HOME .. '/.hammerspoon/Spoons/EmmyLua.spoon/annotations',
+          },
+        },
+        diagnostics = {
+          globals = { 'vim', 'hs' },
+        },
+      },
+    },
+  }))
 
   lspconfig.bashls.setup(default_config)
   lspconfig.golangci_lint_ls.setup(default_config)
