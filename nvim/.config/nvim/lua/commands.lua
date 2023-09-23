@@ -115,3 +115,17 @@ vim.api.nvim_create_user_command('AddToQuickFix', function()
   table.insert(quick_fix_list, current_item)
   vim.fn.setqflist(quick_fix_list, 'r')
 end, {})
+
+-- convert to hexdump
+vim.api.nvim_create_user_command('Hexdump', function(opts)
+  if opts.fargs[1] == 'revert' then
+    vim.cmd('%!xxd -r')
+  else
+    vim.cmd('%!xxd')
+  end
+end, {
+  nargs = '?',
+  complete = function()
+    return { 'revert' }
+  end,
+})

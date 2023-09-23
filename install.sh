@@ -95,7 +95,7 @@ run_install() {
 	CARGO_BIN=(
 		"bacon"
 		"cargo-watch"
-		"evcxr"
+		"evcxr_repl"
 		"silicon"
 	)
 
