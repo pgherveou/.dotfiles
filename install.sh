@@ -68,7 +68,6 @@ run_install() {
 		"bin"
 		"hammerspoon"
 		"cargo"
-		"ra-multiplex"
 	)
 
 	for folder in "${STOW_FOLDERS[@]}"; do
