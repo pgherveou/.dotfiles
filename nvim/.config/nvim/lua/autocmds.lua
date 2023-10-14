@@ -1,5 +1,5 @@
 -- Don't auto insert a comment when using O/o for a newline
-vim.api.nvim_create_autocmd({ 'BufEnter', 'BufRead', 'FileType *' }, {
+vim.api.nvim_create_autocmd({ 'BufEnter', 'BufRead' }, {
   pattern = '*',
   callback = function()
     vim.opt.formatoptions:remove('o')
@@ -39,7 +39,7 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 -- wat use lisp for syntax highlighting
-vim.api.nvim_create_autocmd('BufRead,BufNewFile', {
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   group = 'vimrc',
   pattern = '*.wat',
   callback = function()

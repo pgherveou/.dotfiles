@@ -164,6 +164,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
   case SPC_NAV:
   case HYP_A:
+  case CTL_TAB:
   case SFT_COL:
   case SFT_MIN:
   case ENT_SYM:
@@ -202,6 +203,34 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 };
 
+#ifdef PERMISSIVE_HOLD_PER_KEY
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+  case CTL_TAB:
+    // Immediately select the hold action when another key is tapped.
+    return true;
+  default:
+    // Do not select the hold action when another key is tapped.
+    return false;
+  }
+}
+#endif
+
+#ifdef TAPPING_TERM_PER_KEY
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+  case CTL_TAB:
+    // return TAPPING_TERM  if any mods is pressed
+    if (get_mods() != 0) {
+      return TAPPING_TERM;
+    }
+    return 100;
+  default:
+    return TAPPING_TERM;
+  }
+}
+#endif
+
 #ifdef RETRO_TAPPING_PER_KEY
 bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
   // enable retro tapping only if it happens within max 2*term
@@ -212,6 +241,7 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
   case SPC_NAV:
   case ENT_SYM:
   case SFT_MIN:
+  case CTL_TAB:
   case HYP_A:
     /* case SFT_COL: */
     return true;

@@ -100,20 +100,32 @@ return {
   -- search visually selected text
   'nelstrom/vim-visual-star-search',
 
-  -- TODO disable for large file
-  -- https://github.com/lukas-reineke/indent-blankline.nvim/issues/440#issuecomment-1310520274pe/vim-sleuth
   {
     'lukas-reineke/indent-blankline.nvim',
+    main = 'ibl',
     config = function()
-      vim.opt.list = true
-      require('indent_blankline').setup({
-        show_current_context = true,
-        show_current_context_start = true,
-        indent_blankline_use_treesitter = true,
-        indent_blankline_filetype_exclude = { 'help' },
-      })
+      require('ibl').setup()
+      local hooks = require('ibl.hooks')
+      hooks.register(hooks.type.ACTIVE, function(bufnr)
+        return vim.api.nvim_buf_line_count(bufnr) < 5000
+      end)
     end,
   },
+
+  -- TODO disable for large file
+  -- https://github.com/lukas-reineke/indent-blankline.nvim/issues/440#issuecomment-1310520274pe/vim-sleuth
+  -- {
+  --   'lukas-reineke/indent-blankline.nvim',
+  --   config = function()
+  --     vim.opt.list = true
+  --     require('indent_blankline').setup({
+  --       show_current_context = true,
+  --       show_current_context_start = true,
+  --       indent_blankline_use_treesitter = true,
+  --       indent_blankline_filetype_exclude = { 'help' },
+  --     })
+  --   end,
+  -- },
 
   -- :S command and cr command for case coercing
   'tpope/vim-abolish',
