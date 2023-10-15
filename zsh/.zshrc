@@ -5,8 +5,12 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# OSX antigen file
-source ~/.antigen.zsh
+if [ -f "$HOME/.antigen.zsh" ]; then
+  source ~/.antigen.zsh
+else
+  echo "Antigen not found, please install it"
+fi
+
 
 if [[ -z "${ANTIGEN_LOADED}" ]]; then
   # Load the oh-my-zsh's library.

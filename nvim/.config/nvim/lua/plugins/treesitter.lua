@@ -22,7 +22,6 @@ local config = function()
       -- 'bash',
       'json',
       'yaml',
-      'help',
     },
     highlight = {
       enable = true,

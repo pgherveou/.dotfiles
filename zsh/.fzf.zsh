@@ -6,8 +6,12 @@ fi
 
 # Auto-completion
 # ---------------
-[[ $- == *i* ]] && source "/opt/homebrew/opt/fzf/shell/completion.zsh" 2> /dev/null
+# on macOS use base_path /opt/homebrew/opt/fzf/shell, on Debian use /usr/share/fzf/examples/
+
+OS=$(uname -s)
+[ "$OS" = "Darwin" ] && BASE_PATH="/opt/homebrew/opt/fzf/shell" || BASE_PATH="/usr/share/fzf/examples"
+[[ $- == *i* ]] && source "$BASE_PATH/completion.zsh" 2> /dev/null
 
 # Key bindings
 # ------------
-source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
+source "$BASE_PATH/key-bindings.zsh"
