@@ -115,7 +115,6 @@ local setup_servers = function()
             extraArgs = { '+nightly' },
           },
 
-          -- Too much disk space :(
           server = {
             extraEnv = {
               CARGO_TARGET_DIR = 'target/rust-analyzer',
@@ -221,7 +220,7 @@ return {
     'jose-elias-alvarez/null-ls.nvim',
     'jayp0521/mason-null-ls.nvim',
     'RRethy/vim-illuminate',
-    'simrat39/rust-tools.nvim',
+    'pgherveou/rust-tools.nvim',
     'b0o/schemastore.nvim',
     'ThePrimeagen/refactoring.nvim',
     'folke/neodev.nvim',

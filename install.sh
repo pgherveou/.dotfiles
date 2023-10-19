@@ -18,6 +18,50 @@ add_cron_job() {
 	fi
 }
 
+setup_qmk() {
+	qmk setup -y
+	qmk config user.keyboard=splitkb/kyria/rev1
+	qmk config user.keymap=pgherveou
+	qmk generate-compilation-database
+	ln -s ~/qmk_firmware/compile_commands.json "$PWD"
+}
+
+install_npm_packages() {
+	# list of globally installed npm packages
+	NPM_PKGS=(
+		"neovim"
+		"serve"
+		"speed-test"
+	)
+
+	# install global npm packages using sudo on linux
+	if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+		sudo npm install -g "${NPM_PKGS[@]}"
+	else
+		npm install -g "${NPM_PKGS[@]}"
+	fi
+}
+
+install_cargo_bin() {
+	# install cargo binaries
+	CARGO_BIN=(
+		"bacon"
+		"cargo-watch"
+		"evcxr_repl"
+		"silicon"
+		"sccache"
+	)
+
+	for bin in "${CARGO_BIN[@]}"; do
+		cargo install "$bin"
+	done
+}
+
+setup_cron_jobs() {
+	# cleanup rust projects every day at 7am
+	add_cron_job "$HOME/.dotfiles/bin/.local/scripts/rust_projects_cleanup.sh" "0 7 * * *"
+}
+
 run_install() {
 	set -euo pipefail
 	pushd "$HOME/.dotfiles"
@@ -46,11 +90,6 @@ run_install() {
 	# clone qmk firmware
 	if [ ! -d ~/qmk_firmware ]; then
 		git clone https://github.com/qmk/qmk_firmware ~/qmk_firmware
-		qmk setup -y
-		qmk config user.keyboard=splitkb/kyria/rev1
-		qmk config user.keymap=pgherveou
-		qmk generate-compilation-database
-		ln -s ~/qmk_firmware/compile_commands.json "$PWD"
 	fi
 
 	# create deeplinks to the home folder
@@ -75,37 +114,6 @@ run_install() {
 		stow -D "$folder"
 		stow "$folder"
 	done
-
-	# list of globally installed npm packages
-	NPM_PKGS=(
-		"neovim"
-		"serve"
-		"speed-test"
-	)
-
-	# install global npm packages using sudo on linux
-	if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-		sudo npm install -g "${NPM_PKGS[@]}"
-	else
-		npm install -g "${NPM_PKGS[@]}"
-	fi
-
-	# install cargo binaries
-	CARGO_BIN=(
-		"bacon"
-		"cargo-watch"
-		"evcxr_repl"
-		"silicon"
-	)
-
-	for bin in "${CARGO_BIN[@]}"; do
-		cargo install "$bin"
-	done
-
-	# Add cron jobs
-
-	# cleanup rust projects every day at 7am
-	add_cron_job "$HOME/.dotfiles/bin/.local/scripts/rust_projects_cleanup.sh" "0 7 * * *"
 
 	pop
 }
