@@ -118,8 +118,8 @@ return {
     { '<Leader>fq', quick_fix_search, desc = 'Search file within the quick fix list' },
     { '<Leader>fs', builtin('grep_string'), desc = 'Search from word under cursor' },
     { '<Leader>fo', builtin('oldfiles'), desc = 'Search recent files' },
-    { '<Leader>fl', builtin('lsp_document_symbols'), desc = 'List lsp symbols for current buffer' },
     { '<Leader>s', builtin('lsp_document_symbols'), desc = 'List lsp symbols for current buffer' },
+    { '<Leader>i', builtin('diagnostics'), desc = 'List lsp symbols for current buffer' },
     { '<Leader>fr', builtin('resume'), desc = 'Resume search' },
     { '<leader>f/', extension('live_grep_args', 'live_grep_args'), desc = 'Search with raw grep' },
     -- visual

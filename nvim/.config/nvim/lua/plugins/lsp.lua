@@ -206,7 +206,11 @@ local setup_servers = function()
 end
 
 -- check if vim was called with --cmd 'let no_lsp=1'
-local enabled = vim.fn.exists('g:no_lsp') == 0
+-- vim.fn.exists('g:no_lsp') == 0
+local enabled = true; 
+if vim.fn.getenv('NO_LSP') == '1' then
+  enabled = false
+end
 
 return {
   'neovim/nvim-lspconfig',

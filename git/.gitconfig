@@ -34,5 +34,7 @@
 	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 [alias]
 	hd = rev-parse --verify HEAD
-  prune-merged = !git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d
-  prune-merged-remote = !git remote prune origin && git fetch origin --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D
+	prune-merged = !git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d
+	prune-merged-remote = !git remote prune origin && git fetch origin --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D
+[push]
+	autoSetupRemote = true

@@ -22,7 +22,10 @@
 // #define IGNORE_MOD_TAP_INTERRUPT
 
 #undef DEBOUNCE
-#define DEBOUNCE 10
+#define DEBOUNCE 20
+
+// see https://github.com/qmk/qmk_firmware/blob/master/docs/feature_debounce_type.md
+#define DEBOUNCE_TYPE sym_eager_pr
 
 #ifdef RGBLIGHT_ENABLE
 #define RGBLIGHT_LIMIT_VAL 128

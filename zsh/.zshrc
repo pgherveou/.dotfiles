@@ -44,8 +44,8 @@ alias vim=nvim
 alias code=codium
 alias v=nvim
 alias vv=nvim
-alias nv="nvim --cmd 'let no_lsp=1'"
-alias nvv="nvim --cmd 'let no_lsp=1'"
+alias nv="NO_LSP=1 nvim"
+alias nvv="NO_LSP=1 nvim"
 alias ..="cd .."
 alias ...="cd ../.."
 export EDITOR=nvim

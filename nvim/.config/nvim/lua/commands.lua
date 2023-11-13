@@ -55,11 +55,11 @@ end, {
   end,
 })
 
--- set RUST_LOG to the specified value
-vim.api.nvim_create_user_command('RustDebugArgs', function(opts)
-  vim.fn.setenv('RUST_DEBUG_ARGS', opts.fargs[1])
+vim.api.nvim_create_user_command('RustExecArgs', function(opts)
+  local args = table.concat(opts.fargs, " ")
+  vim.fn.setenv('RUST_EXECUTABLE_ARGS', args)
 end, {
-  nargs = 1,
+  nargs = '*',
 })
 
 -- concat to RUST_LOG the provided value

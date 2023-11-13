@@ -1,0 +1,10 @@
+// https://github.com/evcxr/evcxr/blob/main/COMMON.md#startup
+// :dep sp-core = { package = "sp-core", version = "24.0.0", default-features = false }
+// :dep codec = { package = "parity-scale-codec", version = "3.6.1", default-features = false, features = ["derive"] }
+// :dep sp-core
+// :dep c
+
+// use sp_core::hexdisplay::HexDisplay;
+// use codec::{Encode, Decode};
+
+:sccache 1
