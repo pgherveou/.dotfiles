@@ -207,7 +207,7 @@ end
 
 -- check if vim was called with --cmd 'let no_lsp=1'
 -- vim.fn.exists('g:no_lsp') == 0
-local enabled = true; 
+local enabled = true
 if vim.fn.getenv('NO_LSP') == '1' then
   enabled = false
 end
