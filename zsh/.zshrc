@@ -31,6 +31,8 @@ if [[ -z "${ANTIGEN_LOADED}" ]]; then
   antigen bundle bazel
   antigen bundle npm
   antigen bundle macos
+  antigen bundle atuinsh/atuin@main
+
   antigen bundle zsh-users/zsh-history-substring-search
   antigen bundle zsh-users/zsh-autosuggestions
   antigen bundle zsh-users/zsh-syntax-highlighting
@@ -50,6 +52,9 @@ alias ..="cd .."
 alias ...="cd ../.."
 export EDITOR=nvim
 
+# ignore commands starting with space and dups from history
+export HISTCONTROL=ignoreboth
+
 # local scripts
 export PATH=$PATH:~/.local/scripts
 
@@ -68,6 +73,10 @@ export PATH="$HOME/go/bin:$PATH"
 
 # Rust
 export CARGO_NET_GIT_FETCH_WITH_CLI=true
+
+cargo-targets() {
+  cargo metadata --format-version 1 | jq -r '.packages[].targets[].name'
+}
 
 # Kubectl
 [[ -f /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)

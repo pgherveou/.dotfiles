@@ -107,6 +107,7 @@ run_install() {
 		"bin"
 		"hammerspoon"
 		"cargo"
+		"atuin"
 	)
 
 	for folder in "${STOW_FOLDERS[@]}"; do

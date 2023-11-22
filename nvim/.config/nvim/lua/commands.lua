@@ -35,11 +35,16 @@ vim.api.nvim_create_user_command('BufReload', function(opts)
   local current_file = vim.fn.expand('%')
   local current_position = vim.fn.getpos('.')
   -- disable close when last buffer is deleted
+  local hidden = vim.o.hidden
+  vim.o.hidden = true
 
   -- call :bd and forward the bang option
   vim.cmd(':bd' .. (opts.bang and '!' or ''))
   vim.cmd('edit ' .. current_file)
   vim.fn.setpos('.', current_position)
+
+  -- restore hidden option
+  vim.o.hidden = hidden
 end, {
   bang = true,
   desc = 'Reload the current buffer',
@@ -56,10 +61,17 @@ end, {
 })
 
 vim.api.nvim_create_user_command('RustExecArgs', function(opts)
-  local args = table.concat(opts.fargs, " ")
+  local args = table.concat(opts.fargs, ' ')
   vim.fn.setenv('RUST_EXECUTABLE_ARGS', args)
 end, {
   nargs = '*',
+})
+
+vim.api.nvim_create_user_command('SetEnv', function(opts)
+  vim.fn.setenv(opts.fargs[1], opts.fargs[2])
+end, {
+  nargs = '*',
+  desc = 'Set an environment variable',
 })
 
 -- concat to RUST_LOG the provided value
@@ -128,4 +140,13 @@ end, {
   complete = function()
     return { 'revert' }
   end,
+})
+
+-- create a scratch buffer with the given filetype or markdown by default
+vim.api.nvim_create_user_command('Scratch', function(opts)
+  local bufnr = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_set_current_buf(bufnr)
+  vim.api.nvim_buf_set_option(bufnr, 'filetype', opts.fargs[1] or 'markdown')
+end, {
+  nargs = '?',
 })
