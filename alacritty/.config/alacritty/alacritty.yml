@@ -107,10 +107,14 @@ key_bindings:
   # - { key: K, mods: Alt, chars: "\x1bk" }
   # - { key: L, mods: Alt, chars: "\x1BF" }
   # - { key: H, mods: Alt, chars: "\x1BB" }
-  - { key: H, mods: Control|Shift, chars: "\x1b[72;6u" }
-  - { key: J, mods: Control|Shift, chars: "\x1b[74;6u" }
-  - { key: K, mods: Control|Shift, chars: "\x1b[75;6u" }
-  - { key: L, mods: Control|Shift, chars: "\x1b[76;6u" }
+  - { key: H, mods: Control|Shift, chars: "\uE001" }
+  - { key: J, mods: Control|Shift, chars: "\uE002" }
+  - { key: K, mods: Control|Shift, chars: "\uE003" }
+  - { key: L, mods: Control|Shift, chars: "\uE004" }
+  # - { key: H, mods: Control|Shift, chars: "\x1b[72;6u" }
+  # - { key: J, mods: Control|Shift, chars: "\x1b[74;6u" }
+  # - { key: K, mods: Control|Shift, chars: "\x1b[75;6u" }
+  # - { key: L, mods: Control|Shift, chars: "\x1b[76;6u" }
 
 mouse_bindings:
   - { mouse: Middle, action: PasteSelection }

@@ -50,6 +50,9 @@ alias nv="NO_LSP=1 nvim"
 alias nvv="NO_LSP=1 nvim"
 alias ..="cd .."
 alias ...="cd ../.."
+
+alias clip="nc localhost 8377"
+
 export EDITOR=nvim
 
 # ignore commands starting with space and dups from history

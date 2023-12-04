@@ -6,6 +6,19 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufRead' }, {
   end,
 })
 
+-- yanking with clipper autocommand
+vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
+  pattern = '*',
+  callback = function()
+    local text = vim.v.event.regcontents
+    if vim.fn.has('mac') == 1 then
+      vim.fn.system('nc localhost 8377', text)
+    else
+      vim.fn.system('nc -N localhost 8377', text)
+    end
+  end,
+})
+
 -- run keymapviz for keymap.c files
 vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
   pattern = vim.fn.expand('~') .. '/.dotfiles/qmk/**/keymap.c',

@@ -150,3 +150,13 @@ vim.api.nvim_create_user_command('Scratch', function(opts)
 end, {
   nargs = '?',
 })
+
+-- toggle space and tab characters
+vim.api.nvim_create_user_command('ToggleWhitespace', function()
+  if vim.o.list then
+    vim.o.list = false
+  else
+    vim.o.list = true
+    vim.o.listchars = 'tab:▸ ,trail:·,extends:❯,precedes:❮'
+  end
+end, {})
