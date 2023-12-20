@@ -107,26 +107,40 @@ local setup_servers = function()
     },
     server = {
       settings = {
+        -- try to speed up things with
+        -- https://github.com/rust-lang/rust-analyzer/issues/6905#issuecomment-1594271655
         ['rust-analyzer'] = {
+          cargo = {
+            features = 'all',
+            extraEnv = {
+              -- Use a separate target dir for Rust Analyzer. Helpful if you want to use Rust
+              -- Analyzer and cargo on the command line at the same time.
+              ['CARGO_TARGET_DIR'] = 'target/nvim-rust-analyzer',
+              -- Skip building WASM, there is never need for it here
+              ['SKIP_WASM_BUILD'] = '1',
+              -- Improve stability
+              ['CHALK_OVERFLOW_DEPTH'] = '100000000',
+            },
+          },
           diagnostics = {
             disabled = { 'inactive-code' },
+            experimental = {
+              enable = true,
+            },
+          },
+          procMacro = {
+            -- Don't expand some problematic proc_macros
+            ignored = {
+              ['async-trait'] = { 'async_trait' },
+              ['napi-derive'] = { 'napi' },
+              ['async-recursion'] = { 'async_recursion' },
+              ['async-std'] = { 'async_std' },
+            },
           },
           rustfmt = {
             extraArgs = { '+nightly' },
           },
-
-          server = {
-            extraEnv = {
-              CARGO_TARGET_DIR = 'target/rust-analyzer',
-            },
-          },
-          check = {
-            extraArgs = { '--target-dir=target/rust-analyzer' },
-          },
         },
-      },
-      cargo = {
-        allFeatures = true,
       },
       flags = default_flags,
       capabilities = capabilities,
