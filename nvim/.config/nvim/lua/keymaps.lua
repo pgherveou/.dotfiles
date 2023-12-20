@@ -16,7 +16,7 @@ local mappings = {
     ['YY'] = { ':%y<cr>' },
 
     -- select yanked text
-    ['gv'] = { '`[v`]' },
+    ['gy'] = { '`[v`]' },
 
     ['<leader>y'] = {
       function()

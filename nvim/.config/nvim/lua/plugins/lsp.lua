@@ -20,7 +20,7 @@ local default_lsp_mappings = {
   ['gd'] = { cmd = ':LspDef<CR>', desc = 'Go to definition' },
   ['gf'] = { cmd = ':LspRefs<CR>', desc = 'Go to references' },
   ['gr'] = { cmd = ':LspRename<CR>', desc = 'Rename symbol' },
-  ['gy'] = { cmd = ':LspTypeDef<CR>', desc = 'Go to type definition' },
+  ['gt'] = { cmd = ':LspTypeDef<CR>', desc = 'Go to type definition' },
   ['K'] = { cmd = ':LspHover<CR>', desc = 'Display hover informations' },
   ['H'] = { cmd = ':LspSignatureHelp<CR>', desc = 'Display signature' },
   ['[a'] = { cmd = ':LspDiagPrev<CR>', desc = 'Go to previous diagnostic' },
