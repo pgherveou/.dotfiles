@@ -37,7 +37,7 @@ local function focus(direction)
   }
   local functionToCall = directionFunctionMap[direction]
   if functionToCall then
-    local windows = functionToCall(w, nil, nil, true)
+    local windows = functionToCall(w, nil, true, true)
     if #windows > 0 then
       windows[1]:focus()
     end
