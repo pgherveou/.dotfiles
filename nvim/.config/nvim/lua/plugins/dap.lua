@@ -22,7 +22,7 @@ return {
     { '<F4>', dap_fn('step_over'), desc = '[DAP] step over' },
     { '<F5>', dap_fn('continue'), desc = '[DAP] continue' },
     { '<F10>', dap_fn('run_last'), desc = '[DAP] run last' },
-    { '<F11>', dap_fn('terminate'), desc = '[DAP] terminate' },
+    { '<leader>dt', dap_fn('terminate'), desc = '[DAP] terminate' },
     { '<leader>dc', dap_fn('clear_breakpoints'), desc = '[DAP] open repl' },
     { '<leader>dr', dap_fn('repl.open'), desc = '[DAP] open repl' },
     { '<leader>db', dap_fn('toggle_breakpoint'), desc = '[DAP] toggle breakpoint' },

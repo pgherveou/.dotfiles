@@ -1,3 +1,4 @@
+.tmux.conf
 bin/.local/state
 bin/.local/share
 .ccls-cache

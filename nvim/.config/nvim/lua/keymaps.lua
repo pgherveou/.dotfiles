@@ -16,7 +16,19 @@ local mappings = {
     ['YY'] = { ':%y<cr>' },
 
     -- select yanked text
-    ['<leader>y'] = { '`[v`]' },
+    ['gy'] = { '`[v`]' },
+
+    ['<leader>y'] = {
+      function()
+        local text = vim.fn.getreg('"')
+        if vim.fn.has('mac') == 1 then
+          vim.fn.system('nc localhost 8377', text)
+        else
+          vim.fn.system('nc -N localhost 8377', text)
+        end
+      end,
+      desc = 'Clip yank text to make it available in the clipboard',
+    },
 
     -- qq to record, Q to replay
     ['Q'] = { '@q', desc = 'Replay macro' },
@@ -70,7 +82,10 @@ local mappings = {
     -- open the pull request
     ['<leader>gv'] = { ':!gh pr view --web<CR>', desc = 'Open the pull request with gh in the web browser' },
   },
-  v = {
+  x = {
+    -- execute macro on selected lines
+    ['Q'] = { ':normal @q<CR>', desc = 'Execute macro on selected lines' },
+
     -- Don't copy the contents of an overwritten selection.
     ['p'] = { '"_dP', desc = 'Don\'t copy the contents of an overwritten selection' },
 

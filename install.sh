@@ -77,8 +77,11 @@ run_install() {
 			/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 		fi
 
+		ln -s .tmux-macos.conf .tmux.conf
 		# ln -s /opt/homebrew/share/antigen/antigen.zsh ~/.antigen.zsh
 		# brew bundle install
+	else
+		ln -s .tmux-linux.conf .tmux.conf
 	fi
 
 	# clone tmux plugin manager
