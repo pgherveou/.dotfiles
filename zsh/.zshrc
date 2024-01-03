@@ -12,35 +12,32 @@ else
 fi
 
 
-if [[ -z "${ANTIGEN_LOADED}" ]]; then
-  # Load the oh-my-zsh's library.
-  antigen use oh-my-zsh
+# Load the oh-my-zsh's library.
+antigen use oh-my-zsh
 
-  # Load the theme
-  antigen theme romkatv/powerlevel10k
-  # antigen bundle mafredri/zsh-async
-  # antigen bundle sindresorhus/pure@main
+# Load the theme
+antigen theme romkatv/powerlevel10k
+# antigen bundle mafredri/zsh-async
+# antigen bundle sindresorhus/pure@main
 
-  # Bundles from the default repo (robbyrussell's oh-my-zsh).
-  antigen bundle git
-  antigen bundle command-not-found
-  antigen bundle brew
-  antigen bundle common-aliases
-  antigen bundle compleat
-  antigen bundle git-extras
-  antigen bundle bazel
-  antigen bundle npm
-  antigen bundle macos
-  antigen bundle atuinsh/atuin@main
+# Bundles from the default repo (robbyrussell's oh-my-zsh).
+antigen bundle git
+antigen bundle command-not-found
+antigen bundle brew
+antigen bundle common-aliases
+antigen bundle compleat
+antigen bundle git-extras
+antigen bundle bazel
+antigen bundle npm
+antigen bundle macos
+antigen bundle atuinsh/atuin@main
 
-  antigen bundle zsh-users/zsh-history-substring-search
-  antigen bundle zsh-users/zsh-autosuggestions
-  antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-history-substring-search
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-syntax-highlighting
 
-  # Tell Antigen that you're done.
-  antigen apply
-  export ANTIGEN_LOADED=1
-fi
+# Tell Antigen that you're done.
+antigen apply
 
 alias vim=nvim
 alias code=codium

@@ -14,11 +14,7 @@ return {
     'akinsho/toggleterm.nvim',
     version = '*',
     opts = {
-      on_create = function(term)
-        -- term:send('tmux set status off; clear')
-      end,
       open_mapping = [[<c-t>]],
-      -- shell = 'tmux',
       direction = 'float',
     },
   },
