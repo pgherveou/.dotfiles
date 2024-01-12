@@ -160,3 +160,38 @@ vim.api.nvim_create_user_command('ToggleWhitespace', function()
     vim.o.listchars = 'tab:▸ ,trail:·,extends:❯,precedes:❮'
   end
 end, {})
+
+vim.api.nvim_create_user_command('YankMacro', function(opts)
+  local register = opts.fargs[1] or 'q'
+  local register_content = vim.fn.getreg(register)
+  local macro = vim.fn.keytrans(register_content)
+  vim.fn.setreg('+', macro)
+  vim.fn.setreg('*', macro)
+  vim.fn.setreg('"', macro)
+end, {
+  nargs = '*',
+})
+
+local macros = {
+  -- replace text between < > with the result of rustfilt
+  rustfilt = [[0f<ci><C-R>=system("rustfilt",getreg('"'))<CR><Esc>]],
+}
+
+vim.api.nvim_create_user_command('PutMacro', function(opts)
+  local macro = macros[opts.fargs[1]]
+  local register = opts.fargs[2] or 'q'
+  local macro_content = vim.api.nvim_replace_termcodes(macro, true, true, true)
+  -- print('Set register ' .. register .. ' with macro: ' .. macro)
+  vim.fn.setreg(register, macro_content)
+end, {
+  nargs = '?',
+  complete = function()
+    local keys = {}
+    for k, _ in pairs(macros) do
+      table.insert(keys, k)
+    end
+    return keys
+  end,
+})
+
+-- 00057d: 10 0b                      |         call 11 <ink_env::api::set_contract_storage>

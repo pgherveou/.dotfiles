@@ -81,3 +81,44 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
     end
   end,
 })
+
+-- vim fugitive and directory change
+vim.api.nvim_create_augroup('fugitive_cd', {})
+
+-- Set up the autocmd for DirChanged
+vim.api.nvim_create_autocmd('DirChanged', {
+  group = 'fugitive_cd',
+  pattern = '*',
+  callback = function()
+    -- if there is a fugitive buffer open, close it
+    local fugitive_buffers = vim.fn.filter(vim.fn.getbufinfo(), function(_, info)
+      if info.loaded ~= 1 then
+        return false
+      end
+
+      local bufnr = info.bufnr
+      local bufname = vim.fn.bufname(bufnr)
+
+      return vim.fn.match(bufname, 'fugitive://') >= 0
+    end)
+
+    -- disable close when last buffer is deleted
+    local hidden = vim.o.hidden
+
+    vim.o.hidden = true
+    for _, buf in ipairs(fugitive_buffers) do
+      vim.cmd('bd! ' .. buf.name)
+    end
+
+    -- count the number of buffers
+    local last_buffer = vim.fn.bufnr('$')
+
+    -- if there are none create a new one
+    if last_buffer == 0 then
+      vim.cmd('enew')
+    end
+
+    -- restore hidden option
+    vim.o.hidden = hidden
+  end,
+})
