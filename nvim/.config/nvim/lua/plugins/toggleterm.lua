@@ -15,6 +15,9 @@ return {
     version = '*',
     opts = {
       open_mapping = [[<c-t>]],
+      on_open = function()
+        vim.cmd('startinsert!')
+      end,
       direction = 'float',
     },
   },
