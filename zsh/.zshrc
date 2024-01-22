@@ -115,6 +115,11 @@ openx(){
   fi
 }
 
+hex_to_bytes() {
+  echo $1 | xxd -r -p | od -t x1 -An
+  echo $1 | xxd -r -p | od -A n -t u1 
+}
+
 # bazel
 alias bazel=bazelisk
 # compdef bazelisk=bazel
