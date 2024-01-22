@@ -43,8 +43,7 @@ vim.opt.matchpairs:append('<:>')
 vim.wo.wrap = false
 
 -- Ignore these folders for completions
-vim.o.wildignore = vim.o.wildignore
-  .. ',.hg,.git,.svn' -- Version control
+vim.o.wildignore = '.hg,.git,.svn' -- Version control
   .. ',*.jpg,*.bmp,*.gif,*.png,*.jpeg' -- binary images
   .. ',*.o,*.obj,*.exe,*.dll,*.manifest,*.pyc' -- compiled object files
   .. ',*.resolved,*.lock' -- package manager lock files
