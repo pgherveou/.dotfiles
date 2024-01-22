@@ -5,13 +5,12 @@
 #include "pgherveou.h"
 
 enum enc_mode_t {
-  SCROLL,
   CHROME,
+  SCROLL,
   ZOOM,
   SLACK,
   VOLUME,
   BRIGHTNESS,
-  VIM_QF,
   AFTER_LAST_MODE
 };
 
@@ -36,8 +35,6 @@ const char *get_enc_str(void) {
     return "Volume";
   case BRIGHTNESS:
     return "Brightness";
-  case VIM_QF:
-    return "Vim Quickfix";
   case AFTER_LAST_MODE:
     return "-";
   }
@@ -147,25 +144,6 @@ void scroll(enc_action_t action) {
   }
 }
 
-void vim_quickfix(enc_action_t action) {
-  switch (action & ENC_MSK) {
-  case ENC_CW:
-    SEND_STRING(":cnext");
-    tap_code16(KC_ENTER);
-    break;
-  case ENC_CCW:
-    SEND_STRING(":cprev");
-    tap_code16(KC_ENTER);
-    break;
-  case ENC_DOWN:
-    SEND_STRING(":copen");
-    tap_code16(KC_ENTER);
-    break;
-  default:
-    break;
-  }
-}
-
 void zoom(enc_action_t action) {
   switch (action & ENC_MSK) {
   case ENC_CW:
@@ -233,9 +211,6 @@ void exec_mode(enc_action_t action) {
     break;
   case BRIGHTNESS:
     brightness(action);
-    break;
-  case VIM_QF:
-    vim_quickfix(action);
     break;
   case AFTER_LAST_MODE:
     break;
