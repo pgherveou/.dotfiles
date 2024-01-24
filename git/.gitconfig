@@ -21,7 +21,7 @@
 [merge]
 	tool = fugitive
 [rebase]
-  autosquash = true
+	autosquash = true
 [init]
 	defaultBranch = main
 [core]
@@ -30,8 +30,7 @@
 	insteadOf = https://github.com/
 # avoid issues with cargo-edit
 [url "https://github.com/rust-lang/crates.io-index"]
-  insteadOf = https://github.com/rust-lang/crates.io-index
-
+	insteadOf = https://github.com/rust-lang/crates.io-index
 [gpg]
 	format = ssh
 [gpg "ssh"]

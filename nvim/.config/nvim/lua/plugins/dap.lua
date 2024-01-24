@@ -9,8 +9,6 @@ return {
   'mfussenegger/nvim-dap',
   dependencies = {
     'rcarriga/nvim-dap-ui',
-    'pgherveou/rust-tools.nvim',
-    'anuvyklack/hydra.nvim',
     'theHamsta/nvim-dap-virtual-text',
     'nvim-treesitter/nvim-treesitter',
   },

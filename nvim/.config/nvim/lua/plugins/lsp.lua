@@ -1,56 +1,5 @@
 local u = require('utils')
-
--- lsp commands
-u.lua_command('LspDef', 'vim.lsp.buf.definition()')
-u.lua_command('LspFormatting', 'vim.lsp.buf.format()')
-u.lua_command('LspCodeAction', 'vim.lsp.buf.code_action()')
-u.lua_command('LspHover', 'vim.lsp.buf.hover()')
-u.lua_command('LspRename', 'vim.lsp.buf.rename()')
-u.lua_command('LspRefs', 'vim.lsp.buf.references()')
-u.lua_command('LspTypeDef', 'vim.lsp.buf.type_definition()')
-u.lua_command('LspImplementation', 'vim.lsp.buf.implementation()')
-u.lua_command('LspDiagPrev', 'vim.diagnostic.goto_prev()')
-u.lua_command('LspDiagNext', 'vim.diagnostic.goto_next()')
-u.lua_command('LspDiagLine', 'vim.diagnostic.open_float()')
-u.lua_command('LspSignatureHelp', 'vim.lsp.buf.signature_help()')
-u.lua_command('LspDiagQuickfix', 'vim.diagnostic.setqflist()')
-
--- default lsp mappings
-local default_lsp_mappings = {
-  ['gd'] = { cmd = ':LspDef<CR>', desc = 'Go to definition' },
-  ['gf'] = { cmd = ':LspRefs<CR>', desc = 'Go to references' },
-  ['gr'] = { cmd = ':LspRename<CR>', desc = 'Rename symbol' },
-  ['gt'] = { cmd = ':LspTypeDef<CR>', desc = 'Go to type definition' },
-  ['K'] = { cmd = ':LspHover<CR>', desc = 'Display hover informations' },
-  ['H'] = { cmd = ':LspSignatureHelp<CR>', desc = 'Display signature' },
-  ['[a'] = { cmd = ':LspDiagPrev<CR>', desc = 'Go to previous diagnostic' },
-  [']a'] = { cmd = ':LspDiagNext<CR>', desc = 'Go to next diagnostic' },
-  ['ga'] = { cmd = ':lua vim.lsp.buf.code_action()<CR>', desc = 'Display code actions' },
-  ['gl'] = { cmd = ':LspDiagLine<CR>', desc = 'Display diagnostic line' },
-  ['go'] = { cmd = ':Telescope lsp_references<CR>', desc = 'Display lsp references' },
-}
-
-local format_on_save = function(client)
-  if client.server_capabilities.documentFormattingProvider then
-    vim.cmd([[
-      augroup lsp_buf_format
-        au! BufWritePre <buffer>
-        autocmd BufWritePre <buffer> :lua vim.lsp.buf.format()
-      augroup END
-    ]])
-  end
-end
-
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-local set_mappings = function(client, bufnr, nmap_mappings)
-  local mappings = vim.tbl_extend('force', default_lsp_mappings, nmap_mappings or {})
-  for key, item in pairs(mappings) do
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', key, item.cmd, { desc = item.desc, noremap = true, silent = true })
-  end
-
-  format_on_save(client)
-  require('illuminate').on_attach(client)
-end
+local common = require('plugins.lsp.common')
 
 local setup_servers = function()
   local lspconfig = require('lspconfig')
@@ -67,7 +16,7 @@ local setup_servers = function()
 
   local on_attach = function(client, bufnr)
     disable_formatting(client)
-    set_mappings(client, bufnr)
+    common.set_mappings(client, bufnr)
   end
 
   local default_flags = { debounce_text_changes = 100 }
@@ -76,86 +25,6 @@ local setup_servers = function()
     on_attach = on_attach,
     flags = default_flags,
   }
-
-  -- setup rust via rust-tools
-  local mason_registry = require('mason-registry')
-  local codelldb = mason_registry.get_package('codelldb')
-  local extension_path = codelldb:get_install_path() .. '/extension/'
-  local codelldb_path = extension_path .. 'adapter/codelldb'
-
-  -- use .dylib if running on macos .so if running on linux
-  local liblldb_path = extension_path .. 'lldb/lib/liblldb'
-  if vim.fn.has('mac') == 1 then
-    liblldb_path = liblldb_path .. '.dylib'
-  else
-    liblldb_path = liblldb_path .. '.so'
-  end
-
-  require('rust-tools').setup({
-    dap = {
-      adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path),
-    },
-    tools = {
-      runnables = {
-        use_telescope = true,
-      },
-      inlay_hints = {
-        show_parameter_hints = true,
-        parameter_hints_prefix = '',
-        other_hints_prefix = '',
-      },
-    },
-    server = {
-      settings = {
-        -- try to speed up things with
-        -- https://github.com/rust-lang/rust-analyzer/issues/6905#issuecomment-1594271655
-        ['rust-analyzer'] = {
-          cargo = {
-            features = 'all',
-            extraEnv = {
-              -- Use a separate target dir for Rust Analyzer. Helpful if you want to use Rust
-              -- Analyzer and cargo on the command line at the same time.
-              ['CARGO_TARGET_DIR'] = 'target/nvim-rust-analyzer',
-              -- Skip building WASM, there is never need for it here
-              ['SKIP_WASM_BUILD'] = '1',
-              -- Improve stability
-              ['CHALK_OVERFLOW_DEPTH'] = '100000000',
-            },
-          },
-          diagnostics = {
-            disabled = { 'inactive-code' },
-            experimental = {
-              enable = true,
-            },
-          },
-          procMacro = {
-            -- Don't expand some problematic proc_macros
-            ignored = {
-              ['async-trait'] = { 'async_trait' },
-              ['napi-derive'] = { 'napi' },
-              ['async-recursion'] = { 'async_recursion' },
-              ['async-std'] = { 'async_std' },
-            },
-          },
-          rustfmt = {
-            extraArgs = { '+nightly' },
-          },
-        },
-      },
-      flags = default_flags,
-      capabilities = capabilities,
-      on_attach = function(client, bufnr)
-        -- disable_formatting(client)
-        set_mappings(client, bufnr, {
-          ['K'] = {
-            cmd = ':lua require("rust-tools").hover_actions.hover_actions()<CR>',
-            desc = 'Display hover actions',
-          },
-          ['<leader>l'] = { cmd = ':RustLast<CR>', desc = 'Run or Debug last runnable' },
-        })
-      end,
-    },
-  })
 
   lspconfig.jsonls.setup({
     flags = default_flags,
@@ -219,16 +88,8 @@ local setup_servers = function()
   })
 end
 
--- check if vim was called with --cmd 'let no_lsp=1'
--- vim.fn.exists('g:no_lsp') == 0
-local enabled = true
-if vim.fn.getenv('NO_LSP') == '1' then
-  enabled = false
-end
-
 return {
   'neovim/nvim-lspconfig',
-  enabled = enabled,
   dependencies = {
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
@@ -238,7 +99,6 @@ return {
     'jose-elias-alvarez/null-ls.nvim',
     'jayp0521/mason-null-ls.nvim',
     'RRethy/vim-illuminate',
-    'pgherveou/rust-tools.nvim',
     'b0o/schemastore.nvim',
     'ThePrimeagen/refactoring.nvim',
     'folke/neodev.nvim',
@@ -248,9 +108,10 @@ return {
     require('mason').setup()
     require('mason-lspconfig').setup({ automatic_installation = true })
     setup_servers()
-    require('plugins.lsp.null').setup(format_on_save)
+    require('plugins.lsp.null').setup(common.format_on_save)
     require('mason-null-ls').setup({
       ensure_installed = { 'stylua', 'jq', 'codespell', 'markdownlint' },
+      automatic_installation = true,
     })
   end,
 }
