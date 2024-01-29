@@ -12,6 +12,11 @@ local function toggle_fugitive_window()
   end
 end
 
+local function main_diff_split()
+  local main_branch = vim.fn.system('git symbolic-ref --short refs/remotes/origin/HEAD')
+  vim.cmd('Gvdiffsplit ' .. main_branch .. ':%')
+end
+
 return {
   'tpope/vim-fugitive',
   event = 'VeryLazy',
@@ -19,7 +24,7 @@ return {
   keys = {
     { '<leader>gs', toggle_fugitive_window, desc = '[Git] status window' },
     { '<leader>gd', ':Gvdiff  !~1<cr>', desc = '[Git] diff file' },
-
+    { '<leader>gm', main_diff_split, desc = '[Git] vertival diff split for the current file and the main branch' },
     { '<leader>gB', ':G blame<cr>', desc = '[Git] blame' },
     { '<leader>gj', ':diffget //3<cr>', desc = '[Git] Pick diffget 3' },
     { '<leader>gf', ':diffget //2<cr>', desc = '[Git] Pick diffget 2' },

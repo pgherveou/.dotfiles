@@ -34,8 +34,8 @@ vim.g.rustaceanvim = function()
             cmd = ':RustLsp hover actions<CR>',
             desc = 'Display hover actions',
           },
-          ['<leader>l'] = { cmd = ':RustLsp runnables last<CR>', desc = 'Run last runnable' },
-          ['<leader>D'] = { cmd = ':RustLsp debuggable last<CR>', desc = 'Run last debuggable' },
+          ['<leader>l'] = { cmd = ':RustLsp! runnables<CR>', desc = 'Run last runnable' },
+          ['<leader>D'] = { cmd = ':RustLsp! debuggables<CR>', desc = 'Run last debuggable' },
         })
       end,
       settings = {
@@ -93,7 +93,7 @@ end
 
 return {
   'mrcjkb/rustaceanvim',
-  version = '^3', -- Recommended
+  version = '^4', -- Recommended
   enabled = enabled,
   ft = { 'rust' },
 }

@@ -39,5 +39,6 @@
 	hd = rev-parse --verify HEAD
 	prune-merged = !git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d
 	prune-merged-remote = !git remote prune origin && git fetch origin --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D
+	master-patch = !git format-patch master --stdout > branch.patch
 [push]
 	autoSetupRemote = true
