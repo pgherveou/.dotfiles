@@ -14,6 +14,23 @@ local mappings = {
     -- act like other capitalized actions
     ['Y'] = { 'yg$' },
     ['YY'] = { ':%y<cr>' },
+    -- Paste without carriage return
+    ['<leader>p'] = {
+      function()
+        local content = vim.fn.getreg('"')
+        content = content:gsub('\n$', '')
+        vim.api.nvim_put({ content }, 'c', true, true)
+      end,
+      desc = 'Paste without carriage return',
+    },
+    ['<leader>P'] = {
+      function()
+        local content = vim.fn.getreg('"')
+        content = content:gsub('\n$', '')
+        vim.api.nvim_put({ content }, 'c', false, true)
+      end,
+      desc = 'Paste without carriage return',
+    },
 
     -- select yanked text
     ['gy'] = { '`[v`]' },
@@ -48,10 +65,6 @@ local mappings = {
     ['<Tab>K'] = { ':lprev<CR>zz', desc = 'Go to previous item in location list' },
     ['<Tab>J'] = { ':lnext<CR>zz', desc = 'Go to next item in location list' },
     ['<leader>q'] = { ':AddToQuickFix', desc = 'Add current line to quick fix list' },
-
-    -- navigate buffers
-    ['<leader>o'] = { ':bprevious<CR>', desc = 'Go to previous buffer' },
-    ['<leader>p'] = { ':bnext<CR>', desc = 'Go to next buffer' },
 
     -- Move line up / down
     ['<M-j>'] = { ':m .+1<CR>==', desc = 'Move line down' },

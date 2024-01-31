@@ -194,4 +194,8 @@ end, {
   end,
 })
 
--- 00057d: 10 0b                      |         call 11 <ink_env::api::set_contract_storage>
+-- vim regex cheat sheet:
+-- .\{-} => non greedy match
+-- <  => beginning of a word
+-- \w =>  a single letter
+-- \u =>  turn to uppercase
