@@ -89,7 +89,9 @@ local ts_context = {
   config = function()
     require('treesitter-context').setup({
       enable = true,
-      multiline_threshold = 5,
+
+      min_window_height = 45, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+      multiline_threshold = 4,
     })
   end,
 }

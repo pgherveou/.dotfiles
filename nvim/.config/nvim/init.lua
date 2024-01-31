@@ -22,5 +22,9 @@ vim.opt.rtp:prepend(lazypath)
 if vim.g.vscode then
   require('vscode')
 else
-  require('lazy').setup('plugins')
+  require('lazy').setup('plugins', {
+    dev = {
+      path = vim.env.HOME .. '/github',
+    },
+  })
 end

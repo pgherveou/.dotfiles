@@ -20,25 +20,23 @@ vim.g.rustaceanvim = function()
       runnables = {
         use_telescope = true,
       },
-      inlay_hints = {
-        show_parameter_hints = true,
-        parameter_hints_prefix = '',
-        other_hints_prefix = '',
+      hover_actions = {
+        replace_builtin_hover = true,
+      },
+      float_win_config = {
+        auto_focus = true,
       },
     },
     -- LSP configuration
     server = {
       on_attach = function(client, bufnr)
         require('plugins.lsp.common').set_mappings(client, bufnr, {
-          ['K'] = {
-            cmd = ':RustLsp hover actions<CR>',
-            desc = 'Display hover actions',
-          },
           ['<leader>l'] = { cmd = ':RustLsp! runnables<CR>', desc = 'Run last runnable' },
           ['<leader>D'] = { cmd = ':RustLsp! debuggables<CR>', desc = 'Run last debuggable' },
         })
       end,
       settings = {
+        -- see https://rust-analyzer.github.io/manual.html#configuration
         ['rust-analyzer'] = {
           rust = {
             -- Use a separate target dir for Rust Analyzer. Helpful if you want to use Rust
@@ -60,7 +58,11 @@ vim.g.rustaceanvim = function()
               ['SKIP_WASM_BUILD'] = '1',
             },
           },
+          -- diagnostics = {
+          --   disabled = true,
+          -- },
           procMacro = {
+            -- enable = false,
             -- Don't expand some problematic proc_macros
             ignored = {
               ['async-trait'] = { 'async_trait' },
