@@ -1,8 +1,13 @@
 return {
   'pgherveou/rust-quick-tests.nvim',
   enabled = vim.fn.getenv('NO_LSP') == '1',
+  dependencies = {
+    'nvim-lua/plenary.nvim',
+  },
   dev = true,
+  config = true,
   ft = { 'rust' },
+  cmd = { 'RustQuick' },
   keys = {
     {
       'K',
