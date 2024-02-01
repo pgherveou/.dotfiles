@@ -1,21 +1,19 @@
 return {
   'nanozuki/tabby.nvim',
-  event = 'VeryLazy',
+  lazy = true,
   dependencies = 'nvim-tree/nvim-web-devicons',
   keys = {
     {
       '<leader>tt',
       function()
-        local path = vim.fn.input('tcd: ', '', 'file')
         vim.cmd('tabnew')
-        vim.cmd('tcd ' .. path)
+        vim.api.nvim_feedkeys(':tcd ~/', 'n', false)
       end,
       desc = 'New tab',
     },
     { '<leader>to', ':tabnew<CR>', desc = 'New tab' },
   },
   config = function()
-    -- configs...
     require('tabby.tabline').use_preset('tab_only', {
       theme = {
         fill = 'TabLine', -- tabline background
@@ -25,7 +23,7 @@ return {
         win = 'TabLine', -- window highlight
         tail = 'TabLine', -- tail element highlight
       },
-      nerdfont = true, -- whether use nerdfont
+      nerdfont = false, -- whether use nerdfont
       lualine_theme = nil, -- lualine theme name
       tab_name = {
         name_fallback = function(tabid)
@@ -34,9 +32,6 @@ return {
           return vim.fn.fnamemodify(cwd, ':t')
         end,
       },
-      -- buf_name = {
-      --   mode = 'relative',
-      -- },
     })
   end,
 }

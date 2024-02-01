@@ -30,26 +30,6 @@ vim.api.nvim_create_user_command('Delete', function()
   end
 end, {})
 
--- reload the current file by calling :BufDel first
-vim.api.nvim_create_user_command('BufReload', function(opts)
-  local current_file = vim.fn.expand('%')
-  local current_position = vim.fn.getpos('.')
-  -- disable close when last buffer is deleted
-  local hidden = vim.o.hidden
-  vim.o.hidden = true
-
-  -- call :bd and forward the bang option
-  vim.cmd(':bd' .. (opts.bang and '!' or ''))
-  vim.cmd('edit ' .. current_file)
-  vim.fn.setpos('.', current_position)
-
-  -- restore hidden option
-  vim.o.hidden = hidden
-end, {
-  bang = true,
-  desc = 'Reload the current buffer',
-})
-
 -- set RUST_LOG to the specified value
 vim.api.nvim_create_user_command('RustLog', function(opts)
   vim.fn.setenv('RUST_LOG', opts.fargs[1])
