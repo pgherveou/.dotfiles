@@ -22,16 +22,12 @@ antigen theme romkatv/powerlevel10k
 
 # Bundles from the default repo (robbyrussell's oh-my-zsh).
 antigen bundle git
-antigen bundle command-not-found
-antigen bundle brew
+antigen bundle git-extras
 antigen bundle common-aliases
 antigen bundle compleat
-antigen bundle git-extras
-antigen bundle bazel
-antigen bundle npm
+antigen bundle zoxide
 antigen bundle macos
 antigen bundle atuinsh/atuin@main
-
 antigen bundle zsh-users/zsh-history-substring-search
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting
