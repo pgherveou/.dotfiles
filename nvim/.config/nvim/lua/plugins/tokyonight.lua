@@ -44,11 +44,15 @@ return {
       default = true,
     })
 
-    local file_name = {
-      'filename',
-      file_status = true, -- displays file status (readonly status, modified status)
-      path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
-    }
+    local file_name = function()
+      if vim.bo.buftype == 'terminal' then
+        local name = vim.api.nvim_buf_get_name(0)
+        local pattern = '^[^%s]+:'
+        return name:gsub(pattern, '')
+      else
+        return '%f'
+      end
+    end
     require('lualine').setup({
       options = {
         theme = 'tokyonight',
