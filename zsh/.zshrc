@@ -39,8 +39,8 @@ alias vim=nvim
 alias code=codium
 alias v=nvim
 alias vv=nvim
-alias nv="NO_LSP=1 nvim"
-alias nvv="NO_LSP=1 nvim"
+alias nv="NO_RUST_LSP=1 nvim"
+alias nvv="NO_RUST_LSP=1 nvim"
 alias ..="cd .."
 alias ...="cd ../.."
 

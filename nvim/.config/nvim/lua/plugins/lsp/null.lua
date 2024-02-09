@@ -33,6 +33,12 @@ local sources = {
       return utils.root_has_file({ 'stylua.toml', '.stylua.toml' })
     end,
   }),
+  builtins.formatting.rustfmt.with({
+    condition = function()
+      return require('plugins.lsp.common').no_rust_lsp
+    end,
+    extra_args = { '--edition=2021' },
+  }),
   builtins.diagnostics.luacheck.with({
     condition = function(utils)
       return utils.root_has_file({ '.luacheckrc' })
@@ -48,9 +54,6 @@ local sources = {
     },
   }),
   builtins.diagnostics.flake8,
-  -- builtins.diagnostics.pylint,
-  -- builtins.formatting.autopep8,
-  -- builtins.diagnostics.mypy,
   builtins.formatting.sql_formatter,
   builtins.code_actions.eslint_d.with(eslintConfig),
   builtins.diagnostics.eslint_d.with(eslintConfig),

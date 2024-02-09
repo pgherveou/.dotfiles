@@ -73,14 +73,10 @@ vim.g.rustaceanvim = function()
   }
 end
 
-local enabled = true
-if vim.fn.getenv('NO_LSP') == '1' then
-  enabled = false
-end
 
 return {
   'mrcjkb/rustaceanvim',
   version = '^4', -- Recommended
-  enabled = enabled,
+  enabled = require('plugins.lsp.common').no_rust_lsp == false,
   ft = { 'rust' },
 }

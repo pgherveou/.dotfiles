@@ -1,6 +1,6 @@
 return {
   'pgherveou/rust-quick-tests.nvim',
-  enabled = vim.fn.getenv('NO_LSP') == '1',
+  enabled = require('plugins.lsp.common').no_rust_lsp,
   dependencies = {
     'nvim-lua/plenary.nvim',
     'mfussenegger/nvim-dap',
