@@ -70,22 +70,7 @@ local setup_servers = function()
   lspconfig.pyright.setup(default_config)
   lspconfig.clangd.setup(default_config)
   lspconfig.tailwindcss.setup(default_config)
-  lspconfig.tsserver.setup({
-    capabilities = capabilities,
-    on_attach = function(client, bufnr)
-      on_attach(client, bufnr)
-      local ts_utils = require('nvim-lsp-ts-utils')
-
-      ts_utils.setup({
-        enable_import_on_completion = true,
-        eslint_bin = 'eslint_d',
-      })
-      ts_utils.setup_client(client)
-
-      u.buf_nmap(bufnr, 'gI', ':TSLspImportAll<CR>')
-      u.buf_nmap(bufnr, 'gR', ':TSLspRenameFile<CR>')
-    end,
-  })
+  lspconfig.tsserver.setup(default_config)
 end
 
 return {
@@ -95,8 +80,7 @@ return {
     'williamboman/mason-lspconfig.nvim',
     'nvim-lua/plenary.nvim',
     'hrsh7th/cmp-nvim-lsp',
-    'jose-elias-alvarez/nvim-lsp-ts-utils',
-    'jose-elias-alvarez/null-ls.nvim',
+    'nvimtools/none-ls.nvim',
     'jayp0521/mason-null-ls.nvim',
     'RRethy/vim-illuminate',
     'b0o/schemastore.nvim',

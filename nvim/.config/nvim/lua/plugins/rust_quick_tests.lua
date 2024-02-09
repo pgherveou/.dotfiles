@@ -3,9 +3,13 @@ return {
   enabled = vim.fn.getenv('NO_LSP') == '1',
   dependencies = {
     'nvim-lua/plenary.nvim',
+    'mfussenegger/nvim-dap',
   },
   dev = true,
-  config = true,
+  config = function()
+    require('rust-quick-tests').setup()
+    require('dap').adapters['codelldb'] = require('utils.dap').get_codelldb_adapter()
+  end,
   ft = { 'rust' },
   cmd = { 'RustQuick' },
   keys = {

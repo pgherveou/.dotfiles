@@ -31,14 +31,16 @@ local default_lsp_mappings = {
   ['go'] = { cmd = ':Telescope lsp_references<CR>', desc = 'Display lsp references' },
 }
 
+local lsp_buf_format_augroup = vim.api.nvim_create_augroup('lsp_buf_format', { clear = true })
 M.format_on_save = function(client)
   if client.server_capabilities.documentFormattingProvider then
-    vim.cmd([[
-      augroup lsp_buf_format
-        au! BufWritePre <buffer>
-        autocmd BufWritePre <buffer> :lua vim.lsp.buf.format()
-      augroup END
-    ]])
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      group = lsp_buf_format_augroup,
+      buffer = 0,
+      callback = function()
+        vim.lsp.buf.format()
+      end,
+    })
   end
 end
 
