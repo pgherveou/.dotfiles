@@ -13,8 +13,15 @@ local function toggle_fugitive_window()
 end
 
 local function main_diff_split()
-  local main_branch = vim.fn.system('git symbolic-ref --short refs/remotes/origin/HEAD')
-  vim.cmd('Gvdiffsplit ' .. main_branch .. ':%')
+  local remotes = vim.split(vim.fn.system('git remote'), '\n', { trimempty = true })
+  for _, remote in ipairs(remotes) do
+    local main_branch = vim.fn.system('git symbolic-ref --short refs/remotes/' .. remote .. '/HEAD')
+    if vim.v.shell_error == 0 then
+      vim.cmd('Gvdiffsplit ' .. main_branch .. ':%')
+      return
+    end
+  end
+  vim.notify('No main branch found', vim.log.levels.WARN)
 end
 
 return {

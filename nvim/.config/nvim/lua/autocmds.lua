@@ -122,3 +122,11 @@ vim.api.nvim_create_autocmd('DirChanged', {
     vim.o.hidden = hidden
   end,
 })
+
+-- Keep TermoOpen window focused on the last line
+vim.api.nvim_create_autocmd('TermOpen', {
+  pattern = '*',
+  callback = function()
+    vim.api.nvim_feedkeys('G', 'n', true)
+  end,
+})

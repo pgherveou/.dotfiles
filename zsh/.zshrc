@@ -68,6 +68,7 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 
 # Rust
+source "$HOME/.cargo/env"
 export CARGO_NET_GIT_FETCH_WITH_CLI=true
 
 cargo-targets() {
