@@ -5,12 +5,45 @@ local function dap_fn(fn)
   end
 end
 
+local function bash_config()
+  local dap = require('dap')
+  local mason_registry = require('mason-registry')
+  local adapter = mason_registry.get_package('bash-debug-adapter')
+  local BASH_DEBUG_ADAPTER_BIN = adapter:get_install_path() .. '/bash-debug-adapter'
+  local BASHDB_DIR = adapter:get_install_path() .. '/extension/bashdb_dir'
+
+  dap.adapters.sh = {
+    type = 'executable',
+    command = BASH_DEBUG_ADAPTER_BIN,
+  }
+  dap.configurations.sh = {
+    {
+      name = 'Launch Bash debugger',
+      type = 'sh',
+      request = 'launch',
+      program = '${file}',
+      cwd = '${fileDirname}',
+      pathBashdb = BASHDB_DIR .. '/bashdb',
+      pathBashdbLib = BASHDB_DIR,
+      pathBash = 'bash',
+      pathCat = 'cat',
+      pathMkfifo = 'mkfifo',
+      pathPkill = 'pkill',
+      env = {},
+      args = {},
+      -- showDebugOutput = true,
+      -- trace = true,
+    },
+  }
+end
+
 return {
   'mfussenegger/nvim-dap',
   dependencies = {
     'rcarriga/nvim-dap-ui',
     'theHamsta/nvim-dap-virtual-text',
     'nvim-treesitter/nvim-treesitter',
+    'williamboman/mason.nvim',
   },
   lazy = true,
   keys = {
@@ -63,6 +96,9 @@ return {
     local dap, dapui = require('dap'), require('dapui')
     require('nvim-dap-virtual-text').setup()
     dapui.setup()
+
+    bash_config()
+
     -- open / close dap ui, automatically when debugging
     -- see https://github.com/rcarriga/nvim-dap-ui#usage
     -- todo look for more keymaps from tj config here: https://github.com/tjdevries/config_manager/blob/master/xdg_config/nvim/after/plugin/dap.lua

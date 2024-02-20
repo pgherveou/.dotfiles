@@ -155,10 +155,12 @@ end, {
 local macros = {
   -- replace text between < > with the result of rustfilt
   rustfilt = [[0f<ci><C-R>=system("rustfilt",getreg('"'))<CR><Esc>]],
+  -- replace git and rev with path from patch
+  cargo_patch = [["ayt<Space><t_˝a>f"<t_˝a>"bya"/\(<C-R>a<Space>=\|"<C-R>a"\)<CR>:s#git<Space>=<Space>".\{-}",<Space>rev<Space>=<Space>"\<BS>.\{-}"#path<Space>=<Space><C-R>b<Esc>]],
 }
 
 vim.api.nvim_create_user_command('PutMacro', function(opts)
-  local macro = macros[opts.fargs[1]]
+  local macro = macros[opts.fargs[1]] or vim.fn.getreg(opts.fargs[1])
   local register = opts.fargs[2] or 'q'
   local macro_content = vim.api.nvim_replace_termcodes(macro, true, true, true)
   -- print('Set register ' .. register .. ' with macro: ' .. macro)
