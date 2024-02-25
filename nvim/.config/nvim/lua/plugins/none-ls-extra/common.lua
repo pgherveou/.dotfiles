@@ -3,23 +3,21 @@ local null_ls = require('null-ls')
 local builtins = null_ls.builtins
 local Path = require('plenary.path')
 
-local eslintConfig = {
-  timeout = 20000,
-  condition = function(utils)
-    return utils.root_has_file({ '.eslintrc.js', '.eslintrc' })
-  end,
-}
+-- [null-ls] You required a deprecated builtin (formatting/rustfmt.lua), which will be removed in March.
+-- Please migrate to alternatives: https://github.com/nvimtools/none-ls.nvim/issues/58
+-- [null-ls] You required a deprecated builtin (diagnostics/luacheck.lua), which will be removed in March.
 
 local sources = {
   builtins.formatting.shfmt,
   builtins.formatting.markdownlint,
+  builtins.formatting.sql_formatter,
+  builtins.formatting.gofmt,
   builtins.diagnostics.codespell.with({
     disabled_filetypes = { 'log' },
     extra_args = {
       '--ignore-words=' .. Path:new('~/.config/codespell/ignore-words.txt'):expand(),
     },
   }),
-  builtins.formatting.gofmt,
   builtins.formatting.clang_format.with({
     disabled_filetypes = { 'java' },
   }),
@@ -33,31 +31,18 @@ local sources = {
       return utils.root_has_file({ 'stylua.toml', '.stylua.toml' })
     end,
   }),
-  builtins.formatting.rustfmt.with({
+  require('plugins.none-ls-extra.rustfmt').with({
     condition = function()
       return require('plugins.lsp.common').no_rust_lsp
     end,
     extra_args = { '--edition=2021' },
   }),
-  builtins.diagnostics.luacheck.with({
+  require('plugins.none-ls-extra.luacheck').with({
     condition = function(utils)
       return utils.root_has_file({ '.luacheckrc' })
     end,
-    args = {
-      '--formatter',
-      'plain',
-      '--codes',
-      '--ranges',
-      '--filename',
-      '$FILENAME',
-      '-',
-    },
   }),
-  builtins.diagnostics.flake8,
-  builtins.formatting.sql_formatter,
-  builtins.code_actions.eslint_d.with(eslintConfig),
-  builtins.diagnostics.eslint_d.with(eslintConfig),
-  builtins.diagnostics.shellcheck.with({
+  require('plugins.none-ls-extra.shellcheck').with({
     condition = function(utils)
       return utils.root_has_file({ '.shellcheckrc' })
     end,

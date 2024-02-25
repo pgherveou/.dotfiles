@@ -92,7 +92,7 @@ return {
     require('mason').setup()
     require('mason-lspconfig').setup({ automatic_installation = false })
     setup_servers()
-    require('plugins.lsp.null').setup(common.format_on_save)
+    require('plugins.none-ls-extra.common').setup(common.format_on_save)
     require('mason-null-ls').setup({
       ensure_installed = { 'stylua', 'jq', 'codespell', 'markdownlint' },
       automatic_installation = false,
