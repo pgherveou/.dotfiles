@@ -34,11 +34,11 @@ local default_lsp_mappings = {
 }
 
 local lsp_buf_format_augroup = vim.api.nvim_create_augroup('lsp_buf_format', { clear = true })
-M.format_on_save = function(client)
+M.format_on_save = function(client, bufnr)
   if client.server_capabilities.documentFormattingProvider then
     vim.api.nvim_create_autocmd('BufWritePre', {
       group = lsp_buf_format_augroup,
-      buffer = 0,
+      buffer = bufnr,
       callback = function()
         vim.lsp.buf.format()
       end,
@@ -53,7 +53,7 @@ M.set_mappings = function(client, bufnr, nmap_mappings)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', key, item.cmd, { desc = item.desc, noremap = true, silent = true })
   end
 
-  M.format_on_save(client)
+  M.format_on_save(client, bufnr)
   require('illuminate').on_attach(client)
 end
 

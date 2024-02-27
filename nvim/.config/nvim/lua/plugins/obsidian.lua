@@ -7,6 +7,7 @@ return {
   'epwalsh/obsidian.nvim',
   dependencies = { 'nvim-lua/plenary.nvim' },
   lazy = true,
+  enabled = false,
   cmd = 'Obsidian',
   keys = {
     { '<leader>ns', ':ObsidianSearch<CR>', desc = 'Search obsidian' },

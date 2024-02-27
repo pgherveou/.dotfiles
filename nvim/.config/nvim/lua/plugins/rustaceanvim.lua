@@ -15,7 +15,8 @@ vim.g.rustaceanvim = function()
     -- LSP configuration
     server = {
       on_attach = function(client, bufnr)
-        require('plugins.lsp.common').set_mappings(client, bufnr, {
+        local common = require('plugins.lsp.common')
+        common.set_mappings(client, bufnr, {
           ['<leader>l'] = { cmd = ':RustLsp! runnables<CR>', desc = 'Run last runnable' },
           ['<leader>D'] = { cmd = ':RustLsp! debuggables<CR>', desc = 'Run last debuggable' },
         })
