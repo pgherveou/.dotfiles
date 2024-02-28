@@ -12,6 +12,7 @@ local sources = {
   builtins.formatting.markdownlint,
   builtins.formatting.sql_formatter,
   builtins.formatting.gofmt,
+  builtins.code_actions.gitsigns,
   builtins.diagnostics.codespell.with({
     disabled_filetypes = { 'log' },
     extra_args = {

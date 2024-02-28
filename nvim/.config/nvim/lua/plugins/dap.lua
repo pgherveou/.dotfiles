@@ -35,7 +35,24 @@ local function bash_config()
       -- trace = true,
     },
   }
+  dap.adapters.nlua = function(callback, config)
+    callback({ type = 'server', host = config.host or '127.0.0.1', port = config.port or 8086 })
+  end
+  dap.configurations.lua = {
+    {
+      type = 'nlua',
+      request = 'attach',
+      name = 'Attach to running Neovim instance',
+    },
+  }
 end
+
+-- launch lua debug server in the debuggee
+-- in other instance connect to the server with DAP with F5
+-- Run the script in the debuggee
+vim.api.nvim_create_user_command('LuaDebugServer', function()
+  require('osv').launch({ port = 8086 })
+end, {})
 
 return {
   'mfussenegger/nvim-dap',
@@ -44,8 +61,12 @@ return {
     'theHamsta/nvim-dap-virtual-text',
     'nvim-treesitter/nvim-treesitter',
     'williamboman/mason.nvim',
+
+    -- lua
+    'jbyuki/one-small-step-for-vimkind',
   },
   lazy = true,
+  -- cmd = { 'LuaDebugServer' },
   keys = {
     { '<F1>', dap_fn('step_back'), desc = '[DAP] step back' },
     { '<F2>', dap_fn('step_out'), desc = '[DAP] step out' },

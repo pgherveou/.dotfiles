@@ -19,6 +19,7 @@ vim.g.rustaceanvim = function()
         common.set_mappings(client, bufnr, {
           ['<leader>l'] = { cmd = ':RustLsp! runnables<CR>', desc = 'Run last runnable' },
           ['<leader>D'] = { cmd = ':RustLsp! debuggables<CR>', desc = 'Run last debuggable' },
+          ['<leader>m'] = { cmd = ':RustLsp! expandMacro<CR>', desc = 'Expand macros' },
         })
       end,
       settings = {

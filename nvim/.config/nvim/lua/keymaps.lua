@@ -4,7 +4,7 @@ local mappings = {
     ['<Esc>'] = { ':nohl<CR>:echo<CR>', desc = 'Remove search highlight' },
 
     -- Repeat last command
-    ['<leader>r'] = { '@:', desc = 'Repeat last command' },
+    ['<leader>rc'] = { '@:', desc = 'Repeat last command' },
 
     -- better vertical movement for wrapped lines
     ['j'] = { 'gj' },
