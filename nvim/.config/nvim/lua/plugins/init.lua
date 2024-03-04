@@ -38,15 +38,23 @@ return {
     end,
   },
 
-  -- Auto close parens, braces, brackets, etc
   {
-    'windwp/nvim-autopairs',
+    'echasnovski/mini.nvim',
+    version = false,
     config = function()
-      require('nvim-autopairs').setup({
-        disable_filetype = { 'TelescopePrompt' },
-      })
+      require('mini.pairs').setup()
     end,
   },
+
+  -- Auto close parens, braces, brackets, etc
+  -- {
+  --   'windwp/nvim-autopairs',
+  --   config = function()
+  --     require('nvim-autopairs').setup({
+  --       disable_filetype = { 'TelescopePrompt' },
+  --     })
+  --   end,
+  -- },
 
   -- better buffer deletion
   'ojroques/nvim-bufdel',

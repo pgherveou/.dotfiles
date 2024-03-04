@@ -62,3 +62,4 @@ vim.opt.wildmode = 'longest:full,full' -- Completion settings
 
 -- set undodir
 vim.opt.undodir = vim.fn.stdpath('cache') .. '/undo'
+vim.opt.undofile = true
