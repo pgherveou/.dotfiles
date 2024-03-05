@@ -139,7 +139,6 @@ return {
   'tpope/vim-abolish',
 
   -- git integration
-  'ruanyl/vim-gh-line', -- gh links for text
   {
     'lewis6991/gitsigns.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
