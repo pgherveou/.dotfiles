@@ -81,7 +81,6 @@ return {
     'nvim-lua/plenary.nvim',
     'hrsh7th/cmp-nvim-lsp',
     'nvimtools/none-ls.nvim',
-    'jayp0521/mason-null-ls.nvim',
     'RRethy/vim-illuminate',
     'b0o/schemastore.nvim',
     'ThePrimeagen/refactoring.nvim',
@@ -93,9 +92,5 @@ return {
     require('mason-lspconfig').setup({ automatic_installation = false })
     setup_servers()
     require('plugins.none-ls-extra.common').setup(common.format_on_save)
-    require('mason-null-ls').setup({
-      ensure_installed = { 'stylua', 'jq', 'codespell', 'markdownlint' },
-      automatic_installation = false,
-    })
   end,
 }
