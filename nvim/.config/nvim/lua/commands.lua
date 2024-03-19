@@ -156,7 +156,9 @@ local macros = {
   -- replace text between < > with the result of rustfilt
   rustfilt = [[0f<ci><C-R>=system("rustfilt",getreg('"'))<CR><Esc>]],
   -- replace git and rev with path from patch
-  cargo_patch = [["ayt<Space><t_˝a>f"<t_˝a>"bya"/\(<C-R>a<Space>=\|"<C-R>a"\)<CR>:s#git<Space>=<Space>".\{-}",<Space>rev<Space>=<Space>"\<BS>.\{-}"#path<Space>=<Space><C-R>b<Esc>]],
+  cargo_patch = [["ayt<Space>f""bya"/\(<C-R>a<Space>=\|"<C-R>a"\)<CR>:s#git<Space>=<Space>".\{-}",<Space>rev<Space>=<Space>"\<BS>.\{-}"#path<Space>=<Space><C-R>b<Esc>]],
+  -- compare left / right bench results
+  cmp_bench = [[f:w"ayiw<C-L>"byiwA<Space><C-R>=printf("%.2f%%",1-(<C-R>a/(<C-R>b*1.0))*100)<CR><Esc><C-H>j0]],
 }
 
 vim.api.nvim_create_user_command('PutMacro', function(opts)
