@@ -41,20 +41,11 @@ return {
   {
     'echasnovski/mini.nvim',
     version = false,
+    enabled = false,
     config = function()
       require('mini.pairs').setup()
     end,
   },
-
-  -- Auto close parens, braces, brackets, etc
-  -- {
-  --   'windwp/nvim-autopairs',
-  --   config = function()
-  --     require('nvim-autopairs').setup({
-  --       disable_filetype = { 'TelescopePrompt' },
-  --     })
-  --   end,
-  -- },
 
   -- better buffer deletion
   'ojroques/nvim-bufdel',
@@ -119,21 +110,6 @@ return {
       end)
     end,
   },
-
-  -- TODO disable for large file
-  -- https://github.com/lukas-reineke/indent-blankline.nvim/issues/440#issuecomment-1310520274pe/vim-sleuth
-  -- {
-  --   'lukas-reineke/indent-blankline.nvim',
-  --   config = function()
-  --     vim.opt.list = true
-  --     require('indent_blankline').setup({
-  --       show_current_context = true,
-  --       show_current_context_start = true,
-  --       indent_blankline_use_treesitter = true,
-  --       indent_blankline_filetype_exclude = { 'help' },
-  --     })
-  --   end,
-  -- },
 
   -- :S command and cr command for case coercing
   'tpope/vim-abolish',

@@ -3,10 +3,6 @@ local null_ls = require('null-ls')
 local builtins = null_ls.builtins
 local Path = require('plenary.path')
 
--- [null-ls] You required a deprecated builtin (formatting/rustfmt.lua), which will be removed in March.
--- Please migrate to alternatives: https://github.com/nvimtools/none-ls.nvim/issues/58
--- [null-ls] You required a deprecated builtin (diagnostics/luacheck.lua), which will be removed in March.
-
 local sources = {
   builtins.formatting.shfmt,
   builtins.formatting.markdownlint,

@@ -159,7 +159,6 @@ return {
     'L3MON4D3/LuaSnip',
     'saadparwaiz1/cmp_luasnip',
     'neovim/nvim-lspconfig',
-    'nvim-lua/lsp_extensions.nvim',
     'zbirenbaum/copilot.lua',
   },
   config = config,

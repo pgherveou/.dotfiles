@@ -6,6 +6,7 @@ return {
     'mfussenegger/nvim-dap',
   },
   dev = true,
+  lazy = true,
   config = function()
     require('rust-quick-tests').setup()
     require('dap').adapters['codelldb'] = require('utils.dap').get_codelldb_adapter()
