@@ -76,12 +76,11 @@ end
 return {
   'neovim/nvim-lspconfig',
   dependencies = {
+    'nvim-lua/plenary.nvim',
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
-    'nvim-lua/plenary.nvim',
     'hrsh7th/cmp-nvim-lsp',
     'nvimtools/none-ls.nvim',
-    'RRethy/vim-illuminate',
     'b0o/schemastore.nvim',
     'ThePrimeagen/refactoring.nvim',
     'folke/neodev.nvim',
