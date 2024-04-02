@@ -24,7 +24,6 @@ vim.opt.smartindent = true -- Smart auto-indent when creating a new line
 vim.opt.smarttab = true -- Delete entire shiftwidth of tabs when they're inserted
 vim.opt.softtabstop = 2 -- Number of spaces for some tab operations
 vim.opt.tabstop = 2 -- Number of spaces each tab counts for
-vim.opt.termencoding = 'utf-8' -- Set the default encodings just in case $LANG isn't set
 vim.opt.title = true -- Do not inherit the terminal title
 vim.opt.ttyfast = true -- Set that we have a fast terminal
 vim.opt.signcolumn = 'yes' -- always show the gutter
