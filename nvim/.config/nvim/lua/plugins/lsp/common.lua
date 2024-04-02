@@ -54,7 +54,6 @@ M.set_mappings = function(client, bufnr, nmap_mappings)
   end
 
   M.format_on_save(client, bufnr)
-  require('illuminate').on_attach(client)
 end
 
 return M
