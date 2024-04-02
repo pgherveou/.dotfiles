@@ -115,13 +115,13 @@ return {
   'tpope/vim-abolish',
 
   -- git integration
-  {
-    'lewis6991/gitsigns.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    config = function()
-      require('gitsigns').setup()
-    end,
-  },
+  -- {
+  --   'lewis6991/gitsigns.nvim',
+  --   dependencies = { 'nvim-lua/plenary.nvim' },
+  --   config = function()
+  --     require('gitsigns').setup()
+  --   end,
+  -- },
 
   -- highlight yanked text
   'machakann/vim-highlightedyank',

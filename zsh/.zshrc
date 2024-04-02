@@ -52,7 +52,7 @@ export EDITOR=nvim
 export HISTCONTROL=ignoreboth
 
 # local scripts
-export PATH=$PATH:~/.local/scripts
+export PATH="$PATH:~/.local/scripts:$HOME/github/git-pile/bin"
 
 # mason bin
 export PATH=~/.local/share/nvim/mason/bin:$PATH
@@ -129,8 +129,8 @@ export BUILDIFIER_BIN=$(which buildifier)
 export BUILDOZER_BIN=$(which buildozer)
 export CLANG_FORMAT=$(which clang-format)
 
-# fzf config
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+# Set up fzf key bindings and fuzzy completion
+eval "$(fzf --zsh)"
 
 export FZF_CTRL_T_OPTS="--preview='bat --color=always --style=numbers {}' --bind ctrl-u:preview-page-up,ctrl-d:preview-page-down"
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --exclude .git'
