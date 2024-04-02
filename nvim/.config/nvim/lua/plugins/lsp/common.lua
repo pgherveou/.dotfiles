@@ -18,6 +18,12 @@ u.lua_command('LspDiagLine', 'vim.diagnostic.open_float()')
 u.lua_command('LspSignatureHelp', 'vim.lsp.buf.signature_help()')
 u.lua_command('LspDiagQuickfix', 'vim.diagnostic.setqflist()')
 
+vim.api.nvim_create_user_command('LspInlayHints', function()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local current_setting = vim.lsp.inlay_hint.is_enabled(bufnr)
+  vim.lsp.inlay_hint.enable(bufnr, not current_setting)
+end, {})
+
 -- default lsp mappings
 local default_lsp_mappings = {
   ['gd'] = { cmd = ':LspDef<CR>', desc = 'Go to definition' },
@@ -51,6 +57,10 @@ M.set_mappings = function(client, bufnr, nmap_mappings)
   local mappings = vim.tbl_extend('force', default_lsp_mappings, nmap_mappings or {})
   for key, item in pairs(mappings) do
     vim.api.nvim_buf_set_keymap(bufnr, 'n', key, item.cmd, { desc = item.desc, noremap = true, silent = true })
+  end
+
+  if client.server_capabilities.inlayHintProvider then
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gh', ':LspInlayHints<CR>', { desc = '[lsp] toggle inlay hints' })
   end
 
   M.format_on_save(client, bufnr)
