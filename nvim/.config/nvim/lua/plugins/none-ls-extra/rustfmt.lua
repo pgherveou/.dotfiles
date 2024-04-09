@@ -3,8 +3,12 @@ local methods = require('null-ls.methods')
 
 local FORMATTING = methods.internal.FORMATTING
 
+-- get nightly rustfmt
+local command = vim.fn.trim(vim.fn.system('rustup which rustfmt --toolchain nightly'))
+
 return h.make_builtin({
   name = 'rustfmt',
+  command = command,
   meta = {
     url = 'https://github.com/rust-lang/rustfmt',
     description = 'A tool for formatting rust code according to style guidelines.',

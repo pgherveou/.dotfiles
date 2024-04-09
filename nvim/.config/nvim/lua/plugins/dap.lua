@@ -5,6 +5,11 @@ local function dap_fn(fn)
   end
 end
 
+local function log_point()
+  local dap = require('dap')
+  dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))
+end
+
 local function bash_config()
   local dap = require('dap')
   local mason_registry = require('mason-registry')
@@ -79,6 +84,7 @@ return {
     { '<leader>dc', dap_fn('clear_breakpoints'), desc = '[DAP] open repl' },
     { '<leader>dr', dap_fn('repl.open'), desc = '[DAP] open repl' },
     { '<leader>db', dap_fn('toggle_breakpoint'), desc = '[DAP] toggle breakpoint' },
+    { '<leader>dL', log_point, desc = '[DAP] Set Logpoint' },
 
     { '<Leader>dk', dap_fn('up'), 'Go up a debugging frame' },
     { '<Leader>dj', dap_fn('down'), 'Go down a debugging frame' },
