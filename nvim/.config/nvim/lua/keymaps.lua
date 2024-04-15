@@ -53,6 +53,10 @@ local mappings = {
     -- copy path into clipboard
     ['<leader>cp'] = { ':let @+=expand("%:p")<CR>', desc = 'Copy path into clipboard' },
 
+    -- cd to the current folder
+    ['<leader>cd'] = { ':cd %:h<CR>', desc = 'Change directory to the current file' },
+    ['<leader>lcd'] = { ':lcd %:h<CR>', desc = 'Change local directory to the current file' },
+
     -- make it easy to use cgn using the current word under the cursor
     ['c<Tab>'] = { [[:let @/=expand('<cword>')<cr>cgn]], desc = 'Use cgn using the current word under the cursor' },
 
