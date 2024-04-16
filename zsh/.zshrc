@@ -90,9 +90,18 @@ gh-pr-view(){
   gh pr view --web
 } 
 
+# Select a PR to checkout 
 gh-pr-co(){
-  SELECTED_PR=$(gh pr list | fzf)
-  PR=$(echo $SELECTED_PR | awk '{print $1;}')
+  local use_all="$1"
+  local SELECTED_PR
+
+  if [ "$use_all" = "all" ]; then
+    SELECTED_PR=$(gh pr list | fzf)
+  else
+    SELECTED_PR=$(gh pr list --author "@me" | fzf)
+  fi
+
+  local PR=$(echo "$SELECTED_PR" | awk '{print $1;}')
   gh pr checkout $PR
 }
 
