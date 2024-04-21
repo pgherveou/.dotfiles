@@ -3,6 +3,26 @@ local function disable(_, bufnr)
 end
 
 local config = function()
+  local refactor = {
+    enable = true,
+  }
+  if require('plugins.lsp.common').no_rust_lsp then
+    refactor = {
+      navigation = {
+        enable = true,
+        keymaps = {
+          goto_definition = 'gd',
+        },
+      },
+      smart_rename = {
+        enable = true,
+        keymaps = {
+          smart_rename = 'gr',
+        },
+      },
+    }
+  end
+
   require('nvim-treesitter.configs').setup({
     autotag = {
       enable = true,
@@ -23,6 +43,7 @@ local config = function()
       'json',
       'yaml',
     },
+    refactor = refactor,
     highlight = {
       enable = true,
       additional_vim_regex_highlighting = { 'markdown' },
@@ -78,6 +99,7 @@ local ts = {
   'nvim-treesitter/nvim-treesitter',
   dependencies = {
     'nvim-treesitter/nvim-treesitter-textobjects',
+    'nvim-treesitter/nvim-treesitter-refactor',
   },
   build = ':TSUpdate',
   config = config,

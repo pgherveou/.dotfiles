@@ -39,13 +39,19 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 -- wat use lisp for syntax highlighting
-vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
-  group = 'vimrc',
-  pattern = '*.wat',
-  callback = function()
-    vim.bo.filetype = 'lisp'
-  end,
-})
+local filetype_syntax_mapping = {
+  wat = 'lisp',
+  log = 'messages',
+}
+for filetype, syntax in pairs(filetype_syntax_mapping) do
+  vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+    group = 'vimrc',
+    pattern = '*.' .. filetype,
+    callback = function()
+      vim.bo.filetype = syntax
+    end,
+  })
+end
 
 -- kill rust-analyzer
 local kill_rust_analyzer = function()

@@ -14,6 +14,7 @@ local mappings = {
     -- act like other capitalized actions
     ['Y'] = { 'yg$' },
     ['YY'] = { ':%y<cr>' },
+
     -- Paste without carriage return
     ['<leader>p'] = {
       function()
@@ -31,6 +32,10 @@ local mappings = {
       end,
       desc = 'Paste without carriage return',
     },
+
+    -- new line from normal mode
+    ['<leader>o'] = { ':normal! o<CR>' },
+    ['<leader>O'] = { ':normal! O<CR>' },
 
     -- select yanked text
     ['gy'] = { '`[v`]' },
