@@ -70,10 +70,6 @@ export PATH="$HOME/go/bin:$PATH"
 # Rust
 export CARGO_NET_GIT_FETCH_WITH_CLI=true
 
-update_cargo_fmt() {
-  ln -s $(rustup which rustfmt) ~/.cargo/bin
-}
-
 cargo-targets() {
   cargo metadata --format-version 1 | jq -r '.packages[].targets[].name'
 }
@@ -151,5 +147,11 @@ export FZF_CTRL_T_COMMAND='rg --no-messages --files'
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# Linux specific
+if [ "$(uname -s)" = "Linux" ]; then
+  open() {
+      echo "$1" | nc -N localhost 8378
+  }
+fi
 
 eval "$(atuin init zsh)"
