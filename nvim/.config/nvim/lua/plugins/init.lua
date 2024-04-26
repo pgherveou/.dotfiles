@@ -24,9 +24,6 @@ return {
   -- Surround text.
   'machakann/vim-sandwich',
 
-  -- change case utilities
-  'icatalina/vim-case-change',
-
   -- comment/uncomment binding
   {
     'numToStr/Comment.nvim',
