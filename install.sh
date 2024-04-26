@@ -119,6 +119,10 @@ run_install() {
 		stow "$folder"
 	done
 
+	pushd "$HOME/.private"
+	stow -t ~/ ssh
+	popd
+
 	pop
 }
 

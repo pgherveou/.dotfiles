@@ -141,11 +141,16 @@ export FZF_CTRL_T_OPTS="--preview='bat --color=always --style=numbers {}' --bind
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --exclude .git'
 export FZF_CTRL_T_COMMAND='rg --no-messages --files'
 
+
 # work config
 [ -f ~/.private/init.zsh ] && source ~/.private/init.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+if [[ -S ~/.1password/agent.sock ]]; then
+    export SSH_AUTH_SOCK=~/.1password/agent.sock
+fi
 
 # Linux specific
 if [ "$(uname -s)" = "Linux" ]; then
