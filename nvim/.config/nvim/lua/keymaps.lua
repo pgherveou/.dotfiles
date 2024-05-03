@@ -37,6 +37,10 @@ local mappings = {
     ['<leader>o'] = { ':normal! o<CR>' },
     ['<leader>O'] = { ':normal! O<CR>' },
 
+    -- black hole linewise bindings
+    ['<leader>dd>'] = { '"_dd' },
+    ['<leader>cc>'] = { '"_cc' },
+
     -- select yanked text
     ['gy'] = { '`[v`]' },
 

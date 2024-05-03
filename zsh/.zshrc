@@ -106,6 +106,11 @@ gh-pr-co(){
   gh pr checkout $PR
 }
 
+git-recent(){
+  local branch=$(git branch --sort=-committerdate --format="%(refname:short)" | head -5 | fzf)
+  git checkout $branch
+}
+
 # Xcode via @orta
 openx(){
   if test -n "$(find . -maxdepth 1 -name '*.xcworkspace' -print -quit)"
