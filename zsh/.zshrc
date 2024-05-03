@@ -35,6 +35,8 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 # Tell Antigen that you're done.
 antigen apply
 
+alias cleanup="dua interactive /"
+
 alias vim=nvim
 alias code=codium
 alias v=nvim
@@ -63,6 +65,9 @@ export PATH="/usr/local/opt/llvm/bin:$PATH"
 # Deno
 export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
+
+# Dart
+export PATH="/opt/dart-sdk/bin:$PATH"
 
 # GO
 export PATH="$HOME/go/bin:$PATH"

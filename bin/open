@@ -1,0 +1,3 @@
+#!/bin/bash
+# Open a link remotely through netcat
+echo "$1" | nc -N localhost 8378
