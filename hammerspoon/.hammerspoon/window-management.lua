@@ -63,18 +63,20 @@ module.focusBottom = function()
 end
 
 -- function that take all the window on the screen and arrange them in a grid
-module.makeGridLayout = function()
+module.makeGridLayout = function(windows)
   -- get the current screen
   local screen = hs.screen.mainScreen()
 
-  -- get all the windows on the screen
-  local windows = hs.fnutils.filter(hs.window.orderedWindows(), function(win)
-    return win:screen() == screen
-  end)
+  -- if no windows are passed, get all the windows on the main screen
+  if not windows then
+    windows = hs.fnutils.filter(hs.window.orderedWindows(), function(win)
+      return win:screen() == screen
+    end)
+  end
 
   -- define the the grid size based on the number of windows
-  local rows = math.floor(math.sqrt(#windows))
-  local cols = math.ceil(#windows / rows)
+  local cols = math.floor(math.sqrt(#windows))
+  local rows = math.ceil(#windows / cols)
 
   -- create the grid
   hs.grid.setMargins(hs.geometry.size(10, 10))
