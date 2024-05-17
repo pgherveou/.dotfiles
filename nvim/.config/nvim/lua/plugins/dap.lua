@@ -87,16 +87,24 @@ return {
     { '<leader>db', dap_fn('toggle_breakpoint'), desc = '[DAP] toggle breakpoint' },
     { '<leader>dL', log_point, desc = '[DAP] Set Logpoint' },
 
-    { '<Leader>dk', dap_fn('up'), 'Go up a debugging frame' },
-    { '<Leader>dj', dap_fn('down'), 'Go down a debugging frame' },
-    { '<Leader>dl', dap_fn('focus_frame'), 'Go to the current debugger line for the current frame' },
+    { '<Leader>dk', dap_fn('up'), '[DAP] Go up a debugging frame' },
+    { '<Leader>dj', dap_fn('down'), '[DAP] Go down a debugging frame' },
+    { '<Leader>dl', dap_fn('focus_frame'), '[DAP] Go to the current debugger line for the current frame' },
 
     {
       '<Leader>d<Space>',
       function()
         require('dapui').toggle({ reset = true })
       end,
-      'Toggle debugging REPL',
+      '[DAP] Toggle debugging REPL',
+    },
+
+    {
+      '<Leader>dv',
+      function()
+        require('dapui').eval(nil, { enter = true })
+      end,
+      '[DAP] eval val under cursor',
     },
 
     {
