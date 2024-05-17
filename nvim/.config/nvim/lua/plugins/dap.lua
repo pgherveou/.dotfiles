@@ -79,6 +79,7 @@ return {
     { '<F3>', dap_fn('step_into'), desc = '[DAP] step into' },
     { '<F4>', dap_fn('step_over'), desc = '[DAP] step over' },
     { '<F5>', dap_fn('continue'), desc = '[DAP] continue' },
+    { '<F9>', dap_fn('run_to_cursor'), desc = '[DAP] run to cursor' },
     { '<F10>', dap_fn('run_last'), desc = '[DAP] run last' },
     { '<leader>dt', dap_fn('terminate'), desc = '[DAP] terminate' },
     { '<leader>dc', dap_fn('clear_breakpoints'), desc = '[DAP] open repl' },
