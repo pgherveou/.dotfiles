@@ -41,6 +41,7 @@
   "one-small-step-for-vimkind": { "branch": "main", "commit": "0dd306e68bf79b38cc01b15c22047e6a867df7de" },
   "plenary.nvim": { "branch": "master", "commit": "08e301982b9a057110ede7a735dd1b5285eb341f" },
   "refactoring.nvim": { "branch": "master", "commit": "d2786877c91aa409c824f27b4ce8a9f560dda60a" },
+  "rustaceanvim": { "branch": "master", "commit": "66466d4fe0b8988ba9e2932d3c41782c2efb683b" },
   "schemastore.nvim": { "branch": "main", "commit": "953dc9a37f646a7f0420c41394f716f0dddf5687" },
   "silicon.lua": { "branch": "main", "commit": "b742773c2dd4a13dc7ecbda97ae45fad07e2a7c6" },
   "smart-splits.nvim": { "branch": "master", "commit": "2846aee230e2dd0a3b8912d8eba86dae7d1d16b2" },

@@ -19,9 +19,9 @@ u.lua_command('LspSignatureHelp', 'vim.lsp.buf.signature_help()')
 u.lua_command('LspDiagQuickfix', 'vim.diagnostic.setqflist()')
 
 vim.api.nvim_create_user_command('LspInlayHints', function()
-  local bufnr = vim.api.nvim_get_current_buf()
-  local current_setting = vim.lsp.inlay_hint.is_enabled(bufnr)
-  vim.lsp.inlay_hint.enable(bufnr, not current_setting)
+  local filter = { bufnr = vim.api.nvim_get_current_buf()}
+  local current_setting = vim.lsp.inlay_hint.is_enabled(filter)
+  vim.lsp.inlay_hint.enable(not current_setting, filter)
 end, {})
 
 -- default lsp mappings
@@ -55,13 +55,13 @@ end
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 M.set_mappings = function(client, bufnr, nmap_mappings)
   local mappings = vim.tbl_extend('force', default_lsp_mappings, nmap_mappings or {})
+  if client.server_capabilities.inlayHintProvider then
+    mappings['gh'] = { cmd = ':LspInlayHints<CR>',  desc = '[lsp] toggle inlay hints' }
+  end
   for key, item in pairs(mappings) do
     vim.api.nvim_buf_set_keymap(bufnr, 'n', key, item.cmd, { desc = item.desc, noremap = true, silent = true })
   end
 
-  if client.server_capabilities.inlayHintProvider then
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gh', ':LspInlayHints<CR>', { desc = '[lsp] toggle inlay hints' })
-  end
 
   M.format_on_save(client, bufnr)
 end
