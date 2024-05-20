@@ -41,6 +41,20 @@ local mappings = {
     ['<leader>dd>'] = { '"_dd' },
     ['<leader>cc>'] = { '"_cc' },
 
+    ['<leader>do'] = {
+      function()
+        local win = vim.api.nvim_get_current_win()
+        local is_diff = vim.api.nvim_get_option_value('diff', { win = win })
+
+        if is_diff then
+          vim.cmd('windo diffoff')
+        else
+          vim.cmd('windo diffthis')
+        end
+      end,
+      desc = 'Toggle between diffthis and diffoff',
+    },
+
     -- select yanked text
     ['gy'] = { '`[v`]' },
 
