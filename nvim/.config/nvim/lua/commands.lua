@@ -178,6 +178,23 @@ end, {
   end,
 })
 
+vim.api.nvim_create_autocmd('FocusLost', {
+  pattern = '*',
+  callback = function()
+    local text = vim.fn.getreg('"')
+    if text == '' then
+      return
+    end
+
+    if vim.fn.has('mac') == 1 then
+      -- vim.fn.system('nc localhost 8377', text)
+      return
+    end
+
+    vim.fn.system('nc -N localhost 8377', text)
+  end,
+})
+
 -- vim regex cheat sheet:
 -- .\{-} => non greedy match
 -- <  => beginning of a word
