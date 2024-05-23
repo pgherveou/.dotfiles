@@ -80,4 +80,16 @@ return {
   version = '^4', -- Recommended
   enabled = require('plugins.lsp.common').no_rust_lsp == false,
   ft = { 'rust' },
+  config = function()
+    -- monkey patch hover actions to use rust-quick-tests
+    local fallback = require('rustaceanvim.hover_actions').handler
+    require('rustaceanvim.hover_actions').handler = function(_, result, ctx)
+      local actions = require('rust-quick-tests.hover_actions').get_hover_actions()
+      if actions ~= nil then
+        require('rust-quick-tests.hover_actions').show_actions(actions)
+      else
+        fallback(_, result, ctx)
+      end
+    end
+  end,
 }

@@ -1,18 +1,7 @@
-return {
-  'pgherveou/rust-quick-tests.nvim',
-  enabled = require('plugins.lsp.common').no_rust_lsp,
-  dependencies = {
-    'nvim-lua/plenary.nvim',
-    'mfussenegger/nvim-dap',
-  },
-  dev = true,
-  lazy = true,
-  config = function()
-    require('rust-quick-tests').setup()
-    require('dap').adapters['codelldb'] = require('utils.dap').get_codelldb_adapter()
-  end,
-  ft = { 'rust' },
-  cmd = { 'RustQuick' },
+-- only enable keys
+local keys = {}
+
+if require('plugins.lsp.common').no_rust_lsp then
   keys = {
     {
       'K',
@@ -28,5 +17,23 @@ return {
       end,
       desc = 'Replay last test',
     },
+  }
+end
+
+return {
+  'pgherveou/rust-quick-tests.nvim',
+  -- enabled = require('plugins.lsp.common').no_rust_lsp,
+  dependencies = {
+    'nvim-lua/plenary.nvim',
+    'mfussenegger/nvim-dap',
   },
+  dev = true,
+  lazy = true,
+  config = function()
+    require('rust-quick-tests').setup()
+    require('dap').adapters['codelldb'] = require('utils.dap').get_codelldb_adapter()
+  end,
+  ft = { 'rust' },
+  cmd = { 'RustQuick' },
+  keys = keys,
 }
