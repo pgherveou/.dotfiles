@@ -16,7 +16,6 @@ vim.g.rustaceanvim = function()
     server = {
       on_attach = function(client, bufnr)
         local common = require('plugins.lsp.common')
-        print('Attaching to rust-analyzer')
         common.set_mappings(client, bufnr, {
           ['K'] = {
             cmd = function()
