@@ -16,7 +16,20 @@ vim.g.rustaceanvim = function()
     server = {
       on_attach = function(client, bufnr)
         local common = require('plugins.lsp.common')
+        print('Attaching to rust-analyzer')
         common.set_mappings(client, bufnr, {
+          ['K'] = {
+            cmd = function()
+              -- Prefer rust-quick-tests hover actions if available
+              local actions = require('rust-quick-tests.hover_actions').get_hover_actions()
+              if actions ~= nil then
+                require('rust-quick-tests.hover_actions').show_actions(actions)
+              else
+                vim.lsp.buf.hover()
+              end
+            end,
+            desc = '[Rust] Lsp Hover',
+          },
           ['<leader>l'] = { cmd = ':RustLsp! runnables<CR>', desc = '[Rust] Run last runnable' },
           ['<leader>D'] = { cmd = ':RustLsp! debug<CR>', desc = '[Rust] Debug target under cursor' },
           ['<leader>m'] = { cmd = ':RustLsp! expandMacro<CR>', desc = '[Rust] Expand macros' },
@@ -80,16 +93,4 @@ return {
   version = '^4', -- Recommended
   enabled = require('plugins.lsp.common').no_rust_lsp == false,
   ft = { 'rust' },
-  config = function()
-    -- monkey patch hover actions to use rust-quick-tests
-    local fallback = require('rustaceanvim.hover_actions').handler
-    require('rustaceanvim.hover_actions').handler = function(_, result, ctx)
-      local actions = require('rust-quick-tests.hover_actions').get_hover_actions()
-      if actions ~= nil then
-        require('rust-quick-tests.hover_actions').show_actions(actions)
-      else
-        fallback(_, result, ctx)
-      end
-    end
-  end,
 }
