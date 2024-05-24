@@ -1,8 +1,16 @@
 -- only enable keys
-local keys = {}
+local keys = {
+  {
+    '<leader>l',
+    function()
+      require('rust-quick-tests').replay_last()
+    end,
+    desc = 'Replay last test',
+  },
+}
 
 if require('plugins.lsp.common').no_rust_lsp then
-  keys = {
+  table.insert(keys, {
     {
       'K',
       function()
@@ -10,14 +18,7 @@ if require('plugins.lsp.common').no_rust_lsp then
       end,
       desc = 'Rust tests Hover actions',
     },
-    {
-      '<leader>l',
-      function()
-        require('rust-quick-tests').replay_last()
-      end,
-      desc = 'Replay last test',
-    },
-  }
+  })
 end
 
 return {
