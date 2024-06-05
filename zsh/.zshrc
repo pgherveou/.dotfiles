@@ -75,6 +75,9 @@ export PATH="$HOME/go/bin:$PATH"
 # Rust
 export CARGO_NET_GIT_FETCH_WITH_CLI=true
 
+# Node 
+eval "$(fnm env --use-on-cd)"
+
 cargo-targets() {
   cargo metadata --format-version 1 | jq -r '.packages[].targets[].name'
 }
@@ -135,6 +138,17 @@ hex_to_bytes() {
   echo $1 | xxd -r -p | od -A n -t u1 
 }
 
+proxy() {
+  FORWARD_PORT=${1:-8545}
+  FORWARD_PORT=$FORWARD_PORT mitmproxy -s $(realpath ~/github/mitm-playground/init.py)
+}
+
+hardhat() {
+  pushd ~/github/hardhat_playground
+  npx hardhat node
+  popd
+}
+
 # bazel
 alias bazel=bazelisk
 # compdef bazelisk=bazel
@@ -170,3 +184,10 @@ if [ "$(uname -s)" = "Linux" ]; then
 fi
 
 eval "$(atuin init zsh)"
+
+# fnm
+FNM_PATH="/Users/pg/Library/Application Support/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="/Users/pg/Library/Application Support/fnm:$PATH"
+  eval "`fnm env`"
+fi

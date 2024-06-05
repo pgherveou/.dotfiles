@@ -7,6 +7,13 @@ local keys = {
     end,
     desc = 'Replay last test',
   },
+  {
+    '<leader>gl',
+    function()
+      require('rust-quick-tests').snap_last()
+    end,
+    desc = 'Snap back to last test',
+  },
 }
 
 if require('plugins.lsp.common').no_rust_lsp then
