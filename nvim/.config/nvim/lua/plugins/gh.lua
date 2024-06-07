@@ -1,6 +1,5 @@
-local function is_pr()
-  local word = vim.fn.expand('<cWORD>')
-  local pattern = '#(%d+)'
+local function is_pr(word)
+  local pattern = '%(?#(%d+)%)?'
   local res = string.match(word, pattern)
   if res then
     return res
@@ -10,7 +9,8 @@ local function is_pr()
 end
 
 local function open_file()
-  local pr = is_pr()
+  local word = vim.fn.expand('<cWORD>')
+  local pr = is_pr(word)
   if pr ~= '' then
     local cmd = string.format('!gh browse %s', pr)
     vim.cmd(cmd)
