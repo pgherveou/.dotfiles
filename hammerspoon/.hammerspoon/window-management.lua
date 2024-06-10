@@ -62,6 +62,16 @@ module.focusBottom = function()
   focus('south')
 end
 
+---@param t table
+---@return number
+local function keys_count(t)
+  local count = 0
+  for _ in pairs(t) do
+    count = count + 1
+  end
+  return count
+end
+
 -- function that take all the window on the screen and arrange them in a grid
 module.makeGridLayout = function(windows)
   -- get the current screen
@@ -74,23 +84,43 @@ module.makeGridLayout = function(windows)
     end)
   end
 
+  -- group windows by app name
+  local windows_by_app = {}
+  for _, win in ipairs(windows) do
+    local app_name = win:application():name()
+    if not windows_by_app[app_name] then
+      windows_by_app[app_name] = {}
+    end
+    table.insert(windows_by_app[app_name], win)
+  end
+
   -- define the the grid size based on the number of windows
-  local cols = math.floor(math.sqrt(#windows))
-  local rows = math.ceil(#windows / cols)
+  local size = keys_count(windows_by_app)
+  local cols = math.floor(math.sqrt(size))
+  local rows = math.ceil(size / cols)
 
   -- create the grid
   hs.grid.setMargins(hs.geometry.size(10, 10))
   local grid = hs.grid.setGrid(hs.geometry.size(rows, cols), screen)
 
   -- loop over all the windows and place them in the grid
-  for index, win in ipairs(windows) do
+  local index = 0
+  for _, wins in pairs(windows_by_app) do
+    index = index + 1
     local cell = {
       x = (index - 1) % rows,
       y = math.floor((index - 1) / rows),
       w = 1,
       h = 1,
     }
-    grid.set(win, cell, screen)
+    local frame = grid.getCell(cell, screen)
+
+    for i, win in ipairs(wins) do
+      local offset = 10 * i
+      local offsetFrame = hs.geometry(frame.x, frame.y + offset, frame.w, frame.h - offset)
+      win:setFrame(offsetFrame)
+      win:raise()
+    end
   end
 end
 
