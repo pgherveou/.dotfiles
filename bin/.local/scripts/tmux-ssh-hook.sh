@@ -12,7 +12,8 @@ if [[ "$current_session" == "ssh" ]]; then
 	tmux set status off
 
 # if we are back to the main session turn them back on
-elif [[ "$current_session" == "main" ]]; then
+# elif [[ "$current_session" == "main" ]]; then
+else
 	tmux set -u prefix
 	tmux set -u key-table
 	tmux set status on

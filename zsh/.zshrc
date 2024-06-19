@@ -38,7 +38,6 @@ antigen apply
 alias cleanup="dua interactive /"
 
 alias vim=nvim
-alias code=codium
 alias v=nvim
 alias vv=nvim
 alias nv="NO_RUST_LSP=1 nvim"
@@ -139,8 +138,9 @@ hex_to_bytes() {
 }
 
 proxy() {
-  FORWARD_PORT=${1:-8545}
-  FORWARD_PORT=$FORWARD_PORT mitmproxy -s $(realpath ~/github/mitm-playground/init.py)
+  LISTEN_PORT=${1:-8080}
+  FORWARD_PORT=${2:-8545}
+  FORWARD_PORT=$FORWARD_PORT mitmproxy --listen-port $LISTEN_PORT -s $(realpath ~/github/mitm-playground/init.py)
 }
 
 hardhat() {

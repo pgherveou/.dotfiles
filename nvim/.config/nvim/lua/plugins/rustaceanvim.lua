@@ -70,6 +70,10 @@ vim.g.rustaceanvim = function()
               ['async-std'] = { 'async_std' },
             },
           },
+          inlayHints = {
+            closureReturnTypeHints = true,
+            parameterHints = true,
+          },
           rustfmt = {
             -- Use nightly formatting.
             -- See the polkadot-sdk CI job that checks formatting for the current version used in

@@ -116,7 +116,7 @@ module.makeGridLayout = function(windows)
     local frame = grid.getCell(cell, screen)
 
     for i, win in ipairs(wins) do
-      local offset = 10 * i
+      local offset = 10 * (i - 1)
       local offsetFrame = hs.geometry(frame.x, frame.y + offset, frame.w, frame.h - offset)
       win:setFrame(offsetFrame)
       win:raise()
