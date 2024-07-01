@@ -22,7 +22,6 @@ local function stagedHunksQuickfixList()
       local filepath = line:sub(#file_pattern)
       local filename = vim.fn.fnamemodify(filepath, ':t')
       if not vim.tbl_contains(ignored_files, filename) then
-        print(filename, vim.inspect(ignored_files))
         table.insert(mapped_lines, { filename = filepath, line_number = line_number })
       end
     end

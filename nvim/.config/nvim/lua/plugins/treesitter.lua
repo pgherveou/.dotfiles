@@ -24,9 +24,6 @@ local config = function()
   end
 
   require('nvim-treesitter.configs').setup({
-    autotag = {
-      enable = true,
-    },
     ensure_installed = {
       'go',
       'rust',
@@ -90,7 +87,6 @@ end
 local ts_autotag = {
   'windwp/nvim-ts-autotag',
   dependencies = { 'nvim-treesitter/nvim-treesitter' },
-  lazy = true,
   ft = { 'html', 'xml', 'javascript', 'javascriptreact', 'typescriptreact', 'svelte', 'vue' },
   config = true,
 }
