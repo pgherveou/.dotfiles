@@ -21,11 +21,19 @@ local config = function()
   local buffer_src = { name = 'buffer', get_bufnrs = get_bufnrs }
 
   -- same as here but with Snippet last https://github.com/hrsh7th/nvim-cmp/blob/d93104244c3834fbd8f3dd01da9729920e0b5fe7/lua/cmp/config/compare.lua#L50
+  -- and field first
   local compare_kind = function(entry1, entry2)
     local kind1 = entry1:get_kind()
-    kind1 = kind1 == types.lsp.CompletionItemKind.Text and 100 or kind1
     local kind2 = entry2:get_kind()
+    kind1 = kind1 == types.lsp.CompletionItemKind.Text and 100 or kind1
     kind2 = kind2 == types.lsp.CompletionItemKind.Text and 100 or kind2
+
+    if kind1 == cmp.lsp.CompletionItemKind.Field and kind2 ~= cmp.lsp.CompletionItemKind.Field then
+      return true
+    elseif kind1 ~= cmp.lsp.CompletionItemKind.Field and kind2 == cmp.lsp.CompletionItemKind.Field then
+      return false
+    end
+
     if kind1 ~= kind2 then
       if kind1 == types.lsp.CompletionItemKind.Snippet then
         return false

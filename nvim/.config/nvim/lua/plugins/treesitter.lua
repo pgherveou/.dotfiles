@@ -74,10 +74,11 @@ local config = function()
         set_jumps = true, -- whether to set jumps in the jumplist
         goto_next_start = {
           ['<Down>'] = '@function.outer',
+          ['<Right>'] = '@statement.outer',
         },
         goto_previous_start = {
           ['<Up>'] = '@function.outer',
-          ['[a'] = '@parameter.outer',
+          ['<Left>'] = '@statement.outer',
         },
       },
     },
@@ -87,6 +88,7 @@ end
 local ts_autotag = {
   'windwp/nvim-ts-autotag',
   dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  lazy = true,
   ft = { 'html', 'xml', 'javascript', 'javascriptreact', 'typescriptreact', 'svelte', 'vue' },
   config = true,
 }
