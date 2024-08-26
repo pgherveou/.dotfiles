@@ -54,6 +54,11 @@ local config = function()
       file_browser = {
         path_display = { truncate = 3 },
       },
+      live_grep = {
+        additional_args = function()
+          return { '--hidden' }
+        end,
+      },
     },
   })
 
