@@ -95,7 +95,6 @@ function M:isInMenuBar() end
 --
 --  * Calling this method with inMenuBar equal to false is equivalent to calling hs.menubar.new():removeFromMenuBar().
 --  * A hidden menubaritem can be added to the system menubar by calling hs.menubar:returnToMenuBar() or used as a pop-up menu by calling hs.menubar:popupMenu().
----@return hs.menubar
 function M.new(inMenuBar, autosaveName, ...) end
 
 -- Display a menubaritem as a pop up menu at the specified screen point.
@@ -268,3 +267,4 @@ function M:stateImageSize(size, ...) end
 -- Returns:
 --  * the menubar item title, or an empty string, if there isn't one.  If `styled` is not set or is false, then a string is returned; otherwise a styledtextObject will be returned.
 function M:title(styled, ...) end
+
