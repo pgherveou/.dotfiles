@@ -195,6 +195,28 @@ vim.api.nvim_create_autocmd('FocusLost', {
   end,
 })
 
+vim.api.nvim_create_user_command('Prdoc', function(opts)
+  local pr_number = string.gsub(vim.fn.system('gh pr view --json number --jq .number'), '\n', '')
+  local root_dir = string.gsub(vim.fn.system('git rev-parse --show-toplevel'), '\n', '')
+  local prdoc_file = root_dir .. '/prdoc/pr_' .. pr_number .. '.prdoc'
+
+  if opts.fargs[1] == 'check' then
+    vim.fn.system('cd ' .. root_dir .. ' && prdoc check -n' .. pr_number)
+    return
+  end
+
+  if vim.fn.filereadable(prdoc_file) == 0 then
+    vim.fn.system('cd ' .. root_dir .. ' && prdoc generate ' .. pr_number)
+  end
+
+  vim.cmd('edit ' .. prdoc_file)
+end, {
+  nargs = '?',
+  complete = function()
+    return { 'check' }
+  end,
+})
+
 -- vim regex cheat sheet:
 -- .\{-} => non greedy match
 -- <  => beginning of a word

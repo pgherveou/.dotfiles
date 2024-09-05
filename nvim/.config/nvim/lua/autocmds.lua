@@ -136,3 +136,12 @@ vim.api.nvim_create_autocmd('TermOpen', {
     vim.api.nvim_feedkeys('G', 'n', true)
   end,
 })
+
+-- Use yaml for prdoc files
+-- Create an autocmd that sets the filetype to 'yaml' for files with a .prdoc extension
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = '*.prdoc',
+  callback = function()
+    vim.bo.filetype = 'yaml'
+  end,
+})
