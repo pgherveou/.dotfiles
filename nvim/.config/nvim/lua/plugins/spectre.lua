@@ -2,6 +2,21 @@ return {
   'nvim-pack/nvim-spectre',
   dependencies = { 'nvim-lua/plenary.nvim' },
   lazy = true,
+  config = function()
+    -- https://github.com/nvim-pack/nvim-spectre/issues/118#issuecomment-1531683211
+    require('spectre').setup({
+      replace_engine = {
+        ['sed'] = {
+          cmd = 'sed',
+          args = {
+            '-i',
+            '',
+            '-E',
+          },
+        },
+      },
+    })
+  end,
   keys = {
     {
       '<leader>sr',
