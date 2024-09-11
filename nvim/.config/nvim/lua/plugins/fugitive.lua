@@ -3,7 +3,15 @@ local function toggle_fugitive_window()
   local fugitive_buffer = vim.fn.bufnr('fugitive://')
   -- if there is no buffer with filetype fugitive, or if the buffer is not visible then open it vertically
   if fugitive_buffer == -1 or vim.fn.bufwinnr(fugitive_buffer) == -1 then
-    vim.cmd('vertical G')
+    -- if the current buffer is unnamed, open fugitive and close it
+    local current_buffer = vim.api.nvim_get_current_buf()
+    if vim.api.nvim_buf_get_name(0) == '' then
+      vim.cmd('G')
+      vim.cmd('bd' .. current_buffer)
+    else
+      vim.cmd('vertical G')
+    end
+
     -- if there is a buffer with filetype fugitive, close it
   else
     vim.cmd('bd' .. fugitive_buffer)
