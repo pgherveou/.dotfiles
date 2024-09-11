@@ -5,7 +5,11 @@ local Path = require('plenary.path')
 
 local sources = {
   builtins.formatting.shfmt,
-  builtins.formatting.markdownlint,
+  builtins.formatting.markdownlint.with({
+    condition = function()
+      return require('plugins.lsp.common').no_rust_lsp == false
+    end,
+  }),
   builtins.formatting.sql_formatter,
   builtins.formatting.gofmt,
   builtins.diagnostics.codespell.with({

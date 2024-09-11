@@ -201,7 +201,8 @@ vim.api.nvim_create_user_command('Prdoc', function(opts)
   local prdoc_file = root_dir .. '/prdoc/pr_' .. pr_number .. '.prdoc'
 
   if opts.fargs[1] == 'check' then
-    vim.fn.system('cd ' .. root_dir .. ' && prdoc check -n' .. pr_number)
+    local res = vim.fn.system('cd ' .. root_dir .. ' && RUST_LOG=debug prdoc check -n' .. pr_number)
+    print(res)
     return
   end
 
