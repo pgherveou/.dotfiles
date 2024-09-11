@@ -70,7 +70,7 @@ local setup_servers = function()
   lspconfig.pyright.setup(default_config)
   lspconfig.clangd.setup(default_config)
   lspconfig.tailwindcss.setup(default_config)
-  lspconfig.tsserver.setup(default_config)
+  lspconfig.ts_ls.setup(default_config)
 end
 
 return {
