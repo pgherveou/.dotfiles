@@ -202,7 +202,11 @@ vim.api.nvim_create_user_command('Prdoc', function(opts)
 
   if opts.fargs[1] == 'check' then
     local res = vim.fn.system('cd ' .. root_dir .. ' && RUST_LOG=debug prdoc check -n' .. pr_number)
-    print(res)
+    if vim.v.shell_error == 0 then
+      print('prdoc is valid')
+    else
+      print(res)
+    end
     return
   end
 
