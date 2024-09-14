@@ -73,9 +73,16 @@ local config = function()
   telescope.load_extension('refactoring')
 end
 
--- create a function that run a grep some queried text against the file from the quick fix list vim.fn.getqflist()
+-- https://blog.kianenigma.nl/posts/tech/for-those-who-don-t-want-rust-analyzer-one-regex-to-rul-them-all/
+local function rust_quick_search()
+  local word = vim.fn.expand('<cword>')
+  local default_text = string.format('(macro_rules!|const|enum|struct|fn|trait|impl(<.*?>)?|type) %s', word)
+  require('telescope.builtin').live_grep({
+    default_text = default_text,
+  })
+end
 
--- create a custom picker that act as liv_grep but on the files from the quick fix list
+-- live_grep but on the files from the quick fix list
 local quick_fix_search = function()
   local quick_fix_list = vim.fn.getqflist()
   local quick_fix_files = {}
@@ -123,10 +130,12 @@ return {
     { '<Leader>fq', quick_fix_search, desc = 'Search file within the quick fix list' },
     { '<Leader>fs', builtin('grep_string'), desc = 'Search from word under cursor' },
     { '<Leader>fo', builtin('oldfiles'), desc = 'Search recent files' },
-    { '<Leader>s', builtin('lsp_document_symbols'), desc = 'List lsp symbols for current buffer' },
+    { '<Leader>fls', builtin('lsp_document_symbols'), desc = 'List lsp symbols for current buffer' },
+    { '<Leader>flr', builtin('lsp_references'), desc = 'List lsp references' },
     { '<Leader>i', builtin('diagnostics'), desc = 'List lsp symbols for current buffer' },
     { '<Leader>fr', builtin('resume'), desc = 'Resume search' },
     { '<leader>f/', extension('live_grep_args', 'live_grep_args'), desc = 'Search with raw grep' },
+    { '<leader>f%', rust_quick_search, desc = 'Search with raw grep' },
     -- visual
     {
       '<leader>fs',
