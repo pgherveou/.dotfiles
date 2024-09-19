@@ -74,11 +74,34 @@ local config = function()
 end
 
 -- https://blog.kianenigma.nl/posts/tech/for-those-who-don-t-want-rust-analyzer-one-regex-to-rul-them-all/
+local rust_regex_prefix = '(macro_rules!|const|enum|struct|fn|trait|impl(<.*?>)?|type) '
+local rust_regex_on_complete = {
+  function(picker)
+    vim.keymap.set('i', '<Tab>', function()
+      vim.schedule(function()
+        local prompt = picker:_get_prompt()
+        if prompt:find(rust_regex_prefix, 1, true) == 1 then
+          picker:set_prompt(prompt:sub(#rust_regex_prefix + 1), true)
+        else
+          picker:set_prompt(rust_regex_prefix .. prompt, true)
+        end
+      end)
+    end, { expr = true, buffer = picker.prompt_bufnr })
+  end,
+}
+
 local function rust_quick_search()
   local word = vim.fn.expand('<cword>')
-  local default_text = string.format('(macro_rules!|const|enum|struct|fn|trait|impl(<.*?>)?|type) %s', word)
+  local default_text = rust_regex_prefix .. word
   require('telescope.builtin').live_grep({
     default_text = default_text,
+    on_complete = rust_regex_on_complete,
+  })
+end
+
+local function live_grep()
+  require('telescope.builtin').live_grep({
+    on_complete = rust_regex_on_complete,
   })
 end
 
@@ -125,7 +148,7 @@ return {
     },
     { '<Leader>ff', builtin('find_files', { follow = true, hidden = true }), desc = 'Search files' },
     { '<Leader>/', builtin('current_buffer_fuzzy_find'), desc = 'Fuzzy file in file' },
-    { '<Leader>fg', builtin('live_grep'), desc = 'Search with Live grep' },
+    { '<Leader>fg', live_grep, desc = 'Search with Live grep' },
     { '<Leader>fm', builtin('marks'), desc = 'Search marks' },
     { '<Leader>fq', quick_fix_search, desc = 'Search file within the quick fix list' },
     { '<Leader>fs', builtin('grep_string'), desc = 'Search from word under cursor' },
