@@ -164,3 +164,17 @@ for _, v in ipairs({ '<Del>', '!', '(', ')', ',', '.', '?', '[', '[' }) do
 end
 
 require('utils').keymaps(mappings)
+
+local last_dir = vim.fn.getcwd()
+
+vim.api.nvim_create_autocmd('DirChangedPre', {
+  pattern = 'global',
+  callback = function()
+    last_dir = vim.fn.getcwd()
+  end,
+})
+-- Map ~ to go to the previous directory
+vim.keymap.set('n', '<leader>~', function()
+  vim.cmd('cd ' .. last_dir)
+  print('cd ' .. last_dir)
+end, { noremap = true, silent = true })

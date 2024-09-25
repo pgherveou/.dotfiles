@@ -56,7 +56,7 @@ local config = function()
       },
       live_grep = {
         additional_args = function()
-          return { '--hidden' }
+          return { '--hidden', '--follow' }
         end,
       },
     },

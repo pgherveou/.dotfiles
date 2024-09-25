@@ -75,7 +75,7 @@ export PATH="$HOME/go/bin:$PATH"
 export CARGO_NET_GIT_FETCH_WITH_CLI=true
 
 # Node 
-eval "$(fnm env --use-on-cd)"
+eval "$(fnm env --use-on-cd --log-level=quiet)"
 
 cargo-targets() {
   cargo metadata --format-version 1 | jq -r '.packages[].targets[].name'
