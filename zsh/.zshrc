@@ -93,6 +93,13 @@ gh-pr-view(){
   gh pr view --web
 } 
 
+# Open failing job
+gh-failing-job() {
+# jobs=$(gh pr checks --json "event,completedAt,name,link,description,state" | jq -r '[.[] | select(.state == "FAILURE" and .name != "review-bot")] | sort_by(.completedAt)')
+  jobs=$(gh pr checks --json "event,completedAt,name,link,description,state" | jq -r '[.[] | select(.state == "FAILURE")] | sort_by(.completedAt)')
+  selected=jobs | fzf
+}
+
 # Select a PR to checkout 
 gh-pr-co(){
   local use_all="$1"
@@ -191,3 +198,10 @@ if [ -d "$FNM_PATH" ]; then
   export PATH="/Users/pg/Library/Application Support/fnm:$PATH"
   eval "`fnm env`"
 fi
+
+# bun completions
+[ -s "/Users/pg/.bun/_bun" ] && source "/Users/pg/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

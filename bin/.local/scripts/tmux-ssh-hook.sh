@@ -3,9 +3,9 @@
 current_session="$(tmux display-message -p '#S')"
 
 # if the session we attached to is ssh turn off all tmux key bindings from the top level tmux
-if [[ "$current_session" == "ssh" ]]; then
-	not_ssh="[[ '#{pane_current_command}' != 'ssh' ]]"
-	tmux if-shell "$not_ssh" 'send-keys "ssh pg-archlinux.local" C-m'
+if [[ "$current_session" == "atlas" ]]; then
+	not_ssh="[[ '#{pane_current_command}' != 'atlas' ]]"
+	tmux if-shell "$not_ssh" 'send-keys "ssh atlas.local" C-m'
 
 	tmux set key-table off
 	tmux set prefix None

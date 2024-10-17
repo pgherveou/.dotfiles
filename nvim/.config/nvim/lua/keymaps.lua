@@ -175,6 +175,6 @@ vim.api.nvim_create_autocmd('DirChangedPre', {
 })
 -- Map ~ to go to the previous directory
 vim.keymap.set('n', '<leader>~', function()
-  vim.cmd('cd ' .. last_dir)
   print('cd ' .. last_dir)
+  vim.cmd('cd ' .. last_dir)
 end, { noremap = true, silent = true })

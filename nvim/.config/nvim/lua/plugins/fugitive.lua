@@ -18,17 +18,20 @@ local function toggle_fugitive_window()
   end
 end
 
-local function stagedHunksQuickfixList()
+local function quickFixListFromDiff(diff_file)
+  local lines = vim.fn.readfile(diff_file)
   local ignored_files = { 'Cargo.lock' }
-  vim.fn.system('git diff --cached > /tmp/staged.diff')
-  local lines = vim.fn.readfile('/tmp/staged.diff')
 
   local file_pattern = '^+++ b/'
   local mapped_lines = {}
   for line_number, line in ipairs(lines) do
     if line:match(file_pattern) then
-      local filepath = line:sub(#file_pattern)
+      -- get the root git directory and concatenate it with the filepath
+      local git_root = vim.fn.system('git rev-parse --show-toplevel'):gsub('\n', '')
+      local filepath = git_root .. '/' .. line:sub(#file_pattern)
+
       local filename = vim.fn.fnamemodify(filepath, ':t')
+
       if not vim.tbl_contains(ignored_files, filename) then
         table.insert(mapped_lines, { filename = filepath, line_number = line_number })
       end
@@ -46,10 +49,8 @@ local function stagedHunksQuickfixList()
       local lnum, len = lines[index]:match(unified_diff_pattern)
       if lnum then
         local end_lnum = lnum + len
-        table.insert(
-          qf_list,
-          { filename = line.filename, lnum = lnum, end_lnum = end_lnum, text = 'Staged change: ' .. line.filename }
-        )
+        local text = vim.fn.system('sed -n ' .. lnum .. 'p ' .. line.filename)
+        table.insert(qf_list, { filename = line.filename, lnum = lnum, end_lnum = end_lnum, text = text })
       end
       index = index + 1
     end
@@ -58,6 +59,16 @@ local function stagedHunksQuickfixList()
   -- Set the quickfix list and open it
   vim.fn.setqflist(qf_list)
   vim.cmd('copen')
+end
+
+local function stagedHunksQuickfixList()
+  vim.fn.system('git diff --cached > /tmp/staged.diff')
+  return quickFixListFromDiff('/tmp/staged.diff')
+end
+
+local function unstagedHunksQuickfixList()
+  vim.fn.system('git diff  > /tmp/staged.diff')
+  return quickFixListFromDiff('/tmp/staged.diff')
 end
 
 -- stagedHunksQuickfixList()
@@ -89,6 +100,7 @@ return {
     { '<leader>gf', ':diffget //2<cr>', desc = '[Git] Pick diffget 2' },
     { '<leader>grc', ':G rebase --continue<cr>', desc = '[Git] Continue rebase' },
     { '<leader>gq', stagedHunksQuickfixList, desc = '[Git] Create a quick fix list with staged hunks' },
+    { '<leader>gu', unstagedHunksQuickfixList, desc = '[Git] Create a quick fix list with unstaged hunks' },
   },
   config = function()
     -- alias Gclog to Gclog -100 using cnoreabbrev

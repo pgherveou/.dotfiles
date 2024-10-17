@@ -16,6 +16,7 @@ get_next_meeting() {
 		--excludeAllDayEvents \
 		--separateByDate \
 		--bullet "" \
+		--excludeAllDayEvents \
 		eventsToday)
 }
 
