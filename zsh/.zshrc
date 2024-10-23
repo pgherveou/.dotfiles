@@ -166,6 +166,7 @@ export BUILDOZER_BIN=$(which buildozer)
 export CLANG_FORMAT=$(which clang-format)
 
 # Set up fzf key bindings and fuzzy completion
+source ~/.fzf.zsh
 eval "$(fzf --zsh)"
 
 export FZF_CTRL_T_OPTS="--preview='bat --color=always --style=numbers {}' --bind ctrl-u:preview-page-up,ctrl-d:preview-page-down"
@@ -193,14 +194,10 @@ fi
 eval "$(atuin init zsh)"
 
 # fnm
-FNM_PATH="/Users/pg/Library/Application Support/fnm"
-if [ -d "$FNM_PATH" ]; then
-  export PATH="/Users/pg/Library/Application Support/fnm:$PATH"
-  eval "`fnm env`"
-fi
+eval "$(fnm env --use-on-cd --shell zsh)"
 
 # bun completions
-[ -s "/Users/pg/.bun/_bun" ] && source "/Users/pg/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
