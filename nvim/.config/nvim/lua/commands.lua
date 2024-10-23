@@ -195,6 +195,7 @@ vim.api.nvim_create_autocmd('FocusLost', {
   end,
 })
 
+-- /cmd prdoc --audience runtime_dev --bump minor
 vim.api.nvim_create_user_command('Prdoc', function(opts)
   local pr_number = string.gsub(vim.fn.system('gh pr view --json number --jq .number'), '\n', '')
   local root_dir = string.gsub(vim.fn.system('git rev-parse --show-toplevel'), '\n', '')

@@ -81,7 +81,7 @@ run_install() {
 		# ln -s /opt/homebrew/share/antigen/antigen.zsh ~/.antigen.zsh
 		# brew bundle install
 	else
-		ln -s .tmux-linux.conf .tmux.conf
+		ln -sf .tmux-linux.conf .tmux.conf
 	fi
 
 	# clone tmux plugin manager

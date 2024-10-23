@@ -4,18 +4,22 @@ return {
   lazy = true,
   config = function()
     -- https://github.com/nvim-pack/nvim-spectre/issues/118#issuecomment-1531683211
-    require('spectre').setup({
-      replace_engine = {
-        ['sed'] = {
-          cmd = 'sed',
-          args = {
-            '-i',
-            '',
-            '-E',
+    if vim.fn.has('mac') == 1 then
+      require('spectre').setup({
+        replace_engine = {
+          ['sed'] = {
+            cmd = 'sed',
+            args = {
+              '-i',
+              '',
+              '-E',
+            },
           },
         },
-      },
-    })
+      })
+    else
+      require('spectre').setup()
+    end
   end,
   keys = {
     {

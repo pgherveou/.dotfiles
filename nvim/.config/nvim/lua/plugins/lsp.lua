@@ -66,7 +66,7 @@ local setup_servers = function()
     end,
   }))
 
-  lspconfig.jsonnet_ls.setup(default_config)
+  -- lspconfig.jsonnet_ls.setup(default_config)
   lspconfig.pyright.setup(default_config)
   lspconfig.clangd.setup(default_config)
   lspconfig.tailwindcss.setup(default_config)

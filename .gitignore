@@ -1,4 +1,6 @@
 .tmux.conf
+cargo/.cargo
+atuin/.config/atuin/atuin-receipt.json
 bin/.local/state
 bin/.local/share
 .ccls-cache
@@ -8,3 +10,4 @@ compile_commands.json
 qmk/.cache
 .DS_Store
 alfred/Alfred.alfredpreferences/workflows
+cargo/.cargo

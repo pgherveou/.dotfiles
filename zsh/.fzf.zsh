@@ -1,8 +1,9 @@
 # Setup fzf
 # ---------
-if [[ ! "$PATH" == */opt/homebrew/opt/fzf/bin* ]]; then
+if [[ ! "$PATH" == */home/pg/.fzf/bin* ]]; then
+  PATH="${PATH:+${PATH}:}/home/pg/.fzf/bin"
+elif [[ ! "$PATH" == */opt/homebrew/opt/fzf/bin* ]]; then
   export PATH="${PATH:+${PATH}:}/opt/homebrew/opt/fzf/bin"
 fi
 
-# Set up fzf key bindings and fuzzy completion
-eval "$(fzf --zsh)"
+source <(fzf --zsh)
