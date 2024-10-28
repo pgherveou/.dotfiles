@@ -17,12 +17,14 @@ local keys = {
 }
 
 if require('plugins.lsp.common').no_rust_lsp then
-  table.insert(keys, {
-    'K',
-    function()
-      require('rust-quick-tests').hover_actions()
-    end,
-    desc = 'Rust tests Hover actions',
+  vim.list_extend(keys, {
+    {
+      'K',
+      function()
+        require('rust-quick-tests').hover_actions()
+      end,
+      desc = 'Rust tests Hover actions',
+    },
   })
 end
 

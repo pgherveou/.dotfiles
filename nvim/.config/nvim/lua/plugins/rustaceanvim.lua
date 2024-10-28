@@ -74,12 +74,15 @@ vim.g.rustaceanvim = function()
             closureReturnTypeHints = true,
             parameterHints = true,
           },
+          check = {
+            workspace = false,
+          },
           rustfmt = {
             -- Use nightly formatting.
             -- See the polkadot-sdk CI job that checks formatting for the current version used in
             -- polkadot-sdk.
             -- extraArgs = { '+nightly-2023-11-01' },
-            -- extraArgs = { '+nightly' },
+            extraArgs = { '+nightly' },
           },
         },
       },

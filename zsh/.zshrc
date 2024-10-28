@@ -69,13 +69,16 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 export PATH="/opt/dart-sdk/bin:$PATH"
 
 # GO
-export PATH="$HOME/go/bin:$PATH"
+export PATH=$PATH:/usr/local/go/bin
 
 # Rust
 export CARGO_NET_GIT_FETCH_WITH_CLI=true
 
+# Zombienet
+export PATH=/home/pg/github/polkadot-sdk/substrate/frame/revive/rpc/zombienet:$PATH
+
 # Node 
-eval "$(fnm env --use-on-cd --log-level=quiet)"
+eval "$(fnm env --use-on-cd --shell zsh --log-level=quiet)"
 
 cargo-targets() {
   cargo metadata --format-version 1 | jq -r '.packages[].targets[].name'
@@ -184,12 +187,8 @@ if [[ -S ~/.1password/agent.sock ]]; then
     export SSH_AUTH_SOCK=~/.1password/agent.sock
 fi
 
-# Linux specific
-if [ "$(uname -s)" = "Linux" ]; then
-  open() {
-      echo "$1" | nc -N localhost 8378
-  }
-fi
+# Add local scripts to path
+export PATH="$HOME/.dotfiles/bin/.local/scripts:$PATH"
 
 eval "$(atuin init zsh)"
 
