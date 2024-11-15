@@ -42,8 +42,9 @@ enum custom_keycodes {
 #define SPC_NAV LT(_NAV, KC_SPC)
 
 #define SFT_COL MT(MOD_LSFT, KC_COLN)
-
 #define ENT_SYM LT(_SYM, KC_ENT)
+
+#define SCREENSHOT G(S(KC_PSCR))
 
 // alias WORD_RIGHT to ctrl+right on linux and  alt+right on mac
 #ifdef __APPLE__

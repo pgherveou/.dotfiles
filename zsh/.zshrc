@@ -96,6 +96,13 @@ gh-pr-view(){
   gh pr view --web
 } 
 
+# Init a PR with prdoc and label
+gh-pr-init(){
+  PR_NUMBER=$(gh pr view --json number --jq '.number' | xargs)
+  gh pr comment $PR_NUMBER --body "/cmd prdoc --audience runtime_dev --bump minor"
+  gh pr edit $PR_NUMBER --add-label "T7-smart_contracts" --add-label "R0-silent"
+}
+
 # Open failing job
 gh-failing-job() {
 # jobs=$(gh pr checks --json "event,completedAt,name,link,description,state" | jq -r '[.[] | select(.state == "FAILURE" and .name != "review-bot")] | sort_by(.completedAt)')
@@ -201,3 +208,6 @@ eval "$(fnm env --use-on-cd --shell zsh)"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# deno
+[ -s "$HOME/.deno/env" ] && source "$HOME/.deno/env"
