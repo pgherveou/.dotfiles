@@ -2,8 +2,8 @@
 	email = pgherveou@gmail.com
 	name = pgherveou
 	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJvHp3k6DU+VAMibStgQSHdMkVwcZ9dKq2R0XjOK2OnL
-[commit]
-	gpgsign = true
+; [commit]
+; 	gpgsign = true
 [rerere]
 	enabled = true
 [pull]
@@ -31,10 +31,10 @@
 # avoid issues with cargo-edit
 [url "https://github.com/rust-lang/crates.io-index"]
 	insteadOf = https://github.com/rust-lang/crates.io-index
-[gpg]
-	format = ssh
-[gpg "ssh"]
-	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+; [gpg]
+; 	format = ssh
+; [gpg "ssh"]
+; 	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 [alias]
 	hd = rev-parse --verify HEAD
 	prune-merged = !git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d
