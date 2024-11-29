@@ -17,6 +17,11 @@ return {
       enable_git_status = false,
       filesystem = {
         filtered_items = {
+          hide_by_name = {
+            'node_modules',
+            '.git',
+          },
+          hide_gitignored = false,
           hide_dotfiles = false,
         },
       },

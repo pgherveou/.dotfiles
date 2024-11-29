@@ -36,7 +36,8 @@ TERM = "xterm-256color"
 size = 12
 
 [font.normal]
-family = "MesloLGS NF"
+# family = "MesloLGS NF"
+family = "FiraCode Nerd Font"
 
 [[keyboard.bindings]]
 action = "ToggleFullscreen"
@@ -88,7 +89,7 @@ action = "PasteSelection"
 mouse = "Middle"
 
 [terminal.shell]
-args = ["-l", "-c", "tmux attach || tmux new -s main"]
+args = ["-l", "-c", "source ~/.fzf.zsh && (tmux attach || tmux new -s main)"]
 program = "/bin/zsh"
 
 [window]

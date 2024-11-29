@@ -96,6 +96,11 @@ gh-pr-view(){
   gh pr view --web
 } 
 
+# open a devops issue 
+gh-devops() {
+  gh issue -R paritytech/devops create --title "Deploy eth-rpc"
+}
+
 # Init a PR with prdoc and label
 gh-pr-init(){
   PR_NUMBER=$(gh pr view --json number --jq '.number' | xargs)
@@ -129,6 +134,24 @@ git-recent(){
   local branch=$(git branch --sort=-committerdate --format="%(refname:short)" | head -5 | fzf)
   git checkout $branch
 }
+
+start_mitmproxy() {
+  # Default port to 8546 if not provided
+  local port="${1:-8546}"
+  
+  # Check if a tmux session/window named 'mitmproxy' exists
+  if ! tmux list-windows -t $(tmux display-message -p '#S') | grep -q "mitmproxy"; then
+    # If not, create the window
+    tmux new-window -n mitmproxy
+  fi
+  
+  
+  # Send the commands to the tmux window
+  tmux send-keys -t mitmproxy "cd ~/github/mitmproxy" C-m
+  tmux send-keys -t mitmproxy "source venv/bin/activate" C-m
+  tmux send-keys -t mitmproxy "mitmproxy --listen-port 8000 --mode reverse:http://localhost:${port} -s \$(realpath ~/github/mitm-playground/init.py)" C-m
+}
+
 
 # Xcode via @orta
 openx(){
