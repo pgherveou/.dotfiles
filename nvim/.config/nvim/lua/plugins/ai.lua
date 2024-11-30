@@ -7,6 +7,16 @@ return {
   },
   config = function()
     require('codecompanion').setup({
+
+      adapters = {
+        openai = function()
+          return require('codecompanion.adapters').extend('openai', {
+            env = {
+              api_key = 'cmd:op read op://Private/OpenAI.nvim/credential --no-newline',
+            },
+          })
+        end,
+      },
       strategies = {
         chat = {
           adapter = 'copilot',
