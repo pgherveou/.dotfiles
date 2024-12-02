@@ -12,25 +12,25 @@ return {
         openai = function()
           return require('codecompanion.adapters').extend('openai', {
             env = {
-              api_key = 'cmd:op read op://Private/OpenAI.nvim/credential --no-newline',
+              api_key = os.getenv('OPENAI_API_NVIM_KEY'),
             },
           })
         end,
       },
-      strategies = {
-        chat = {
-          adapter = 'copilot',
-        },
-        inline = {
-          adapter = 'copilot',
-        },
-        completion = {
-          adapter = 'copilot',
-        },
-        diagnostics = {
-          adapter = 'copilot',
-        },
-      },
+      -- strategies = {
+      --   chat = {
+      --     adapter = 'copilot',
+      --   },
+      --   inline = {
+      --     adapter = 'copilot',
+      --   },
+      --   completion = {
+      --     adapter = 'copilot',
+      --   },
+      --   diagnostics = {
+      --     adapter = 'copilot',
+      --   },
+      -- },
     })
   end,
 }
