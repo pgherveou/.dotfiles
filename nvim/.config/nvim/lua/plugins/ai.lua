@@ -5,6 +5,10 @@ return {
     'nvim-treesitter/nvim-treesitter',
     { 'MeanderingProgrammer/render-markdown.nvim', ft = { 'markdown', 'codecompanion' } },
   },
+  lazy = true,
+  keys = {
+    { '<leader>ca', ':CodeCompanionChat<CR>', desc = 'Open codecompanion chat' },
+  },
   config = function()
     require('codecompanion').setup({
 

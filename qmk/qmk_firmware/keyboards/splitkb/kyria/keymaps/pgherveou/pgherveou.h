@@ -24,7 +24,6 @@ enum custom_keycodes {
   KC_SECRET_1,
   KC_SECRET_2,
   KC_SECRET_3,
-  KC_SECRET_4,
 };
 
 // Aliases for readability
