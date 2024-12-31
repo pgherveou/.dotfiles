@@ -26,26 +26,9 @@ setup_qmk() {
 	ln -s ~/qmk_firmware/compile_commands.json "$PWD"
 }
 
-install_npm_packages() {
-	# list of globally installed npm packages
-	NPM_PKGS=(
-		"neovim"
-		"serve"
-		"speed-test"
-	)
-
-	# install global npm packages using sudo on linux
-	if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-		sudo npm install -g "${NPM_PKGS[@]}"
-	else
-		npm install -g "${NPM_PKGS[@]}"
-	fi
-}
-
 install_cargo_bin() {
 	# install cargo binaries
 	CARGO_BIN=(
-		"bacon"
 		"cargo-watch"
 		"evcxr_repl"
 		"silicon"
