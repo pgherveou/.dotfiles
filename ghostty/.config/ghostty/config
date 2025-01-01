@@ -1,7 +1,15 @@
+theme = catppuccin-mocha
+font-family = MesloLGM Nerd Font 
+font-size = 16
+background-opacity = 0.95
+gtk-titlebar = false
+window-padding-x = 6
+confirm-close-surface = false
+
 keybind = ctrl+g>r=reload_config
 keybind = ctrl+g>'=new_split:right
 keybind = ctrl+g>x=close_surface
 keybind = ctrl+g>l=goto_split:right
 keybind = ctrl+g>h=goto_split:left
 keybind = ctrl+g>z=toggle_split_zoom
-# keybind = ctrl+g>o=
+
