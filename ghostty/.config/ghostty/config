@@ -13,3 +13,9 @@ keybind = ctrl+g>l=goto_split:right
 keybind = ctrl+g>h=goto_split:left
 keybind = ctrl+g>z=toggle_split_zoom
 
+
+keybind = ctrl+shift+h=text:
+keybind = ctrl+shift+j=text:
+keybind = ctrl+shift+k=text:
+keybind = ctrl+shift+l=text:
+

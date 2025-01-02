@@ -15,10 +15,10 @@ return {
     { '<C-l>', smart_splits('move_cursor_right'), desc = 'Move cursor right' },
 
     -- resizing splits
-    { '<C-S-h>', smart_splits('resize_left'), desc = 'Resize left' },
-    { '<C-S-j>', smart_splits('resize_down'), desc = 'Resize down' },
-    { '<C-S-k>', smart_splits('resize_up'), desc = 'Resize up' },
-    { '<C-S-l>', smart_splits('resize_right'), desc = 'Resize right' },
+    { '<M-S-h>', smart_splits('resize_left'), desc = 'Resize left' },
+    { '<M-S-j>', smart_splits('resize_down'), desc = 'Resize down' },
+    { '<M-S-k>', smart_splits('resize_up'), desc = 'Resize up' },
+    { '<M-S-l>', smart_splits('resize_right'), desc = 'Resize right' },
   },
 }
 

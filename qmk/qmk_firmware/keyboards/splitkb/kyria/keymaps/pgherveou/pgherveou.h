@@ -42,6 +42,8 @@ enum custom_keycodes {
 
 #define SFT_COL MT(MOD_LSFT, KC_COLN)
 #define ENT_SYM LT(_SYM, KC_ENT)
+#define GUI_AMPR MT(MOD_LGUI, KC_AMPR)
+#define SFT_ASTR MT(MOD_LSFT, KC_ASTR)
 
 #define SCREENSHOT G(S(KC_PSCR))
 
