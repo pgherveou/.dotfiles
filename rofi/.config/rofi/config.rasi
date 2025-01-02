@@ -1,15 +1,16 @@
 configuration{
-    modi: "run,window,combi";
+    modi: "run,drun,window";
     icon-theme: "Oranchelo";
     show-icons: true;
-    terminal: "alacritty";
+    terminal: "ghostty";
     drun-display-format: "{icon} {name}";
     location: 0;
     disable-history: false;
     hide-scrollbar: true;
-    display-combi: " 🖥️  All ";
-    display-run: " 🏃  Run ";
-    display-window: " 🪟  Window";
+    display-drun: "   Apps ";
+    display-run: "   Run ";
+    display-window: " 󰕰  Window";
+    display-Network: " 󰤨  Network";
     sidebar-mode: true;
 }
 

@@ -30,6 +30,7 @@ return {
     require('tokyonight').setup({
 
       style = 'storm',
+      transparent = true,
       -- on_highlights = function(hl)
       --   hl.DiffDelete = { bg = '#3f2d3d', fg = '#3f2d3d' }
       -- end,

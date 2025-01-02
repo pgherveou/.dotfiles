@@ -1,3 +1,6 @@
+
+initial-command = tmux attach || tmux new -s main
+
 theme = catppuccin-mocha
 font-family = MesloLGM Nerd Font 
 font-size = 16
