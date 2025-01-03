@@ -36,6 +36,11 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias clip="nc localhost 8377"
 
+# if linux alias open=xdg-open
+if [[ $(uname) == "Linux" ]]; then
+  alias open=xdg-open
+fi
+
 # local scripts
 export PATH="$PATH:$HOME/.local/scripts:$HOME/github/git-pile/bin"
 
