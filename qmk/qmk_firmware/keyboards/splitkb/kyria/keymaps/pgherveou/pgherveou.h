@@ -5,6 +5,7 @@ enum layers {
   _QWERTY = 0,
   _NAV,
   _SYM,
+  _CMD,
   _FUNCTION,
 };
 
@@ -29,6 +30,7 @@ enum custom_keycodes {
 // Aliases for readability
 #define SYM MO(_SYM)
 #define NAV MO(_NAV)
+#define CMDKEYS MO(_CMD)
 #define FKEYS MO(_FUNCTION)
 
 #define HYP_A MT(MOD_HYPR, KC_A)
@@ -39,6 +41,7 @@ enum custom_keycodes {
 #define GUI_DEL MT(MOD_LGUI, KC_DEL)
 #define CTL_BSP MT(MOD_RCTL, KC_BSPC)
 #define SPC_NAV LT(_NAV, KC_SPC)
+#define QUOT_CMD LT(_CMD, KC_QUOT)
 
 #define SFT_COL MT(MOD_LSFT, KC_COLN)
 #define ENT_SYM LT(_SYM, KC_ENT)
