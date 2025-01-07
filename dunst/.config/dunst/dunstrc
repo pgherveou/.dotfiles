@@ -20,12 +20,15 @@ mouse_right_click = close_all
 [urgency_low]
 background = "#1e1e2e"
 foreground = "#cdd6f4"
+timeout = 10000 
 
 [urgency_normal]
 background = "#1e1e2e"
 foreground = "#cdd6f4"
+timeout = 10000 
 
 [urgency_critical]
 background = "#1e1e2e"
 foreground = "#cdd6f4"
 frame_color = "#fab387"
+timeout = 10000 

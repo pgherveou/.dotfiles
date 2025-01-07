@@ -160,6 +160,10 @@ hex_to_bytes() {
   echo $1 | xxd -r -p | od -A n -t u1 
 }
 
+dunst_history() {
+  dunstctl history | jq -r '.data[][0] | {body: .body.data, summary: .summary.data, id: .id.data}'
+}
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f $HOME/.p10k.zsh ]] || source $HOME/.p10k.zsh
 
