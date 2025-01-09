@@ -20,6 +20,7 @@ exec --no-startup-id dunst
 # kill any hanging polybar processes
 exec_always killall polybar
 exec_always --no-startup-id ~/.config/polybar/launch_polybar.sh
+exec_always --no-startup-id /usr/bin/i3wsr --config ~/.config/i3/i3wsr.toml
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -66,6 +67,8 @@ for_window [class="1Password"] floating enable
 
 # start a terminal
 bindsym $mod+t fullscreen disable, exec ghostty
+
+# start a browser
 bindsym $mod+b fullscreen disable, exec firefox
 
 # kill focused window
@@ -73,9 +76,12 @@ bindsym $mod+q kill
 
 # start dmenu (a program launcher)
 bindsym $mod+f fullscreen disable, exec ~/.config/rofi/web-search.sh
-bindsym $mod+d fullscreen disable, exec --no-startup-id rofi -show drun
+bindsym $mod+d fullscreen disable, exec--no-startup-id rofi -show drun
 bindsym $mod+space fullscreen disable, exec --no-startup-id rofi -show combi
 bindsym $mod+Tab fullscreen disable, exec --no-startup-id rofi -show window
+
+# Keybinding to open ChatGPT in Firefox or focus on an existing tab
+# bindsym $mod+c exec --no-startup-id sh -c 'xdotool search --name "ChatGPT" windowactivate || firefox --new-tab "https://chatgpt.com"'
 
 # change focus
 bindsym $mod+h focus left
@@ -148,6 +154,12 @@ bindsym $mod+7 workspace number $ws7
 bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
+
+# [C]hrome -> ws3
+bindsym $mod+f workspace number $ws3
+
+# [G]hostty -> ws1
+bindsym $mod+g  workspace number $ws1
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1; workspace number $ws1

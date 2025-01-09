@@ -1,3 +1,6 @@
+-- set to open on mac xdg-open on linux
+local open_cmd = vim.fn.has('mac') == 1 and 'open' or 'xdg-open'
+
 local mappings = {
   n = {
     -- Remove search highlight.
@@ -114,7 +117,7 @@ local mappings = {
     ['<leader><leader>'] = { '<C-^>', desc = 'Edit the alternnate file' },
 
     -- fix gx to open files
-    ['gx'] = { ':!open <cfile><CR>', desc = 'Open file under cursor' },
+    ['gx'] = { ':!' .. open_cmd .. ' "<cfile><CR>"', desc = 'Open file under cursor' },
 
     -- Replay last command in tmux pane, by calling tmux send-keys -t bottom Up Enter
     ['<leader>tk'] = { ':silent :!tmux send-keys -t bottom Up Enter<CR>', desc = 'Replay last command in tmux pane' },

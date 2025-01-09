@@ -1,0 +1,12 @@
+[aliases.class]
+TelegramDesktop = "Telegram"
+"@polkadot/apps-electron" = "PolkadotJS"
+"com\\.mitchellh\\.ghostty" = "Ghostty"
+
+[aliases.instance]
+"@polkadot/apps-electron" = "PolkadotJS"
+
+[general]
+empty_label = "🌕"
+display_property = "instance" # class, instance, name
+

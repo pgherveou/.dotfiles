@@ -6,7 +6,7 @@ if [[ $# -eq 1 ]]; then
 	selected=$1
 # use fzf to select the target
 else
-	selected=$(find ~/github ~/qmk_firmware -mindepth 1 -maxdepth 1 -type d | fzf)
+	selected=$(find -L ~/github ~/ -mindepth 1 -maxdepth 1 -type d | fzf)
 fi
 
 # exit if no target selected
@@ -33,3 +33,4 @@ fi
 
 # switch to the selected session
 tmux switch-client -t $selected_name
+

@@ -94,6 +94,9 @@ export PATH="$HOME/.dotfiles/bin/.local/scripts:$PATH"
 export PATH="$PATH:/Users/pg/.atuin/bin"
 eval "$(atuin init zsh)"
 
+# custom llvm
+# export PATH="$PATH:$HOME/github/revive/llvm18.0/bin/"
+
 # Open gh url
 gh-pr-view(){
   gh pr view --web
@@ -139,20 +142,16 @@ git-recent(){
 }
 
 start_mitmproxy() {
-  # Default port to 8546 if not provided
-  local port="${1:-8546}"
+  local ports="${1:-8000:8545}"
+  IFS=":" read listen_port proxy_port <<< "$ports"
   
-  # Check if a tmux session/window named 'mitmproxy' exists
-  if ! tmux list-windows -t $(tmux display-message -p '#S') | grep -q "mitmproxy"; then
-    # If not, create the window
-    tmux new-window -n mitmproxy
-  fi
+  pkill -f mitmproxy
+  tmux new-window -d -n mitmproxy "cd $HOME/github/mitmproxy; source venv/bin/activate; mitmproxy --listen-port $listen_port --mode reverse:http://localhost:${proxy_port} -s $HOME/github/mitmproxy/scripts/json-rpc.py; tmux wait-for -S mitmproxy-done"
   
-  
-  # Send the commands to the tmux window
-  tmux send-keys -t mitmproxy "cd $HOME/github/mitmproxy" C-m
-  tmux send-keys -t mitmproxy "source venv/bin/activate" C-m
-  tmux send-keys -t mitmproxy "mitmproxy --listen-port 8000 --mode reverse:http://localhost:${port} -s $HOME/github/mitm-playground/init.py" C-m
+  # # Send the commands to the tmux window
+  # tmux send-keys -t mitmproxy "cd $HOME/github/mitmproxy" C-m
+  # tmux send-keys -t mitmproxy "source venv/bin/activate" C-m
+  # tmux send-keys -t mitmproxy "mitmproxy --listen-port $listen_port --mode reverse:http://localhost:${proxy_port} -s $HOME/github/mitmproxy/scripts/json-rpc.py" C-m
 }
 
 hex_to_bytes() {

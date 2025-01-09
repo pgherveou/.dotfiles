@@ -39,7 +39,7 @@ enum custom_keycodes {
 #define SFT_PIP MT(MOD_LSFT, KC_PIPE)
 #define SFT_MIN MT(MOD_RSFT, KC_MINUS)
 #define GUI_DEL MT(MOD_LGUI, KC_DEL)
-#define CTL_BSP MT(MOD_RCTL, KC_BSPC)
+#define GUI_BSP MT(MOD_RGUI, KC_BSPC)
 #define SPC_NAV LT(_NAV, KC_SPC)
 #define QUOT_CMD LT(_CMD, KC_QUOT)
 
