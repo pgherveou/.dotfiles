@@ -65,11 +65,6 @@ smart_gaps on
 # floating windows
 for_window [class="1Password"] floating enable
 
-# start a terminal
-bindsym $mod+t fullscreen disable, exec ghostty
-
-# start a browser
-bindsym $mod+b fullscreen disable, exec firefox
 
 # kill focused window
 bindsym $mod+q kill
@@ -119,7 +114,7 @@ bindsym $mod+m fullscreen toggle
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+# bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -155,11 +150,9 @@ bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
 
-# [C]hrome -> ws3
-bindsym $mod+f workspace number $ws3
-
-# [G]hostty -> ws1
-bindsym $mod+g  workspace number $ws1
+bindsym $mod+g fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh ghostty 1
+bindsym $mod+b fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh firefox 2
+bindsym $mod+e fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh element 3
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1; workspace number $ws1
@@ -206,6 +199,12 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+
+mode "open" {
+        bindsym s exec --no-startup-id flameshot gui
+        bindsym Escape mode "default"
+}
+bindsym $mod+o mode "open"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
