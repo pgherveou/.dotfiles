@@ -150,9 +150,12 @@ bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
 
-bindsym $mod+g fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh ghostty 1
-bindsym $mod+b fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh firefox 2
-bindsym $mod+e fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh element 3
+# Ghostty
+bindsym $mod+g fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh ghostty ghostty 1
+# Chromium
+bindsym $mod+c fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh Chromium chromium 2
+# Element
+bindsym $mod+e fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh Element element-desktop 3
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1; workspace number $ws1

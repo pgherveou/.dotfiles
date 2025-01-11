@@ -69,6 +69,8 @@ local config = function()
   telescope.load_extension('ui-select')
   telescope.load_extension('advanced_git_search')
 
+  telescope.load_extension('git_worktree')
+
   require('refactoring').setup({})
   telescope.load_extension('refactoring')
 end
@@ -89,6 +91,20 @@ local rust_regex_on_complete = {
     end, { expr = true, buffer = picker.prompt_bufnr })
   end,
 }
+local toggle_fuzzy = {
+  function(picker)
+    vim.keymap.set('i', '<Tab>', function()
+      vim.schedule(function()
+        local prompt = picker:_get_prompt()
+        if prompt:sub(1, 1) == '\'' then
+          picker:set_prompt(prompt:sub(2), true)
+        else
+          picker:set_prompt('\'' .. prompt, true)
+        end
+      end)
+    end, { expr = true, buffer = picker.prompt_bufnr })
+  end,
+}
 
 local function rust_quick_search()
   local word = vim.fn.expand('<cword>')
@@ -96,6 +112,21 @@ local function rust_quick_search()
   require('telescope.builtin').live_grep({
     default_text = default_text,
     on_complete = rust_regex_on_complete,
+  })
+end
+
+local function rust_quick_search_no_prefix()
+  local default_text = vim.fn.expand('<cword>')
+  require('telescope.builtin').live_grep({
+    default_text = default_text,
+    on_complete = rust_regex_on_complete,
+  })
+end
+
+local function local_search()
+  require('telescope.builtin').current_buffer_fuzzy_find({
+    default_text = '\'',
+    on_complete = toggle_fuzzy,
   })
 end
 
@@ -126,6 +157,7 @@ end
 return {
   'nvim-telescope/telescope.nvim',
   dependencies = {
+    'polarmutex/git-worktree.nvim',
     'nvim-telescope/telescope-live-grep-args.nvim',
     'nvim-telescope/telescope-file-browser.nvim',
     'nvim-telescope/telescope-github.nvim',
@@ -147,18 +179,25 @@ return {
       desc = 'Browse files',
     },
     { '<Leader>ff', builtin('find_files', { follow = true, hidden = true }), desc = 'Search files' },
-    { '<Leader>/', builtin('current_buffer_fuzzy_find'), desc = 'Fuzzy file in file' },
+    { '<Leader>/', local_search, desc = 'Fuzzy file in file' },
     { '<Leader>fg', live_grep, desc = 'Search with Live grep' },
     { '<Leader>fm', builtin('marks'), desc = 'Search marks' },
     { '<Leader>fq', quick_fix_search, desc = 'Search file within the quick fix list' },
-    { '<Leader>fs', builtin('grep_string'), desc = 'Search from word under cursor' },
+    { '<Leader>fs', rust_quick_search_no_prefix, desc = 'Search from word under cursor' },
+    { '<leader>f%', rust_quick_search, desc = 'Search from word under cursor with prefix' },
     { '<Leader>fo', builtin('oldfiles'), desc = 'Search recent files' },
     { '<Leader>fls', builtin('lsp_document_symbols'), desc = 'List lsp symbols for current buffer' },
     { '<Leader>flr', builtin('lsp_references'), desc = 'List lsp references' },
     { '<Leader>i', builtin('diagnostics'), desc = 'List lsp symbols for current buffer' },
     { '<Leader>fr', builtin('resume'), desc = 'Resume search' },
     { '<leader>f/', extension('live_grep_args', 'live_grep_args'), desc = 'Search with raw grep' },
-    { '<leader>f%', rust_quick_search, desc = 'Search with raw grep' },
+    {
+      '<leader>fw',
+      function()
+        require('telescope').extensions.git_worktree.git_worktree()
+      end,
+      desc = 'Manage Git git_worktree',
+    },
     -- visual
     {
       '<leader>fs',

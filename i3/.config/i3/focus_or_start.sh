@@ -1,11 +1,11 @@
 #!/bin/bash
 
-APP_NAME=$1
-WORKSPACE_ID=$2
+APP_CLASS=$1
+APP_NAME=$2
+WORKSPACE_ID=$3
 
-if pgrep -x "$APP_NAME" > /dev/null
-then
-    i3-msg "[class=\"$APP_NAME\"] focus"
-else
+OUTPUT=$(i3-msg "[class=\"$APP_CLASS\"] focus")
+if [[ $OUTPUT == *"false"* ]]; then
     i3-msg "workspace $WORKSPACE_ID; exec $APP_NAME"
 fi
+

@@ -1,0 +1,16 @@
+[exports.locations]
+auto = true
+exporter = "locations"
+path = ".bacon-locations"
+line_format = "{kind} {path}:{line}:{column} {message}"
+
+
+# Uncomment and change the key-bindings you want to define
+# (some of those ones are the defaults and are just here for illustration)
+[keybindings]
+k = "scroll-lines(-1)"
+j = "scroll-lines(1)"
+ctrl-u = "scroll-pages(-1)"
+ctrl-d = "scroll-pages(1)"
+q = "quit"
+r = "rerun"

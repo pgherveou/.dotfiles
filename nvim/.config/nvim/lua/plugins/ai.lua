@@ -7,13 +7,24 @@ return {
   },
   lazy = true,
   keys = {
-    { '<leader>ca', ':CodeCompanionChat<CR>', desc = 'Open codecompanion chat' },
-    { '<leader>f', ":'<,'>CodeCompanion /fix<CR>", mode = 'v',  desc = 'Open codecompanion chat' },
-    { '<leader>e', ":'<,'>CodeCompanion /explain<CR>", mode = 'v',  desc = 'Open codecompanion chat' }
-
+    { '<leader>ca', ':CodeCompanionChat<CR>', mode = { 'n', 'v' }, noremap = true, desc = 'Open codecompanion chat' },
+    {
+      '<leader>cm',
+      ':CodeCompanionActions<CR>',
+      mode = { 'n', 'v' },
+      noremap = true,
+      desc = 'Open codecompanion menu',
+    },
+    { '<leader>f', ':\'<,\'>CodeCompanion /fix<CR>', mode = 'v', desc = 'Open codecompanion chat' },
+    { '<leader>e', ':\'<,\'>CodeCompanion /explain<CR>', mode = 'v', desc = 'Open codecompanion chat' },
   },
   config = function()
     require('codecompanion').setup({
+      -- display = {
+      --   action_palette = {
+      --     provider = 'telescope',
+      --   },
+      -- },
 
       adapters = {
         openai = function()

@@ -178,6 +178,14 @@ end, {
   end,
 })
 
+vim.api.nvim_create_user_command('Worktree', function(opts)
+  local path = opts.fargs[1]
+  local branch = opts.fargs[2]
+  require('git-worktree').create_worktree(path, branch, 'origin')
+end, {
+  nargs = '*',
+})
+
 vim.api.nvim_create_autocmd('FocusLost', {
   pattern = '*',
   callback = function()
