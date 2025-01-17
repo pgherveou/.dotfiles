@@ -94,6 +94,8 @@ export PATH="$HOME/.dotfiles/bin/.local/scripts:$PATH"
 export PATH="$PATH:/Users/pg/.atuin/bin"
 eval "$(atuin init zsh)"
 
+
+
 # custom llvm
 # export PATH="$PATH:$HOME/github/revive/llvm18.0/bin/"
 
@@ -101,11 +103,6 @@ eval "$(atuin init zsh)"
 gh-pr-view(){
   gh pr view --web
 } 
-
-# open a devops issue 
-gh-devops() {
-  gh issue -R paritytech/devops create --title "Deploy eth-rpc"
-}
 
 # Init a PR with prdoc and label
 gh-pr-init(){
@@ -147,11 +144,10 @@ start_mitmproxy() {
   
   pkill -f mitmproxy
   tmux new-window -d -n mitmproxy "cd $HOME/github/mitmproxy; source venv/bin/activate; mitmproxy --listen-port $listen_port --mode reverse:http://localhost:${proxy_port} -s $HOME/github/mitmproxy/scripts/json-rpc.py; tmux wait-for -S mitmproxy-done"
-  
-  # # Send the commands to the tmux window
-  # tmux send-keys -t mitmproxy "cd $HOME/github/mitmproxy" C-m
-  # tmux send-keys -t mitmproxy "source venv/bin/activate" C-m
-  # tmux send-keys -t mitmproxy "mitmproxy --listen-port $listen_port --mode reverse:http://localhost:${proxy_port} -s $HOME/github/mitmproxy/scripts/json-rpc.py" C-m
+}
+
+hex() {
+  printf '%x' "$1"
 }
 
 hex_to_bytes() {
@@ -166,5 +162,3 @@ dunst_history() {
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f $HOME/.p10k.zsh ]] || source $HOME/.p10k.zsh
 
-# bun completions
-[ -s "/home/pg/.bun/_bun" ] && source "/home/pg/.bun/_bun"

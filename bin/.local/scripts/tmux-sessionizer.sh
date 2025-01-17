@@ -6,7 +6,7 @@ if [[ $# -eq 1 ]]; then
 	selected=$1
 # use fzf to select the target
 else
-	selected=$(find -L ~/github ~/ -mindepth 1 -maxdepth 1 -type d | fzf)
+	selected=$(printf '%s\n' $(find -L ~/github -mindepth 1 -maxdepth 1 -type d) $(find ~ -mindepth 1 -maxdepth 1 -type l -exec test -d {} \; -print) "$HOME/.dotfiles" | fzf)
 fi
 
 # exit if no target selected

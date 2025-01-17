@@ -26,6 +26,9 @@ return {
       --   },
       -- },
 
+      -- opts = {
+      --   log_level = 'ERROR', -- TRACE|DEBUG|ERROR|INFO
+      -- },
       adapters = {
         openai = function()
           return require('codecompanion.adapters').extend('openai', {
@@ -35,20 +38,20 @@ return {
           })
         end,
       },
-      -- strategies = {
-      --   chat = {
-      --     adapter = 'copilot',
-      --   },
-      --   inline = {
-      --     adapter = 'copilot',
-      --   },
-      --   completion = {
-      --     adapter = 'copilot',
-      --   },
-      --   diagnostics = {
-      --     adapter = 'copilot',
-      --   },
-      -- },
+      strategies = {
+        chat = {
+          adapter = 'openai',
+        },
+        inline = {
+          adapter = 'openai',
+        },
+        completion = {
+          adapter = 'openai',
+        },
+        diagnostics = {
+          adapter = 'openai',
+        },
+      },
     })
   end,
 }
