@@ -1,5 +1,5 @@
 
-initial-command = tmux attach || tmux new -s main
+initial-command = /usr/local/bin/tmux attach || /usr/local/bin/tmux new -s main
 
 theme = catppuccin-mocha
 font-family = MesloLGM Nerd Font 
@@ -11,6 +11,7 @@ confirm-close-surface = false
 
 keybind = ctrl+g>r=reload_config
 keybind = ctrl+g>'=new_split:right
+# keybind = ctrl+g>\=new_split:bottom
 keybind = ctrl+g>x=close_surface
 keybind = ctrl+g>l=goto_split:right
 keybind = ctrl+g>h=goto_split:left

@@ -10,7 +10,7 @@ declare -A websites=(
 options=$(printf "%s\n" "${!websites[@]}")
 
 # Show Rofi menu and get the selected engine
-selected=$(echo "$options" | rofi -dmenu -i -p "Search:")
+selected=$(echo "$options" | rofi -dmenu -no-custom -i -p "Search:")
 
 # If a selection was made
 if [ -n "$selected" ]; then

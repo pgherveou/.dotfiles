@@ -114,7 +114,7 @@ bindsym $mod+m fullscreen toggle
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
-# bindsym $mod+e layout toggle split
+bindsym $mod+t layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -156,6 +156,10 @@ bindsym $mod+g fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_st
 bindsym $mod+c fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh Chromium chromium 2
 # Element
 bindsym $mod+e fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh Element element-desktop 3
+
+# move current workspace to next output
+bindsym $mod+n move workspace to output right	
+
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1; workspace number $ws1

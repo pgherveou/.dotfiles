@@ -1,7 +1,7 @@
 [user]
 	email = pgherveou@gmail.com
 	name = pgherveou
-	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJvHp3k6DU+VAMibStgQSHdMkVwcZ9dKq2R0XjOK2OnL
+	signingkey = C7446D07D90C8961
 ; [commit]
 ; 	gpgsign = true
 [rerere]
@@ -48,3 +48,10 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[commit]
+	gpgsign = true

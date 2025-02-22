@@ -150,6 +150,21 @@ hex() {
   printf '%x' "$1"
 }
 
+hex_to_dec() {
+  # Check if input is provided
+  if [[ -z "$1" ]]; then
+    echo "Usage: hex_to_dec <hexadecimal_number>"
+    return 1
+  fi
+
+  # Convert hexadecimal to decimal
+  local hex="$1"
+  local decimal=$((hex))
+
+  # Output the decimal value
+  echo "$decimal"
+}
+
 hex_to_bytes() {
   echo $1 | xxd -r -p | od -t x1 -An
   echo $1 | xxd -r -p | od -A n -t u1 
