@@ -107,9 +107,18 @@ gh-pr-view(){
 # Init a PR with prdoc and label
 gh-pr-init(){
   PR_NUMBER=$(gh pr view --json number --jq '.number' | xargs)
-  gh pr comment $PR_NUMBER --body "/cmd prdoc --audience runtime_dev --bump minor"
+  gh pr comment $PR_NUMBER --body "/cmd prdoc --audience runtime_dev --bump patch"
   gh pr edit $PR_NUMBER --add-label "T7-smart_contracts" --add-label "R0-silent"
 }
+
+
+# Bench pallet-revive
+gh-pr-bench(){
+  PR_NUMBER=$(gh pr view --json number --jq '.number' | xargs)
+  gh pr comment $PR_NUMBER --body "/cmd bench --runtime dev --pallet pallet_revive --clean"
+}
+
+
 
 # Open failing job
 gh-failing-job() {
@@ -176,4 +185,20 @@ dunst_history() {
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f $HOME/.p10k.zsh ]] || source $HOME/.p10k.zsh
+
+fkill() {
+  local pid
+  if [[ -z "$1" ]]; then
+    echo "Usage: fkill <process_name>"
+    return 1
+  fi
+
+  pid=$(pgrep -fi "$1" | fzf --prompt="Select process to kill: " --preview='ps -p {} -o pid,user,comm,args' --preview-window=down:4:wrap)
+
+  if [[ -n "$pid" ]]; then
+    kill -9 "$pid" && echo "Killed process $pid"
+  else
+    echo "No process selected."
+  fi
+}
 

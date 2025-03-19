@@ -75,17 +75,37 @@ local config = function()
   telescope.load_extension('refactoring')
 end
 
--- https://blog.kianenigma.nl/posts/tech/for-those-who-don-t-want-rust-analyzer-one-regex-to-rul-them-all/
-local rust_regex_prefix = '(macro_rules!|const|enum|struct|fn|trait|impl(<.*?>)?|type) '
-local rust_regex_on_complete = {
+local last_file_type = 'rust'
+local function get_filetype_prefix()
+  -- https://blog.kianenigma.nl/posts/tech/for-those-who-don-t-want-rust-analyzer-one-regex-to-rul-them-all/
+  local prefixes_by_filetype = {
+    rust = '(macro_rules!|const|enum|struct|fn|trait|impl(<.*?>)?|type) ',
+    solidity = '(function|contract) ',
+    typescript = '(import|function|const|let|class|interface|type) ',
+    lua = '(function|local|require) ',
+    go = '(func|type|interface|const|var|struct|package|import) ',
+  }
+
+  local filetype = vim.bo.filetype
+  if prefixes_by_filetype[filetype] then
+    last_file_type = filetype
+  else
+    filetype = last_file_type
+  end
+
+  return prefixes_by_filetype[filetype] or prefixes_by_filetype['rust']
+end
+
+local regex_on_complete = {
   function(picker)
     vim.keymap.set('i', '<Tab>', function()
       vim.schedule(function()
         local prompt = picker:_get_prompt()
-        if prompt:find(rust_regex_prefix, 1, true) == 1 then
-          picker:set_prompt(prompt:sub(#rust_regex_prefix + 1), true)
+        local prefix = get_filetype_prefix()
+        if prompt:find(prefix, 1, true) == 1 then
+          picker:set_prompt(prompt:sub(#prefix + 1), true)
         else
-          picker:set_prompt(rust_regex_prefix .. prompt, true)
+          picker:set_prompt(prefix .. prompt, true)
         end
       end)
     end, { expr = true, buffer = picker.prompt_bufnr })
@@ -106,20 +126,21 @@ local toggle_fuzzy = {
   end,
 }
 
-local function rust_quick_search()
+local function regex_quick_search()
   local word = vim.fn.expand('<cword>')
-  local default_text = rust_regex_prefix .. word
+  local prefix = get_filetype_prefix()
+  local default_text = prefix .. word
   require('telescope.builtin').live_grep({
     default_text = default_text,
-    on_complete = rust_regex_on_complete,
+    on_complete = regex_on_complete,
   })
 end
 
-local function rust_quick_search_no_prefix()
+local function quick_search_no_prefix()
   local default_text = vim.fn.expand('<cword>')
   require('telescope.builtin').live_grep({
     default_text = default_text,
-    on_complete = rust_regex_on_complete,
+    on_complete = regex_on_complete,
   })
 end
 
@@ -132,7 +153,7 @@ end
 
 local function live_grep()
   require('telescope.builtin').live_grep({
-    on_complete = rust_regex_on_complete,
+    on_complete = regex_on_complete,
   })
 end
 
@@ -183,8 +204,8 @@ return {
     { '<Leader>fg', live_grep, desc = 'Search with Live grep' },
     { '<Leader>fm', builtin('marks'), desc = 'Search marks' },
     { '<Leader>fq', quick_fix_search, desc = 'Search file within the quick fix list' },
-    { '<Leader>fs', rust_quick_search_no_prefix, desc = 'Search from word under cursor' },
-    { '<leader>f%', rust_quick_search, desc = 'Search from word under cursor with prefix' },
+    { '<Leader>fs', quick_search_no_prefix, desc = 'Search from word under cursor' },
+    { '<leader>f%', regex_quick_search, desc = 'Search from word under cursor with prefix' },
     { '<Leader>fo', builtin('oldfiles'), desc = 'Search recent files' },
     { '<Leader>fls', builtin('lsp_document_symbols'), desc = 'List lsp symbols for current buffer' },
     { '<Leader>flr', builtin('lsp_references'), desc = 'List lsp references' },
