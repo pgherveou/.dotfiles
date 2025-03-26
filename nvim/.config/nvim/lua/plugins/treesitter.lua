@@ -36,6 +36,7 @@ local config = function()
       'cpp',
       'vim',
       'lua',
+      'solidity',
       -- 'bash',
       'json',
       'yaml',

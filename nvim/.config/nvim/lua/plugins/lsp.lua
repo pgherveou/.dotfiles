@@ -37,8 +37,6 @@ local setup_servers = function()
     },
   })
 
-  lspconfig.buf_ls.setup({})
-
   lspconfig.marksman.setup(default_config)
 
   lspconfig.lua_ls.setup(vim.tbl_extend('force', default_config, {

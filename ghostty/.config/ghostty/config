@@ -22,3 +22,5 @@ keybind = ctrl+shift+j=text:
 keybind = ctrl+shift+k=text:
 keybind = ctrl+shift+l=text:
 
+keybind = command+h=ignore
+keybind = unconsumed:ctrl+t=ignore

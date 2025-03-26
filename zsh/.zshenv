@@ -9,4 +9,5 @@ export PATH="$HOME/.local/bin:$PATH"
 
 [[ -S ~/.1password/agent.sock ]] && export SSH_AUTH_SOCK=~/.1password/agent.sock
 
-export PATH="$PATH:/home/pg/.foundry/bin"
+export PATH="$PATH:/$HOME/.foundry/bin"
+
