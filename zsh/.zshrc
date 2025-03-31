@@ -127,6 +127,7 @@ gh-failing-job() {
   selected=jobs | fzf
 }
 
+
 # Select a PR to checkout 
 gh-pr-co(){
   local use_all="$1"
@@ -143,7 +144,7 @@ gh-pr-co(){
 }
 
 git-recent(){
-  local branch=$(git branch --sort=-committerdate --format="%(refname:short)" | head -5 | fzf)
+  local branch=$(git branch --sort=-committerdate --format="%(refname:short)" | head -15 | fzf)
   git checkout $branch
 }
 
