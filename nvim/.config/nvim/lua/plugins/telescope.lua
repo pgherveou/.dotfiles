@@ -178,6 +178,7 @@ end
 return {
   'nvim-telescope/telescope.nvim',
   dependencies = {
+    'nvim-telescope/telescope-symbols.nvim',
     'polarmutex/git-worktree.nvim',
     'nvim-telescope/telescope-live-grep-args.nvim',
     'nvim-telescope/telescope-file-browser.nvim',
@@ -212,6 +213,7 @@ return {
     { '<Leader>i', builtin('diagnostics'), desc = 'List lsp symbols for current buffer' },
     { '<Leader>fr', builtin('resume'), desc = 'Resume search' },
     { '<leader>f/', extension('live_grep_args', 'live_grep_args'), desc = 'Search with raw grep' },
+    { '<leader>fj', builtin('symbols', { 'emoji' }), desc = 'Search and insert emojii' },
     {
       '<leader>fw',
       function()

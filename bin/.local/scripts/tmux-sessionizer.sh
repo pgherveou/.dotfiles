@@ -29,6 +29,19 @@ fi
 # if tmux is running, but the selected session is not, create it
 if ! tmux has-session -t=$selected_name 2>/dev/null; then
 	tmux new-session -ds $selected_name -c $selected
+
+	# open nvim in the first window and rename the window to "editor"
+	tmux send-keys -t $selected_name "tmux rename-window 'nvim'" Enter
+	tmux send-keys -t $selected_name "nv" Enter
+
+	# create a second window and rename it to "shell"
+	tmux new-window -t $selected_name -n "shell" -c $selected
+
+	# create a third window and rename it to "servers"
+	tmux new-window -t $selected_name -n "servers" -c $selected
+
+	# focuse on the first window
+	tmux select-window -t $selected_name:1
 fi
 
 # switch to the selected session

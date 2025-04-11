@@ -18,19 +18,21 @@ mouse_left_click = do_action
 mouse_middle_click = do_action
 mouse_right_click = close_all
 
+[global]
+timeout = 10
 
 [urgency_low]
 background = "#1e1e2e"
 foreground = "#cdd6f4"
-timeout = 10 
+timeout = 10
 
 [urgency_normal]
 background = "#1e1e2e"
 foreground = "#cdd6f4"
-timeout = 10 
+timeout = 10
 
 [urgency_critical]
 background = "#1e1e2e"
 foreground = "#cdd6f4"
 frame_color = "#fab387"
-timeout = 10 
+timeout = 10

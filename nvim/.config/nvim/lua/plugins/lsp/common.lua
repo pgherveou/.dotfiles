@@ -3,6 +3,8 @@ local u = require('utils')
 
 M.no_rust_lsp = vim.fn.getenv('NO_RUST_LSP') == '1'
 
+vim.diagnostic.config({ virtual_text = true })
+
 -- lsp commands
 u.lua_command('LspDef', 'vim.lsp.buf.definition()')
 u.lua_command('LspFormatting', 'vim.lsp.buf.format()')

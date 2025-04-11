@@ -17,6 +17,9 @@ local setup_servers = function()
   local on_attach = function(client, bufnr)
     disable_formatting(client)
     common.set_mappings(client, bufnr)
+    if client:supports_method('textDocument/completion') then
+      vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
+    end
   end
 
   local default_flags = { debounce_text_changes = 100 }

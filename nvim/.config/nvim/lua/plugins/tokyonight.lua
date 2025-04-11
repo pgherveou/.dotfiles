@@ -2,24 +2,29 @@ local function get_progress()
   return '%6o %3l:%-2v'
 end
 
--- https://github.com/ThePrimeagen/harpoon/pull/308/files
-
 local function harpoonFiles()
   if vim.api.nvim_buf_get_option(0, 'buftype') ~= '' then
     return ''
   end
-  local tabela = require('harpoon').get_mark_config()['marks']
   local currentFile = vim.fn.split(vim.api.nvim_buf_get_name(0), '/')
   currentFile = currentFile[#currentFile]
+
+  local harpoon = require('harpoon')
+  local items = harpoon:list().items
   local ret = {}
-  for key, value in pairs(tabela) do
-    local file = vim.fn.split(value['filename'], '/')
+  for key, item in ipairs(items) do
+    -- get the file name
+    local file = vim.fn.split(item.value, '/')
     file = file[#file]
+
+    -- append * if it's the current file
     file = file == currentFile and file .. '*' or file .. ' '
     table.insert(ret, '  ' .. key .. ' ' .. file)
   end
+
   return table.concat(ret)
 end
+
 return {
   'folke/tokyonight.nvim',
   dependencies = {

@@ -1,11 +1,10 @@
 #!/bin/bash
 
 declare -A websites=(
-    ["Substrate"]="https://paritytech.github.io/polkadot-sdk/master/index.html?search="
+    ["Substrate"]="https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/index.html?search="
     ["Rust std"]="https://doc.rust-lang.org/std/index.html?search="
     ["Rust docs"]="https://docs.rs/"
 )
-
 # Generate a list of search engine names for Rofi
 options=$(printf "%s\n" "${!websites[@]}")
 

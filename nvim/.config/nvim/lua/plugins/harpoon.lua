@@ -4,7 +4,7 @@ for i = 1, 4 do
   table.insert(navigation_entries, {
     '<leader>' .. tostring(i),
     function()
-      require('harpoon.ui').nav_file(i)
+      require('harpoon'):list():select(i)
     end,
     desc = 'Navigate to file ' .. i,
   })
@@ -12,27 +12,40 @@ end
 
 return {
   'ThePrimeagen/harpoon',
+  branch = 'harpoon2',
   dependencies = { 'nvim-lua/plenary.nvim' },
   lazy = true,
+
+  config = function()
+    local harpoon = require('harpoon')
+    local default = require('harpoon.config').get_default_config().default
+
+    harpoon.setup({
+      settings = {
+        save_on_toggle = true,
+        sync_on_ui_close = true,
+      },
+      default = {
+        select = function(list_item, list, option)
+          P(list_item)
+          default.select(list_item, list, option)
+        end,
+      },
+    })
+  end,
   keys = {
-    {
-      '<leader>tc',
-      function()
-        require('harpoon.cmd-ui').toggle_quick_menu()
-      end,
-      desc = 'Toggle harpoon quick menu',
-    },
     {
       '<leader>a',
       function()
-        require('harpoon.mark').add_file()
+        require('harpoon'):list():add()
       end,
       desc = 'Add file to harpoon',
     },
     {
       '<leader>h',
       function()
-        require('harpoon.ui').toggle_quick_menu()
+        local harpoon = require('harpoon')
+        harpoon.ui:toggle_quick_menu(harpoon:list())
       end,
       desc = 'Toggle harpoon menu',
     },

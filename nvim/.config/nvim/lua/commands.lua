@@ -122,13 +122,38 @@ end, {
   end,
 })
 
--- create a scratch buffer with the given filetype or markdown by default
-vim.api.nvim_create_user_command('Scratch', function(opts)
-  local bufnr = vim.api.nvim_create_buf(false, true)
-  vim.api.nvim_set_current_buf(bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'filetype', opts.fargs[1] or 'markdown')
+vim.api.nvim_create_user_command('DecToHex', function(opts)
+  local input = opts.args
+  local number
+  local hex
+
+  if input ~= '' then
+    number = tonumber(input)
+    if not number then
+      vim.notify('Invalid decimal number: ' .. input, vim.log.levels.WARN)
+      return
+    end
+    hex = string.format('0x%X', number)
+    vim.api.nvim_paste(hex, true, -1) -- paste at cursor
+  else
+    -- No arg: work with number on current line
+    local row = vim.api.nvim_win_get_cursor(0)[1]
+    local line = vim.api.nvim_get_current_line()
+    local before, match, after = line:match('^(.-)(%d+)(.-)$')
+
+    if not match then
+      vim.notify('No decimal number found on the current line', vim.log.levels.WARN)
+      return
+    end
+
+    number = tonumber(match)
+    hex = string.format('0x%X', number)
+    local new_line = before .. hex .. after
+    vim.api.nvim_buf_set_lines(0, row - 1, row, false, { new_line })
+  end
 end, {
   nargs = '?',
+  desc = 'Convert a decimal number to hexadecimal (replaces number inline if no arg, else inserts at cursor)',
 })
 
 -- toggle space and tab characters
