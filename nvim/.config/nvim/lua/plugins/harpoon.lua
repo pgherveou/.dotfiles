@@ -25,12 +25,12 @@ return {
         save_on_toggle = true,
         sync_on_ui_close = true,
       },
-      default = {
-        select = function(list_item, list, option)
-          P(list_item)
-          default.select(list_item, list, option)
-        end,
-      },
+      -- if we want to use custom behavior for the harpoon menu
+      -- default = {
+      --   select = function(list_item, list, option)
+      --     default.select(list_item, list, option)
+      --   end,
+      -- },
     })
   end,
   keys = {
