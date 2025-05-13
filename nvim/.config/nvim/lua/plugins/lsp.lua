@@ -22,7 +22,7 @@ local setup_servers = function()
     end
   end
 
-  local default_flags = { debounce_text_changes = 100 }
+  local default_flags = { debounce_text_changes = 150 }
   local default_config = {
     capabilities = capabilities,
     on_attach = on_attach,
@@ -89,12 +89,14 @@ return {
     'folke/neodev.nvim',
   },
   config = function()
-    require('neodev').setup({})
+    require('neodev').setup()
     require('mason').setup()
 
     -- ensure these packages are installed with mason
     -- 'bashls', 'prettierd', 'clang-format', 'bacon', 'clangd', 'codelldb', 'codespell', 'eslint_d', 'golangci_lint_ls', 'jq', 'jsonls', 'lua_ls', 'luacheck', 'marksman', 'pyright', 'rust_analyzer', 'shellcheck', 'stylua', 'tailwindcss', 'taplo', 'ts_ls',
-    require('mason-lspconfig').setup({ automatic_installation = false })
+    require('mason-lspconfig').setup({
+      automatic_enable = false,
+    })
     setup_servers()
     require('plugins.none-ls-extra.common').setup(common.format_on_save)
   end,

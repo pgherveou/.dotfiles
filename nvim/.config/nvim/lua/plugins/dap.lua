@@ -10,55 +10,6 @@ local function log_point()
   dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))
 end
 
-local function bash_config()
-  local dap = require('dap')
-  local mason_registry = require('mason-registry')
-  local adapter = mason_registry.get_package('bash-debug-adapter')
-  local BASH_DEBUG_ADAPTER_BIN = adapter:get_install_path() .. '/bash-debug-adapter'
-  local BASHDB_DIR = adapter:get_install_path() .. '/extension/bashdb_dir'
-
-  dap.adapters.sh = {
-    type = 'executable',
-    command = BASH_DEBUG_ADAPTER_BIN,
-  }
-  dap.configurations.sh = {
-    {
-      name = 'Launch Bash debugger',
-      type = 'sh',
-      request = 'launch',
-      program = '${file}',
-      cwd = '${fileDirname}',
-      pathBashdb = BASHDB_DIR .. '/bashdb',
-      pathBashdbLib = BASHDB_DIR,
-      pathBash = 'bash',
-      pathCat = 'cat',
-      pathMkfifo = 'mkfifo',
-      pathPkill = 'pkill',
-      env = {},
-      args = {},
-      -- showDebugOutput = true,
-      -- trace = true,
-    },
-  }
-  dap.adapters.nlua = function(callback, config)
-    callback({ type = 'server', host = config.host or '127.0.0.1', port = config.port or 8086 })
-  end
-  dap.configurations.lua = {
-    {
-      type = 'nlua',
-      request = 'attach',
-      name = 'Attach to running Neovim instance',
-    },
-  }
-end
-
--- launch lua debug server in the debuggee
--- in other instance connect to the server with DAP with F5
--- Run the script in the debuggee
-vim.api.nvim_create_user_command('LuaDebugServer', function()
-  require('osv').launch({ port = 8086 })
-end, {})
-
 return {
   'mfussenegger/nvim-dap',
   dependencies = {
@@ -134,7 +85,7 @@ return {
     require('nvim-dap-virtual-text').setup()
     dapui.setup()
 
-    bash_config()
+    -- bash_config()
 
     -- open / close dap ui, automatically when debugging
     -- see https://github.com/rcarriga/nvim-dap-ui#usage

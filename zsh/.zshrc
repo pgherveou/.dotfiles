@@ -106,9 +106,11 @@ gh-pr-view(){
 
 # Init a PR with prdoc and label
 gh-pr-init(){
+  # level default to patch
+  LEVEL=${1:-patch}
   PR_NUMBER=$(gh pr view --json number --jq '.number' | xargs)
-  gh pr comment $PR_NUMBER --body "/cmd prdoc --audience runtime_dev --bump patch"
-  gh pr edit $PR_NUMBER --add-label "T7-smart_contracts" --add-label "R0-silent"
+  gh pr comment $PR_NUMBER --body "/cmd prdoc --audience runtime_dev --bump $LEVEL"
+  gh pr edit $PR_NUMBER --add-label "T7-smart_contracts"
 }
 
 
