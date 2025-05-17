@@ -1,7 +1,7 @@
 local M = {}
 
 M.get_codelldb_adapter = function()
-  local extension_path = os.getenv('MASON') .. 'packages/codelldb/extension/'
+  local extension_path = os.getenv('MASON') .. '/packages/codelldb/extension/'
   local codelldb_path = extension_path .. 'adapter/codelldb'
 
   -- use .dylib if running on macos .so if running on linux

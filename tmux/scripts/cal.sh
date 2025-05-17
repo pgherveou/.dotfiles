@@ -8,13 +8,13 @@ NERD_FONT_MEETING=" "
 get_next_meeting() {
     next_meeting=$(
         gcalcli agenda \
-                --tsv \
-                --nostarted \
-                --nodeclined \
-                --calendar pgherveou@parity.io \
-                | grep -E '^[0-9]{4}-[0-9]{2}-[0-9]{2}' \
-                | sed 1d \
-                | head -n 2
+            --tsv \
+            --nostarted \
+            --nodeclined \
+            --calendar pgherveou@parity.io \
+        | sed 1d \
+        | grep -P '^[0-9]{4}-[0-9]{2}-[0-9]{2}\t[0-9]{2}:[0-9]{2}\t[0-9]{4}-[0-9]{2}-[0-9]{2}\t[0-9]{2}:[0-9]{2}\t.+$' \
+        | head -n1
     )
 }
 
