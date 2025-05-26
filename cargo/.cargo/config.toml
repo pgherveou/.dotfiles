@@ -2,3 +2,13 @@
 [profile.rust-analyzer]
 inherits = "dev"
 
+[build]
+rustflags = ["-Clink-arg=-fuse-ld=lld", "-Zthreads=32"]
+
+# [unstable]
+# # enable the codegen-backend profile key
+# codegen-backend = true
+
+[profile.dev]
+debug = 0
+# codegen-backend = "cranelift"
