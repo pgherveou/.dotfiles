@@ -5,7 +5,7 @@ local setup_servers = function()
   local lspconfig = require('lspconfig')
   local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-  capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+  -- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
   capabilities.offsetEncoding = { 'utf-16' }
 
   -- most languages use a custom formatter to format the code
@@ -82,7 +82,7 @@ return {
     'nvim-lua/plenary.nvim',
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
-    'hrsh7th/cmp-nvim-lsp',
+    'saghen/blink.cmp',
     'nvimtools/none-ls.nvim',
     'b0o/schemastore.nvim',
     'ThePrimeagen/refactoring.nvim',

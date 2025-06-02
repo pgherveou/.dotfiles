@@ -113,6 +113,12 @@ gh-pr-init(){
   gh pr edit $PR_NUMBER --add-label "T7-smart_contracts"
 }
 
+# call fmt
+gh-pr-fmt(){
+  PR_NUMBER=$(gh pr view --json number --jq '.number' | xargs)
+  gh pr comment $PR_NUMBER --body "/cmd fmt"
+}
+
 
 # Bench pallet-revive
 gh-pr-bench(){

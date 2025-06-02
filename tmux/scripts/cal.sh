@@ -44,10 +44,23 @@ display_popup() {
 }
 
 print_tmux_status() {
+    today=$(date +%Y-%m-%d)
+    event_str="$NERD_FONT_MEETING $start_time $title ($minutes_till_meeting minutes)"
+    # Add event_date if not today
+    if [[ "$event_date" != "$today" ]]; then
+        event_str="$NERD_FONT_MEETING $event_date $start_time $title ($minutes_till_meeting minutes)"
+    fi
+
     if [[ $minutes_till_meeting -lt $ALERT_IF_IN_NEXT_MINUTES && $minutes_till_meeting -gt -60 ]]; then
-        echo "$NERD_FONT_MEETING $start_time $title ($minutes_till_meeting minutes)"
+        echo "$event_str"
     elif [[ $minutes_till_meeting -ge -60 ]]; then
-        echo "$NERD_FONT_MEETING $start_time $title"
+        # Show date if not today
+        if [[ "$event_date" != "$today" ]]; then
+            weekday=$(date -d "$event_date" +%a)
+            echo "$NERD_FONT_MEETING $weekday $start_time $title"
+        else
+            echo "$NERD_FONT_MEETING $start_time $title"
+        fi
     else
         echo "$NERD_FONT_FREE"
     fi

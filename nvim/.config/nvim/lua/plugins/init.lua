@@ -1,25 +1,4 @@
 return {
-  {
-    'zbirenbaum/copilot.lua',
-    event = 'VimEnter',
-    config = function()
-      vim.defer_fn(function()
-        require('copilot').setup({
-          suggestion = { enabled = false },
-          panel = { enabled = false },
-          filetypes = { markdown = true },
-        })
-      end, 100)
-    end,
-  },
-
-  {
-    'zbirenbaum/copilot-cmp',
-    dependencies = { 'copilot.lua' },
-    config = function()
-      require('copilot_cmp').setup()
-    end,
-  },
 
   -- Surround text.
   'machakann/vim-sandwich',
@@ -122,8 +101,7 @@ return {
             winblend = 0, -- NOTE: it's winblend, not blend
           },
         },
-      }
-      )
+      })
     end,
   },
 
