@@ -123,7 +123,7 @@ gh-pr-fmt(){
 # Bench pallet-revive
 gh-pr-bench(){
   PR_NUMBER=$(gh pr view --json number --jq '.number' | xargs)
-  PALLET=${1:-pallet-revive}
+  PALLET=${1:-pallet_revive}
   gh pr comment $PR_NUMBER --body "/cmd bench --runtime dev --pallet $PALLET"
 }
 
