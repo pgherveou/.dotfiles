@@ -10,5 +10,5 @@ inherits = "dev"
 # codegen-backend = true
 
 [profile.dev]
-debug = 0
+# debug = 0
 # codegen-backend = "cranelift"

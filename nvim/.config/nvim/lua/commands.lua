@@ -10,6 +10,11 @@ vim.api.nvim_create_user_command('ClearMarks', function()
   vim.cmd('delmarks A-Z0-9')
 end, {})
 
+-- toggle completion
+vim.api.nvim_create_user_command('ToggleCompletion', function()
+  vim.b.completion = not vim.b.completion
+end, {})
+
 -- rename a file
 vim.api.nvim_create_user_command('Rename', function()
   local old_name = vim.fn.expand('%')

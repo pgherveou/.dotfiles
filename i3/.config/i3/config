@@ -151,6 +151,7 @@ bindsym $mod+e fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_st
 
 # move current workspace to next output
 bindsym $mod+n move workspace to output right	
+bindsym $mod+b exec --no-startup-id ~/.config/i3/move_to_next_ws.sh
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1; workspace number $ws1

@@ -53,6 +53,8 @@ local config = function()
       },
       file_browser = {
         path_display = { truncate = 3 },
+        respect_gitignore = false,
+        no_ignore = true,
       },
       live_grep = {
         additional_args = function()

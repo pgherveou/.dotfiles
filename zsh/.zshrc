@@ -73,6 +73,9 @@ cargo-targets() {
   cargo metadata --format-version 1 | jq -r '.packages[].targets[].name'
 }
 
+# resolc bin
+export RESOLC_BIN=$HOME/.cargo/bin/resolc
+
 # Use a prefix with git-pile
 # see https://github.com/keith/git-pile#optional
 export PATH="$PATH:$HOME/.local/scripts:$HOME/github/git-pile/bin"
@@ -212,3 +215,13 @@ fkill() {
   fi
 }
 
+
+my_past_pr() {
+  DATE_STR=${1:-'6 months ago'}
+  DATE=$(date -d $DATE_STR +%Y-%m-%d)
+
+  REPO=${2:-paritytech/polkadot-sdk}
+
+  gh api --paginate "search/issues?q=repo:$REPO+type:pr+state:closed+author:@me+closed:>=$DATE" \
+    | jq -r '.items[] | "[#\(.number)](\(.html_url)) - \(.title)"'
+}

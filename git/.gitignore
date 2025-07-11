@@ -4,4 +4,5 @@ bacon.toml
 venv
 keyboards/splitkb/kyria/keymaps/pgherveou
 hack.sh
+.null-ls*
 .claude
