@@ -67,6 +67,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 [ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
 
 # Node 
+export PATH="$HOME/.local/share/fnm:$PATH"
 eval "$(fnm env --use-on-cd --shell zsh --log-level=quiet)"
 
 cargo-targets() {
@@ -82,6 +83,7 @@ export PATH="$PATH:$HOME/.local/scripts:$HOME/github/git-pile/bin"
 export GIT_PILE_PREFIX=pg/
 
 # Set up fzf key bindings and fuzzy completion
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_CTRL_T_OPTS="--preview='bat --color=always --style=numbers {}' --bind ctrl-u:preview-page-up,ctrl-d:preview-page-down"
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --exclude .git'
 export FZF_CTRL_T_COMMAND='rg --no-messages --files'
@@ -94,7 +96,7 @@ eval "$(fzf --zsh)"
 export PATH="$HOME/.dotfiles/bin/.local/scripts:$PATH"
 
 # Atuin
-export PATH="$PATH:/Users/pg/.atuin/bin"
+export PATH="$PATH:/$HOME/.atuin/bin"
 eval "$(atuin init zsh)"
 
 
@@ -225,3 +227,5 @@ my_past_pr() {
   gh api --paginate "search/issues?q=repo:$REPO+type:pr+state:closed+author:@me+closed:>=$DATE" \
     | jq -r '.items[] | "[#\(.number)](\(.html_url)) - \(.title)"'
 }
+
+

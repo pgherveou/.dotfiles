@@ -82,7 +82,6 @@ run_install() {
 	STOW_FOLDERS=(
 		"alacritty"
 		"git"
-		"ideavim"
 		"nvim"
 		"codespell"
 		"private"
@@ -105,8 +104,6 @@ run_install() {
 	pushd "$HOME/.private"
 	stow -t ~/ ssh
 	popd
-
-	pop
 }
 
 # Run install when the script is executed
