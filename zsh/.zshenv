@@ -1,5 +1,6 @@
 [ -f $HOME/.cargo/env ] && source "$HOME/.cargo/env" 
 
+export SSH_SERVER=toaster
 export EDITOR=nvim
 export HISTCONTROL=ignoreboth
 export LANG=en_US.UTF-8
