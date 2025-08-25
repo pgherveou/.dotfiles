@@ -42,7 +42,7 @@ if [[ $(uname) == "Linux" ]]; then
 fi
 
 # local scripts
-export PATH="$PATH:$HOME/.local/scripts:$HOME/github/git-pile/bin"
+export PATH="$PATH:$HOME/.local/scripts:$HOME/.local/bin:$HOME/github/git-pile/bin"
 
 # mason bin
 export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
@@ -59,6 +59,7 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 export PATH=$PATH:/usr/local/go/bin
 
 # Rust
+export PATH=$PATH:/$HOME/.cargo/bin
 export CARGO_NET_GIT_FETCH_WITH_CLI=true
 
 # bun
@@ -67,8 +68,11 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 [ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
 
 # Node 
-export PATH="$HOME/.local/share/fnm:$PATH"
-eval "$(fnm env --use-on-cd --shell zsh --log-level=quiet)"
+FNM_PATH="$HOME/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "$(fnm env --use-on-cd --shell zsh --log-level=quiet)"
+fi
 
 cargo-targets() {
   cargo metadata --format-version 1 | jq -r '.packages[].targets[].name'
@@ -227,5 +231,4 @@ my_past_pr() {
   gh api --paginate "search/issues?q=repo:$REPO+type:pr+state:closed+author:@me+closed:>=$DATE" \
     | jq -r '.items[] | "[#\(.number)](\(.html_url)) - \(.title)"'
 }
-
 

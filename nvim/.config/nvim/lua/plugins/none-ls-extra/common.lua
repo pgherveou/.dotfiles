@@ -35,7 +35,7 @@ local sources = {
     condition = function()
       return require('plugins.lsp.common').no_rust_lsp
     end,
-    extra_args = { '--edition=2021' },
+    -- extra_args = { '--edition=2021' },
   }),
   require('plugins.none-ls-extra.luacheck').with({
     condition = function(utils)

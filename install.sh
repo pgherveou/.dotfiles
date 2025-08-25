@@ -80,7 +80,6 @@ run_install() {
 
 	# create deeplinks to the home folder
 	STOW_FOLDERS=(
-		"alacritty"
 		"git"
 		"nvim"
 		"codespell"

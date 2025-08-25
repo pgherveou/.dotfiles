@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 # source: https://github.com/ThePrimeagen/.dotfiles/blob/master/bin/.local/scripts/tmux-sessionizer
 
+if command -v fzf >/dev/null 2>&1; then
+    FZF_BIN="fzf"
+else
+    FZF_BIN="$HOME/.fzf/bin/fzf"
+fi
+
 # select the target
 if [[ $# -eq 1 ]]; then
 	selected=$1
 # use fzf to select the target
 else
-	selected=$(printf '%s\n' $(find -L ~/github -mindepth 1 -maxdepth 1 -type d) $(find ~ -mindepth 1 -maxdepth 1 -type l -exec test -d {} \; -print) "$HOME/.dotfiles" | fzf)
+	selected=$(printf '%s\n' $(find -L ~/github -mindepth 1 -maxdepth 1 -type d) $(find ~ -mindepth 1 -maxdepth 1 -type l -exec test -d {} \; -print) "$HOME/.dotfiles" | $FZF_BIN)
 fi
 
 # exit if no target selected
