@@ -56,7 +56,7 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 [ -s "$DENO_INSTALL/env" ] && source "$DENO_INSTALL/env"
 
 # GO
-export PATH=$PATH:/usr/local/go/bin
+export PATH="$(go env GOPATH)/bin:$PATH"
 
 # Rust
 export PATH=$PATH:/$HOME/.cargo/bin
