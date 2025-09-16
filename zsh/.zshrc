@@ -52,6 +52,11 @@ export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
 # clangd
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 
+if [[ $(uname) == "Darwin" ]]; then
+  export LIBCLANG_PATH="/opt/homebrew/opt/llvm/lib"
+  export DYLD_LIBRARY_PATH="/opt/homebrew/opt/llvm/lib:$DYLD_LIBRARY_PATH"
+fi
+
 # Deno
 export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
