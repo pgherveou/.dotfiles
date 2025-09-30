@@ -1,6 +1,6 @@
 initial-command = /bin/zsh -l -c  "/usr/local/bin/tmux attach || /usr/local/bin/tmux new -s main"
 
-theme = catppuccin-mocha
+theme = Catppuccin Mocha
 font-family = MesloLGM Nerd Font 
 font-size = 16
 background-opacity = 0.95

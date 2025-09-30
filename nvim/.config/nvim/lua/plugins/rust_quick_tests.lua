@@ -39,6 +39,7 @@ return {
   lazy = true,
   config = function()
     require('rust-quick-tests').setup()
+    vim.cmd('cnoreabbrev R RustQuick')
     require('dap').adapters['codelldb'] = require('utils.dap').get_codelldb_adapter()
   end,
   ft = { 'rust' },
