@@ -26,4 +26,4 @@ keybind = ctrl+shift+l=text:
 
 keybind = command+h=ignore
 keybind = command+m=ignore
-keybind = unconsumed:ctrl+t=ignore
+keybind = unconsumed:ctrl+t=text:\u0014
