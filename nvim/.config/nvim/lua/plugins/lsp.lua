@@ -2,7 +2,6 @@ local u = require('utils')
 local common = require('plugins.lsp.common')
 
 local setup_servers = function()
-  local lspconfig = require('lspconfig')
   local capabilities = vim.lsp.protocol.make_client_capabilities()
 
   -- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
@@ -29,7 +28,7 @@ local setup_servers = function()
     flags = default_flags,
   }
 
-  lspconfig.jsonls.setup({
+  vim.lsp.config('jsonls', {
     flags = default_flags,
     capabilities = capabilities,
     on_attach = on_attach,
@@ -39,10 +38,12 @@ local setup_servers = function()
       },
     },
   })
+  vim.lsp.enable('jsonls')
 
-  lspconfig.marksman.setup(default_config)
+  vim.lsp.config('marksman', default_config)
+  vim.lsp.enable('marksman')
 
-  lspconfig.lua_ls.setup(vim.tbl_extend('force', default_config, {
+  vim.lsp.config('lua_ls', vim.tbl_extend('force', default_config, {
     settings = {
       Lua = {
         telemetry = { enable = false },
@@ -59,21 +60,36 @@ local setup_servers = function()
       },
     },
   }))
+  vim.lsp.enable('lua_ls')
 
-  lspconfig.bashls.setup(default_config)
-  lspconfig.golangci_lint_ls.setup(default_config)
-  lspconfig.gopls.setup(vim.tbl_extend('force', default_config, {
+  vim.lsp.config('bashls', default_config)
+  vim.lsp.enable('bashls')
+
+  vim.lsp.config('golangci_lint_ls', default_config)
+  vim.lsp.enable('golangci_lint_ls')
+
+  vim.lsp.config('gopls', vim.tbl_extend('force', default_config, {
     on_attach = function(client, bufnr)
       default_config.on_attach(client, bufnr)
       u.buf_nmap(bufnr, '<leader>t', ':GoTestFunc<CR>')
     end,
   }))
+  vim.lsp.enable('gopls')
 
-  -- lspconfig.jsonnet_ls.setup(default_config)
-  lspconfig.pyright.setup(default_config)
-  lspconfig.clangd.setup(default_config)
-  lspconfig.tailwindcss.setup(default_config)
-  lspconfig.ts_ls.setup(default_config)
+  -- vim.lsp.config('jsonnet_ls', default_config)
+  -- vim.lsp.enable('jsonnet_ls')
+
+  vim.lsp.config('pyright', default_config)
+  vim.lsp.enable('pyright')
+
+  vim.lsp.config('clangd', default_config)
+  vim.lsp.enable('clangd')
+
+  vim.lsp.config('tailwindcss', default_config)
+  vim.lsp.enable('tailwindcss')
+
+  vim.lsp.config('ts_ls', default_config)
+  vim.lsp.enable('ts_ls')
 end
 
 return {

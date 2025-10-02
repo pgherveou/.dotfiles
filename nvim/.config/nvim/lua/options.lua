@@ -33,7 +33,8 @@ vim.opt.laststatus = 3 -- always show the status line
 vim.opt.scrolloff = 8 -- minimum number of lines to keep above and below the cursor
 -- vim.opt.cmdheight = 0 -- height of the command line
 -- :set fillchars-=diff
-vim.opt.fillchars = { diff = ' ' } -- no ~ at the end of the buffer
+vim.opt.fillchars = { diff = ' ' } -- no ~ at the end of ;; Remove linematch from default diffopt
+vim.opt.diffopt = 'internal,filler,closeoff'
 
 -- Add angular brackets to matchpairs
 vim.opt.matchpairs:append('<:>')
