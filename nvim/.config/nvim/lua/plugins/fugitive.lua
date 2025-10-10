@@ -105,5 +105,12 @@ return {
   config = function()
     -- alias Gclog to Gclog -100 using cnoreabbrev
     vim.cmd('cnoreabbrev Gclog Gclog -100')
+
+    -- GeditHere: Like Gedit but preserves cursor position
+    vim.api.nvim_create_user_command('GeditHere', function(opts)
+      local pos = vim.api.nvim_win_get_cursor(0)
+      vim.cmd('Gedit ' .. opts.args)
+      vim.api.nvim_win_set_cursor(0, pos)
+    end, { nargs = 1, complete = 'customlist,fugitive#Complete' })
   end,
 }

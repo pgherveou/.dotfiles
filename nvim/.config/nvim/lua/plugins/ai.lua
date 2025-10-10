@@ -30,13 +30,15 @@ return {
       --   log_level = 'ERROR', -- TRACE|DEBUG|ERROR|INFO
       -- },
       adapters = {
-        openai = function()
-          return require('codecompanion.adapters').extend('openai', {
-            env = {
-              api_key = os.getenv('OPENAI_API_NVIM_KEY'),
-            },
-          })
-        end,
+        http = {
+          openai = function()
+            return require('codecompanion.adapters').extend('openai', {
+              env = {
+                api_key = os.getenv('OPENAI_API_NVIM_KEY'),
+              },
+            })
+          end,
+        },
       },
       strategies = {
         chat = {

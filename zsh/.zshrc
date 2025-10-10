@@ -6,6 +6,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Increase the open file limit
+ulimit -n 65535
 
 if [ -f "$HOME/.antigen.zsh" ]; then
   source $HOME/.antigen.zsh

@@ -43,23 +43,26 @@ local setup_servers = function()
   vim.lsp.config('marksman', default_config)
   vim.lsp.enable('marksman')
 
-  vim.lsp.config('lua_ls', vim.tbl_extend('force', default_config, {
-    settings = {
-      Lua = {
-        telemetry = { enable = false },
-        workspace = {
-          checkThirdParty = false,
-          library = {
-            vim.env.VIMRUNTIME,
-            vim.env.HOME .. '/.hammerspoon/Spoons/EmmyLua.spoon/annotations',
+  vim.lsp.config(
+    'lua_ls',
+    vim.tbl_extend('force', default_config, {
+      settings = {
+        Lua = {
+          telemetry = { enable = false },
+          workspace = {
+            checkThirdParty = false,
+            library = {
+              vim.env.VIMRUNTIME,
+              vim.env.HOME .. '/.hammerspoon/Spoons/EmmyLua.spoon/annotations',
+            },
+          },
+          diagnostics = {
+            globals = { 'vim', 'hs' },
           },
         },
-        diagnostics = {
-          globals = { 'vim', 'hs' },
-        },
       },
-    },
-  }))
+    })
+  )
   vim.lsp.enable('lua_ls')
 
   vim.lsp.config('bashls', default_config)
@@ -68,12 +71,15 @@ local setup_servers = function()
   vim.lsp.config('golangci_lint_ls', default_config)
   vim.lsp.enable('golangci_lint_ls')
 
-  vim.lsp.config('gopls', vim.tbl_extend('force', default_config, {
-    on_attach = function(client, bufnr)
-      default_config.on_attach(client, bufnr)
-      u.buf_nmap(bufnr, '<leader>t', ':GoTestFunc<CR>')
-    end,
-  }))
+  vim.lsp.config(
+    'gopls',
+    vim.tbl_extend('force', default_config, {
+      on_attach = function(client, bufnr)
+        default_config.on_attach(client, bufnr)
+        u.buf_nmap(bufnr, '<leader>t', ':GoTestFunc<CR>')
+      end,
+    })
+  )
   vim.lsp.enable('gopls')
 
   -- vim.lsp.config('jsonnet_ls', default_config)
@@ -88,7 +94,35 @@ local setup_servers = function()
   vim.lsp.config('tailwindcss', default_config)
   vim.lsp.enable('tailwindcss')
 
-  vim.lsp.config('ts_ls', default_config)
+  vim.lsp.config(
+    'denols',
+    vim.tbl_extend('force', default_config, {
+      root_markers = { 'deno.json', 'deno.jsonc' },
+    })
+  )
+  vim.lsp.enable('denols')
+
+  vim.lsp.config(
+    'ts_ls',
+    vim.tbl_extend('force', default_config, {
+      root_markers = { 'package.json' },
+      single_file_support = false,
+      root_dir = function(fname)
+        local util = vim.lsp.config.util or require('lspconfig.util')
+        local root = util.root_pattern('package.json')(fname)
+        if root then
+          -- Check if this is a Deno project
+          local deno_json = vim.uv.fs_stat(root .. '/deno.json')
+          local deno_jsonc = vim.uv.fs_stat(root .. '/deno.jsonc')
+          if deno_json or deno_jsonc then
+            return nil -- Don't start ts_ls in Deno projects
+          end
+          return root
+        end
+        return nil
+      end,
+    })
+  )
   vim.lsp.enable('ts_ls')
 end
 
