@@ -19,10 +19,10 @@ vim.g.rustaceanvim = function()
         common.set_mappings(client, bufnr, {
           ['K'] = {
             cmd = function()
-              -- Prefer rust-quick-tests hover actions if available
-              local actions = require('rust-quick-tests.hover_actions').get_hover_actions()
+              -- Prefer quick-tests hover actions if available
+              local actions = require('quick-tests.hover_actions').get_hover_actions()
               if actions ~= nil then
-                require('rust-quick-tests.hover_actions').show_actions(actions)
+                require('quick-tests.hover_actions').show_actions(actions)
               else
                 vim.lsp.buf.hover()
               end
