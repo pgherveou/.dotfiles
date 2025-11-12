@@ -62,8 +62,10 @@ export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 [ -s "$DENO_INSTALL/env" ] && source "$DENO_INSTALL/env"
 
-# GO
-export PATH="$(go env GOPATH)/bin:$PATH"
+# Add Go binaries to PATH if Go is installed
+if command -v go &> /dev/null; then
+    export PATH="$(go env GOPATH)/bin:$PATH"
+fi
 
 # Rust
 export PATH=$PATH:/$HOME/.cargo/bin
@@ -102,6 +104,7 @@ eval "$(fzf --zsh)"
 
 # work config
 [ -f $HOME/.private/init.zsh ] && source $HOME/.private/init.zsh
+[ -f $HOME/github/contracts-boilerplate/scripts/node-env.sh ] && source $HOME/github/contracts-boilerplate/scripts/node-env.sh 
 
 # Add local scripts to path
 export PATH="$HOME/.dotfiles/bin/.local/scripts:$PATH"

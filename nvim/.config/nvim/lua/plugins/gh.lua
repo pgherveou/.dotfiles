@@ -1,11 +1,11 @@
 local function is_pr(word)
-  local pattern = '%(?#(%d+)%)?'
-  local res = string.match(word, pattern)
-  if res then
-    return res
-  else
-    return ''
+  local pr = word:match('%(#(%d+)%)')
+  if pr then
+    return pr
   end
+
+  pr = word:match('#(%d+)')
+  return pr or ''
 end
 
 local function open_file()

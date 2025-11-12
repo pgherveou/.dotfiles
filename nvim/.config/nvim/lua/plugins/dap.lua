@@ -1,7 +1,30 @@
 -- good example https://github.com/AlexSWall/dot-files/blob/main/neovim/lua/plugins/configs/dap.lua#L92
-local function dap_fn(fn)
+local function dap_fn(path)
+  local parts = vim.split(path, '.', { plain = true })
   return function()
-    pcall(require('dap')[fn])
+    local ok, dap = pcall(require, 'dap')
+    if not ok then
+      return
+    end
+
+    local target = dap
+    for index, part in ipairs(parts) do
+      if type(target) ~= 'table' then
+        return
+      end
+
+      if index == #parts then
+        local fn = target[part]
+        if type(fn) == 'function' then
+          if not pcall(fn) then
+            pcall(fn, target)
+          end
+        end
+        return
+      end
+
+      target = target[part]
+    end
   end
 end
 
@@ -33,7 +56,7 @@ return {
     { '<F9>', dap_fn('run_to_cursor'), desc = '[DAP] run to cursor' },
     { '<F10>', dap_fn('run_last'), desc = '[DAP] run last' },
     { '<leader>dt', dap_fn('terminate'), desc = '[DAP] terminate' },
-    { '<leader>dc', dap_fn('clear_breakpoints'), desc = '[DAP] open repl' },
+    { '<leader>dc', dap_fn('clear_breakpoints'), desc = '[DAP] clear breakpoints' },
     { '<leader>dr', dap_fn('repl.open'), desc = '[DAP] open repl' },
     { '<leader>db', dap_fn('toggle_breakpoint'), desc = '[DAP] toggle breakpoint' },
     { '<leader>dL', log_point, desc = '[DAP] Set Logpoint' },

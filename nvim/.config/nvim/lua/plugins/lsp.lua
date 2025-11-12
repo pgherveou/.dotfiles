@@ -21,6 +21,13 @@ local setup_servers = function()
     end
   end
 
+  local on_attach_with_formatting = function(client, bufnr)
+    common.set_mappings(client, bufnr)
+    if client:supports_method('textDocument/completion') then
+      vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
+    end
+  end
+
   local default_flags = { debounce_text_changes = 150 }
   local default_config = {
     capabilities = capabilities,
@@ -97,6 +104,7 @@ local setup_servers = function()
   vim.lsp.config(
     'denols',
     vim.tbl_extend('force', default_config, {
+      on_attach = on_attach_with_formatting,
       root_markers = { 'deno.json', 'deno.jsonc' },
     })
   )

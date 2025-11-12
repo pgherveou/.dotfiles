@@ -17,9 +17,6 @@ local config = function()
   local fb_actions = require('telescope').extensions.file_browser.actions
 
   telescope.setup({
-    ['ui-select'] = {
-      themes.get_dropdown(),
-    },
     defaults = {
       path_display = { 'truncate' },
       file_ignore_patterns = { '.git/', 'target' },
@@ -61,6 +58,9 @@ local config = function()
           return { '--hidden', '--follow' }
         end,
       },
+    },
+    extensions = {
+      ['ui-select'] = themes.get_dropdown(),
     },
   })
 
@@ -164,10 +164,21 @@ local quick_fix_search = function()
   local quick_fix_list = vim.fn.getqflist()
   local quick_fix_files = {}
   for _, item in ipairs(quick_fix_list) do
-    local filename = vim.api.nvim_buf_get_name(item.bufnr)
-    if not vim.tbl_contains(quick_fix_files, filename) then
+    local filename = ''
+    if item.bufnr and item.bufnr > 0 then
+      filename = vim.api.nvim_buf_get_name(item.bufnr)
+    end
+    if (not filename or filename == '') and item.filename then
+      filename = item.filename
+    end
+
+    if filename ~= '' and not vim.tbl_contains(quick_fix_files, filename) then
       table.insert(quick_fix_files, filename)
     end
+  end
+  if #quick_fix_files == 0 then
+    vim.notify('Quickfix list does not contain any files', vim.log.levels.INFO)
+    return
   end
 
   require('telescope.builtin').live_grep({

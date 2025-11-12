@@ -162,7 +162,7 @@ vim.keymap.set('n', 'dd', function()
 end, { expr = true })
 
 -- Add undo breakpoints, useful when used in combination with C-o u (one shot command + undo)
-for _, v in ipairs({ '<Del>', '!', '(', ')', ',', '.', '?', '[', '[' }) do
+for _, v in ipairs({ '<Del>', '!', '(', ')', ',', '.', '?', '[', ']' }) do
   mappings['i'][v] = { v .. '<C-g>u' }
 end
 
