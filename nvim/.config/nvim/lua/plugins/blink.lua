@@ -21,6 +21,7 @@ return {
     },
 
     version = '1.*',
+    ---@module 'blink.cmp'
     opts = {
       -- C-space: Open menu or open docs if already open
       -- C-n/C-p or Up/Down: Select next/previous item
@@ -30,11 +31,12 @@ return {
       -- See :h blink-cmp-config-keymap for defining your own keymap
       keymap = {
         preset = 'default',
-        -- ['<CR>'] = { 'select_and_accept' },
       },
 
-      sources = {
+      -- (Default) Only show the documentation popup when manually triggered
+      completion = { documentation = { auto_show = false } },
 
+      sources = {
         default = { 'lsp', 'path', 'snippets', 'buffer', 'copilot' },
         providers = {
           copilot = {
