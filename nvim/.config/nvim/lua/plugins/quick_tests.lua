@@ -36,7 +36,7 @@ return {
   lazy = true,
   config = function()
     require('quick-tests').setup()
-    vim.cmd('cnoreabbrev T TestQuick')
+    vim.cmd('cnoreabbrev Te TestQuick')
     require('dap').adapters['codelldb'] = require('utils.dap').get_codelldb_adapter()
   end,
   ft = { 'rust', 'typescript' },

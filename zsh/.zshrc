@@ -87,8 +87,8 @@ cargo-targets() {
   cargo metadata --format-version 1 | jq -r '.packages[].targets[].name'
 }
 
-# resolc bin
-export RESOLC_BIN=$HOME/.cargo/bin/resolc
+# # resolc bin
+# export RESOLC_BIN=$HOME/.cargo/bin/resolc
 
 # Use a prefix with git-pile
 # see https://github.com/keith/git-pile#optional
