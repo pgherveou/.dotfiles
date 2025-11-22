@@ -75,9 +75,6 @@ bindsym $mod+d fullscreen disable, exec--no-startup-id rofi -show drun
 bindsym $mod+space fullscreen disable, exec --no-startup-id rofi -show combi
 bindsym $mod+Tab fullscreen disable, exec --no-startup-id rofi -show window
 
-# Keybinding to open ChatGPT in Firefox or focus on an existing tab
-# bindsym $mod+c exec --no-startup-id sh -c 'xdotool search --name "ChatGPT" windowactivate || firefox --new-tab "https://chatgpt.com"'
-
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -144,9 +141,9 @@ bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 
 bindsym $mod+g fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh ghostty ghostty 1
-bindsym $mod+c fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh Chromium chromium 2
+bindsym $mod+c fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="chromium"' chromium 2
 bindsym $mod+e fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh Element element-desktop 3
-# bindsym $mod+t fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh TelegramDesktop telegram-desktop 4
+bindsym $mod+i fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="chatgpt.com"' 'chromium --app=https://chatgpt.com' 4
 
 # move current workspace to next output
 bindsym $mod+n move workspace to output right	

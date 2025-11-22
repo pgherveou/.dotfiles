@@ -1,10 +1,17 @@
 #!/bin/bash
 
-APP_CLASS=$1
+MATCH_CRITERIA=$1
 APP_NAME=$2
 WORKSPACE_ID=$3
 
-OUTPUT=$(i3-msg "[class=\"$APP_CLASS\"] focus")
+# If criteria contains '=', use it as-is, otherwise assume it's a class match
+if [[ $MATCH_CRITERIA == *"="* ]]; then
+    CRITERIA="[$MATCH_CRITERIA]"
+else
+    CRITERIA="[class=\"$MATCH_CRITERIA\"]"
+fi
+
+OUTPUT=$(i3-msg "$CRITERIA focus")
 if [[ $OUTPUT == *"false"* ]]; then
     i3-msg "workspace $WORKSPACE_ID; exec $APP_NAME"
 fi
