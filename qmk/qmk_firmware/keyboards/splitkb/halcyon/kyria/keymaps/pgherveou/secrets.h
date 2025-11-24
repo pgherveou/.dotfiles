@@ -1,1 +1,1 @@
-static const char *secrets[] = {"","",""};
+// RESET

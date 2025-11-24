@@ -129,14 +129,6 @@
                     },
                     "ignore": true,
                     "manipulate_caps_lock_led": false
-                },
-                {
-                    "identifiers": {
-                        "is_keyboard": true,
-                        "product_id": 32718,
-                        "vendor_id": 36125
-                    },
-                    "ignore": true
                 }
             ],
             "name": "Default",
