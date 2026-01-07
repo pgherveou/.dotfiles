@@ -1,6 +1,5 @@
 [ -f $HOME/.cargo/env ] && source "$HOME/.cargo/env" 
 
-export SSH_SERVER=toaster
 export EDITOR=nvim
 export HISTCONTROL=ignoreboth
 export LANG=en_US.UTF-8
@@ -13,3 +12,4 @@ if [[ "$(uname)" == "Darwin" && -S ~/.1password/agent.sock ]]; then
 fi
 
 export PATH="$PATH:/$HOME/.foundry/bin"
+. "$HOME/.cargo/env"

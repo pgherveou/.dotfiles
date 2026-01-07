@@ -25,33 +25,44 @@ return {
       --     provider = 'telescope',
       --   },
       -- },
-
       -- opts = {
       --   log_level = 'ERROR', -- TRACE|DEBUG|ERROR|INFO
       -- },
+
       adapters = {
-        http = {
-          openai = function()
-            return require('codecompanion.adapters').extend('openai', {
-              env = {
-                api_key = os.getenv('OPENAI_API_NVIM_KEY'),
+        acp = {
+          codex = function()
+            return require('codecompanion.adapters').extend('codex', {
+              defaults = {
+                auth_method = 'chatgpt', -- "openai-api-key"|"codex-api-key"|"chatgpt"
               },
             })
           end,
         },
       },
+      -- adapters = {
+      --   http = {
+      --     openai = function()
+      --       return require('codecompanion.adapters').extend('openai', {
+      --         env = {
+      --           api_key = os.getenv('OPENAI_API_NVIM_KEY'),
+      --         },
+      --       })
+      --     end,
+      --   },
+      -- },
       strategies = {
         chat = {
-          adapter = 'openai',
+          adapter = 'codex',
         },
         inline = {
-          adapter = 'openai',
+          adapter = 'codex',
         },
         completion = {
-          adapter = 'openai',
+          adapter = 'codex',
         },
         diagnostics = {
-          adapter = 'openai',
+          adapter = 'codex',
         },
       },
     })

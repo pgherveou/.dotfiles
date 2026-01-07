@@ -4,11 +4,18 @@ return {
   cmd = { 'DiffviewOpen' },
   keys = {
     {
-      '<leader>Dv',
+      '<leader>Dh',
       function()
         vim.cmd('DiffviewOpen origin/HEAD...HEAD --imply-local')
       end,
       desc = 'Review a PR',
+    },
+    {
+      '<leader>Dc',
+      function()
+        vim.cmd('DiffviewOpen --cached')
+      end,
+      desc = 'Review stage changes',
     },
   },
   config = function()

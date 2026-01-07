@@ -5,6 +5,8 @@ TelegramDesktop = "Telegram"
 
 [aliases.instance]
 "@polkadot/apps-electron" = "PolkadotJS"
+"whatsapp.com" = "WhatsApp"
+"chatgpt.com" = "ChatGPT"
 
 [general]
 empty_label = "🌕"

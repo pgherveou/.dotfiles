@@ -12,8 +12,12 @@ local function open_file()
   local word = vim.fn.expand('<cWORD>')
   local pr = is_pr(word)
   if pr ~= '' then
-    local cmd = string.format('!gh browse %s', pr)
-    vim.cmd(cmd)
+    local url = vim.fn.systemlist(string.format('gh browse %s --no-browser', pr))[1]
+    if url and url ~= '' then
+      vim.fn.setreg('+', url)
+      vim.notify('URL copied to clipboard: ' .. url, vim.log.levels.INFO)
+    end
+    vim.cmd(string.format('!gh browse %s', pr))
     return
   end
 
@@ -27,8 +31,12 @@ local function open_file()
   end
 
   local branch = vim.fn.systemlist('git branch --show-current')[1]
-  local cmd = string.format('!gh browse %s --branch %s', file, branch)
-  vim.cmd(cmd)
+  local url = vim.fn.systemlist(string.format('gh browse %s --branch %s --no-browser', file, branch))[1]
+  if url and url ~= '' then
+    vim.fn.setreg('+', url)
+    vim.notify('URL copied to clipboard: ' .. url, vim.log.levels.INFO)
+  end
+  vim.cmd(string.format('!gh browse %s --branch %s', file, branch))
 end
 
 return {

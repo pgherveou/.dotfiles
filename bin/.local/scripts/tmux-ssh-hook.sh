@@ -2,17 +2,15 @@
 
 current_session="$(tmux display-message -p '#S')"
 
-# if the session we attached to is ssh turn off all tmux key bindings from the top level tmux
-if [[ "$current_session" == "atlas" ]]; then
+if [[ "$current_session" == ssh* ]]; then
+	name="${current_session#ssh_}"
 	not_ssh="[[ '#{pane_current_command}' != 'ssh' ]]"
-	tmux if-shell "$not_ssh" "send-keys 'ssh $SSH_SERVER' C-m"
-
+	tmux if-shell "$not_ssh" "send-keys 'ssh $name' C-m"
 	tmux set key-table off
 	tmux set prefix None
 	tmux set status off
 
-# if we are back to the main session turn them back on
-# elif [[ "$current_session" == "main" ]]; then
+# if we are back to the main session flip settings back on
 else
 	tmux set -u prefix
 	tmux set -u key-table

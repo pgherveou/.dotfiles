@@ -70,6 +70,7 @@ fi
 # Rust
 export PATH=$PATH:/$HOME/.cargo/bin
 export CARGO_NET_GIT_FETCH_WITH_CLI=true
+export CXXFLAGS="-include cstdint"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -113,10 +114,16 @@ export PATH="$HOME/.dotfiles/bin/.local/scripts:$PATH"
 export PATH="$PATH:/$HOME/.atuin/bin"
 eval "$(atuin init zsh)"
 
-
-
 # custom llvm
 # export PATH="$PATH:$HOME/github/revive/llvm18.0/bin/"
+
+# pbcopy shim for Linux if missing, using xclip
+if ! command -v pbcopy >/dev/null 2>&1; then
+  if command -v xclip >/dev/null 2>&1; then
+    alias pbcopy='xclip -selection clipboard'
+  fi
+fi
+
 
 # Open gh url
 gh-pr-view(){
@@ -240,5 +247,46 @@ my_past_pr() {
 
   gh api --paginate "search/issues?q=repo:$REPO+type:pr+state:closed+author:@me+closed:>=$DATE" \
     | jq -r '.items[] | "[#\(.number)](\(.html_url)) - \(.title)"'
+}
+
+install_codex_acp() {
+  local arch=$(uname -m)
+  local latest_version=$(curl -s https://api.github.com/repos/zed-industries/codex-acp/releases/latest | grep '"tag_name"' | sed -E 's/.*"v([^"]+)".*/\1/')
+
+  if [[ -z "$latest_version" ]]; then
+    echo "Failed to fetch latest version"
+    return 1
+  fi
+
+  local download_url="https://github.com/zed-industries/codex-acp/releases/download/v${latest_version}/codex-acp-${latest_version}-${arch}-unknown-linux-gnu.tar.gz"
+
+  echo "Installing codex-acp v${latest_version} for ${arch}..."
+
+  local tmp_dir=$(mktemp -d)
+  cd "$tmp_dir" || return 1
+
+  curl -L -o codex-acp.tar.gz "$download_url" || {
+    echo "Failed to download codex-acp"
+    rm -rf "$tmp_dir"
+    return 1
+  }
+
+  tar -xzf codex-acp.tar.gz || {
+    echo "Failed to extract archive"
+    rm -rf "$tmp_dir"
+    return 1
+  }
+
+  mkdir -p "$HOME/.local/bin"
+  mv codex-acp "$HOME/.local/bin/" || {
+    echo "Failed to move binary"
+    rm -rf "$tmp_dir"
+    return 1
+  }
+
+  chmod +x "$HOME/.local/bin/codex-acp"
+  rm -rf "$tmp_dir"
+
+  echo "Successfully installed codex-acp v${latest_version} to ~/.local/bin/codex-acp"
 }
 

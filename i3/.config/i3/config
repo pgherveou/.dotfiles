@@ -104,7 +104,7 @@ bindsym $mod+m fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
+# bindsym $mod+w layout tabbed
 bindsym $mod+t layout toggle split
 
 # toggle tiling / floating
@@ -144,6 +144,7 @@ bindsym $mod+g fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_st
 bindsym $mod+c fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="chromium"' chromium 2
 bindsym $mod+e fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh Element element-desktop 3
 bindsym $mod+i fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="chatgpt.com"' 'chromium --app=https://chatgpt.com' 4
+bindsym $mod+w fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="whatsapp.com"' 'chromium --app=https://web.whatsapp.com' 5
 
 # move current workspace to next output
 bindsym $mod+n move workspace to output right	
