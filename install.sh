@@ -73,10 +73,10 @@ run_install() {
 		git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 	fi
 
-	# clone qmk firmware
-	if [ ! -d ~/qmk_firmware ]; then
-		git clone https://github.com/qmk/qmk_firmware ~/qmk_firmware
-	fi
+	# # clone qmk firmware
+	# if [ ! -d ~/qmk_firmware ]; then
+	# 	git clone https://github.com/qmk/qmk_firmware ~/qmk_firmware
+	# fi
 
 	# create deeplinks to the home folder
 	STOW_FOLDERS=(
@@ -92,6 +92,7 @@ run_install() {
 		"hammerspoon"
 		"cargo"
 		"atuin"
+		"opencode"
 	)
 
 	for folder in "${STOW_FOLDERS[@]}"; do

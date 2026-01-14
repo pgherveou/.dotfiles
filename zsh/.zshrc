@@ -290,3 +290,6 @@ install_codex_acp() {
   echo "Successfully installed codex-acp v${latest_version} to ~/.local/bin/codex-acp"
 }
 
+
+# opencode
+export PATH=/home/pg/.opencode/bin:$PATH
