@@ -219,6 +219,11 @@ dunst_history() {
   dunstctl history | jq -r '.data[][0] | {body: .body.data, summary: .summary.data, id: .id.data}'
 }
 
+# Start notification daemon if not already running
+if ! systemctl --user is-active --quiet dunst; then
+  systemctl --user start dunst &>/dev/null
+fi
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f $HOME/.p10k.zsh ]] || source $HOME/.p10k.zsh
 
@@ -293,3 +298,6 @@ install_codex_acp() {
 
 # opencode
 export PATH=/home/pg/.opencode/bin:$PATH
+
+# wt worktrunk
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi

@@ -18,7 +18,7 @@ exec --no-startup-id feh --bg-scale ~/.config/i3/nice-blue-background.png
 exec --no-startup-id dunst
 
 # kill any hanging polybar processes
-exec_always killall polybar
+exec_always --no-startup-id killall -q polybar || true
 exec_always --no-startup-id ~/.config/polybar/launch_polybar.sh
 exec_always --no-startup-id /usr/bin/i3wsr --config ~/.config/i3/i3wsr.toml
 
@@ -71,7 +71,7 @@ bindsym $mod+q kill
 
 # start dmenu (a program launcher)
 bindsym $mod+f fullscreen disable, exec ~/.config/rofi/web-search.sh
-bindsym $mod+d fullscreen disable, exec--no-startup-id rofi -show drun
+bindsym $mod+d fullscreen disable, exec --no-startup-id rofi -show drun
 bindsym $mod+space fullscreen disable, exec --no-startup-id rofi -show combi
 bindsym $mod+Tab fullscreen disable, exec --no-startup-id rofi -show window
 
@@ -142,7 +142,8 @@ bindsym $mod+9 workspace number $ws9
 
 bindsym $mod+g fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh ghostty ghostty 1
 bindsym $mod+c fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="chromium"' chromium 2
-bindsym $mod+e fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh Element element-desktop 3
+# bindsym $mod+e fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh Element element-desktop 3
+bindsym $mod+e fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="app.element.io"' 'chromium --app=https://app.element.io' 5
 bindsym $mod+i fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="chatgpt.com"' 'chromium --app=https://chatgpt.com' 4
 bindsym $mod+w fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="whatsapp.com"' 'chromium --app=https://web.whatsapp.com' 5
 
