@@ -6,3 +6,4 @@ keyboards/splitkb/kyria/keymaps/pgherveou
 hack.sh
 .null-ls*
 /.claude
+.sisyphus

@@ -3,6 +3,19 @@ local function disable(_, bufnr)
 end
 
 local config = function()
+  -- Register custom vhs parser
+  local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+  parser_config.vhs = {
+    install_info = {
+      url = "/home/pg/github/tree-sitter-vhs",
+      files = {"src/parser.c"},
+      branch = "main",
+      generate_requires_npm = false,
+      requires_generate_from_grammar = false,
+    },
+    filetype = "vhs",
+  }
+
   local refactor = {
     enable = true,
   }
@@ -40,6 +53,7 @@ local config = function()
       -- 'bash',
       'json',
       'yaml',
+      'vhs',
     },
     refactor = refactor,
     highlight = {

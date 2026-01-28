@@ -72,7 +72,16 @@ local setup_servers = function()
   )
   vim.lsp.enable('lua_ls')
 
-  vim.lsp.config('bashls', default_config)
+  vim.lsp.config(
+    'bashls',
+    vim.tbl_extend('force', default_config, {
+      settings = {
+        bashIde = {
+          shellcheckArguments = '--exclude=SC2086'
+        }
+      }
+    })
+  )
   vim.lsp.enable('bashls')
 
   vim.lsp.config('golangci_lint_ls', default_config)

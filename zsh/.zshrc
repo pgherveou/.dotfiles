@@ -183,12 +183,32 @@ git-recent(){
   git checkout $branch
 }
 
+# Start a new tmux session and SSH to the given host
+ssh_session() {
+  tmux new-session -d -s "ssh_$1" "ssh $1"
+  tmux switch-client -t "ssh_$1"
+}
+
 start_mitmproxy() {
-  local ports="${1:-8000:8545}"
-  IFS=":" read listen_port proxy_port <<< "$ports"
+  local input="${1:-8000:localhost:8545}"
+  local listen_port="${input%%:*}"
+  local target="${input#*:}"
+  
+  # Determine the target URL
+  if [[ "$target" =~ ^[0-9]+$ ]]; then
+    # Just a port number, proxy to localhost
+    local target_url="http://localhost:${target}"
+  elif [[ "$target" =~ ^localhost ]]; then
+    # localhost with optional port
+    local target_url="http://${target}"
+  else
+    # Domain name, use https
+    local target_url="https://${target}"
+  fi
   
   pkill -f mitmproxy
-  tmux new-window -d -n mitmproxy "cd $HOME/github/mitmproxy; source venv/bin/activate; mitmproxy --listen-port $listen_port --mode reverse:http://localhost:${proxy_port} -s $HOME/github/mitmproxy/scripts/json-rpc.py; tmux wait-for -S mitmproxy-done"
+  # Use @listen_port syntax for reverse mode - --listen-port doesn't work with reverse mode
+  tmux new-window -d -n mitmproxy "cd $HOME/github/mitmproxy; source venv/bin/activate; mitmproxy --mode reverse:${target_url}@${listen_port} -s $HOME/github/mitmproxy/scripts/json-rpc.py; tmux wait-for -S mitmproxy-done"
 }
 
 hex() {

@@ -39,7 +39,7 @@ exec --no-startup-id dex --autostart --environment i3
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- betterlockscreen -l -- --show-failed-attempts -p win
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -68,6 +68,9 @@ for_window [class="1Password"] floating enable
 
 # kill focused window
 bindsym $mod+q kill
+
+# lock screen
+bindsym $mod+Shift+x exec --no-startup-id betterlockscreen -l -- --show-failed-attempts -p win
 
 # start dmenu (a program launcher)
 bindsym $mod+f fullscreen disable, exec ~/.config/rofi/web-search.sh
@@ -143,9 +146,9 @@ bindsym $mod+9 workspace number $ws9
 bindsym $mod+g fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh ghostty ghostty 1
 bindsym $mod+c fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="chromium"' chromium 2
 # bindsym $mod+e fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh Element element-desktop 3
-bindsym $mod+e fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="app.element.io"' 'chromium --app=https://app.element.io' 5
-bindsym $mod+i fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="chatgpt.com"' 'chromium --app=https://chatgpt.com' 4
-bindsym $mod+w fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="whatsapp.com"' 'chromium --app=https://web.whatsapp.com' 5
+bindsym $mod+e fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="app.element.io"' 'chromium --app=https://app.element.io --profile-directory="Default"' 5
+bindsym $mod+i fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="chatgpt.com"' 'chromium --app=https://chatgpt.com --profile-directory="Default"' 4
+bindsym $mod+w fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="whatsapp.com"' 'chromium --app=https://web.whatsapp.com --profile-directory="Default"' 5
 
 # move current workspace to next output
 bindsym $mod+n move workspace to output right	
