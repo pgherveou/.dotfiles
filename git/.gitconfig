@@ -55,3 +55,7 @@
 	required = true
 ; [commit]
 ; 	gpgsign = true
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true

@@ -36,3 +36,7 @@ background = "#1e1e2e"
 foreground = "#cdd6f4"
 frame_color = "#fab387"
 timeout = 10
+
+[chromium-apps]
+appname = "Chromium"
+script = "~/.local/scripts/dunst-mark-app.sh"

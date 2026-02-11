@@ -1,9 +1,14 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "formatter": {
+    "rustfmt": {
+      "command": ["rustup", "run", "nightly", "rustfmt"]
+    }
+  },
   "keybinds": {
     "leader": "ctrl+space",
     "session_child_cycle": "<leader>c",
-    "session_compact": "<leader>C",
+    "session_compact": "<leader>C"
   },
   "agent": {
     "build": {
@@ -16,6 +21,7 @@
   "plugin": [
     "opencode-openai-codex-auth",
     "opencode-anthropic-auth@latest",
+    "oh-my-opencode@latest"
   ],
   "provider": {
     "openai": {

@@ -178,6 +178,21 @@ gh-pr-co(){
   gh pr checkout $PR
 }
 
+# Select a PR and create a worktree for it
+gh-pr-wt(){
+  local use_all="$1"
+  local SELECTED_PR
+
+  if [ "$use_all" = "all" ]; then
+    SELECTED_PR=$(gh pr list | fzf)
+  else
+    SELECTED_PR=$(gh pr list --author "@me" | fzf)
+  fi
+
+  local PR=$(echo "$SELECTED_PR" | awk '{print $1;}')
+  wt switch "pr:$PR"
+}
+
 git-recent(){
   local branch=$(git branch --sort=-committerdate --format="%(refname:short)" | head -15 | fzf)
   git checkout $branch
