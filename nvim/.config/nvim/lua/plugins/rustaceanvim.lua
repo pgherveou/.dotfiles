@@ -14,6 +14,9 @@ vim.g.rustaceanvim = function()
     },
     -- LSP configuration
     server = {
+      capabilities = vim.tbl_extend('force', vim.lsp.protocol.make_client_capabilities(), {
+        offsetEncoding = { 'utf-16' },
+      }),
       on_attach = function(client, bufnr)
         local common = require('plugins.lsp.common')
         common.set_mappings(client, bufnr, {
@@ -96,7 +99,7 @@ end
 
 return {
   'mrcjkb/rustaceanvim',
-  version = '^4', -- Recommended
+  version = '^8', -- Recommended
   enabled = require('plugins.lsp.common').no_rust_lsp == false,
   ft = { 'rust' },
 }

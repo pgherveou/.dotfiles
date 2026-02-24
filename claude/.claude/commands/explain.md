@@ -19,7 +19,7 @@ Generate a single self-contained HTML file with:
 - Animated transitions or interactive elements
 - ASCII diagrams converted to visual diagrams where helpful
 - Code snippets with syntax highlighting
-- Save to `explanations/<topic>-explained.html` and open in browser
+- Save to `.claude/explanations/<topic>-explained.html` and open in browser
 
 ## Guidelines
 

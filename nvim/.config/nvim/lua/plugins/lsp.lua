@@ -107,8 +107,6 @@ local setup_servers = function()
   vim.lsp.config('clangd', default_config)
   vim.lsp.enable('clangd')
 
-  vim.lsp.config('tailwindcss', default_config)
-  vim.lsp.enable('tailwindcss')
 
   vim.lsp.config(
     'denols',

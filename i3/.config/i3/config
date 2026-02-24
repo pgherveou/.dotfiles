@@ -149,6 +149,7 @@ bindsym $mod+c fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_st
 bindsym $mod+e fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="app.element.io"' 'chromium --app=https://app.element.io --profile-directory="Default"' 5
 bindsym $mod+i fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="chatgpt.com"' 'chromium --app=https://chatgpt.com --profile-directory="Default"' 4
 bindsym $mod+w fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="whatsapp.com"' 'chromium --app=https://web.whatsapp.com --profile-directory="Default"' 5
+bindsym $mod+p fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="polkadot.js.org"' 'chromium --app=https://polkadot.js.org/apps --profile-directory="Default"' 5
 
 # move current workspace to next output
 bindsym $mod+n move workspace to output right	
