@@ -5,6 +5,8 @@ separator_color= frame
 highlight = "#89b4fa"
 font = "MesloLGM Nerd Font 14"
 width = 500
+monitor = HDMI-0
+origin = top-left
 
 # Defines action of mouse event
 # Possible values are:
