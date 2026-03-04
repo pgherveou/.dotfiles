@@ -5,11 +5,6 @@
       "command": ["rustup", "run", "nightly", "rustfmt"]
     }
   },
-  "keybinds": {
-    "leader": "ctrl+space",
-    "session_child_cycle": "<leader>c",
-    "session_compact": "<leader>C"
-  },
   "agent": {
     "build": {
       "permission": "allow"

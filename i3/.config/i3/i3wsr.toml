@@ -8,6 +8,9 @@ TelegramDesktop = "Telegram"
 "whatsapp.com" = "WhatsApp"
 "chatgpt.com" = "ChatGPT"
 
+[aliases.name]
+".*Excalidraw.*" = "Excalidraw"
+
 [general]
 empty_label = "🌕"
 display_property = "instance" # class, instance, name

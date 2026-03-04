@@ -9,6 +9,9 @@ fi
 # Increase the open file limit
 ulimit -n 65535
 
+# Custom completions (node-env, etc.)
+fpath=(~/.zsh/completions $fpath)
+
 if [ -f "$HOME/.antigen.zsh" ]; then
   source $HOME/.antigen.zsh
   antigen use oh-my-zsh
@@ -108,7 +111,7 @@ eval "$(fzf --zsh)"
 [ -f $HOME/github/contracts-boilerplate/scripts/node-env.sh ] && source $HOME/github/contracts-boilerplate/scripts/node-env.sh 
 
 # Add local scripts to path
-export PATH="$HOME/.dotfiles/bin/.local/scripts:$PATH"
+export PATH="$HOME/.dotfiles/bin/.local/scripts:$HOME/github/node-env/bin:$PATH"
 
 # Atuin
 export PATH="$PATH:/$HOME/.atuin/bin"
@@ -261,6 +264,15 @@ fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f $HOME/.p10k.zsh ]] || source $HOME/.p10k.zsh
+
+excalidraw-start() {
+  docker start mcp-excalidraw-canvas 2>/dev/null || \
+    docker run -d -p 3401:3000 --name mcp-excalidraw-canvas ghcr.io/yctimlin/mcp_excalidraw-canvas:latest
+}
+
+excalidraw-stop() {
+  docker stop mcp-excalidraw-canvas
+}
 
 fkill() {
   local pid

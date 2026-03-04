@@ -9,7 +9,6 @@
     ],
     "defaultMode": "bypassPermissions"
   },
-  "model": "opus",
   "hooks": {
     "Stop": [
       {
@@ -43,5 +42,6 @@
     "pr-review-toolkit@claude-plugins-official": true
   },
   "skipDangerousModePermissionPrompt": true,
-  "effortLevel": "medium"
+  "effortLevel": "medium",
+  "model": "opus"
 }

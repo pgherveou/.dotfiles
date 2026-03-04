@@ -23,6 +23,14 @@ When editing existing Rust code, preserve the local style:
 - Ensure tests pass for all targets
 - Ensure code is formatted
 
+### node-env (Revive dev environments)
+
+`node-env` is on PATH — use it to manage Polkadot Revive dev nodes, eth-rpc bridges, and tmux stacks. Source: `~/github/node-env`.
+
+Slash commands are available globally: `/dev-stack`, `/anvil-stack`, `/westend-stack`, `/paseo-stack`, `/geth-stack`, `/kill-servers`, `/logs`, `/node-env`.
+
+If `node-env` is not found, tell the user to add `~/github/node-env/bin` to their PATH.
+
 ### Git Worktree Management
 
 Place worktrees as siblings to the main repo using `--` as separator:
