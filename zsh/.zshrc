@@ -257,8 +257,8 @@ dunst_history() {
   dunstctl history | jq -r '.data[][0] | {body: .body.data, summary: .summary.data, id: .id.data}'
 }
 
-# Start notification daemon if not already running
-if ! systemctl --user is-active --quiet dunst; then
+# Start notification daemon if not already running (Linux only)
+if [[ "$(uname)" == "Linux" ]] && ! systemctl --user is-active --quiet dunst; then
   systemctl --user start dunst &>/dev/null
 fi
 
