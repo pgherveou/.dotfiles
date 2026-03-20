@@ -40,6 +40,7 @@ alias nvv="NO_RUST_LSP=1 nvim"
 alias ..="cd .."
 alias ...="cd ../.."
 alias clip="nc localhost 8377"
+alias ca="claude --dangerously-skip-permissions"
 
 # if linux alias open=xdg-open
 if [[ $(uname) == "Linux" ]]; then
@@ -348,3 +349,10 @@ export PATH=/home/pg/.opencode/bin:$PATH
 
 # wt worktrunk
 if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
+alias wt-clean='git worktree list --porcelain | grep "^branch" | sed "s|branch refs/heads/||" | fzf --multi --header="TAB to select, Enter to remove" | xargs wt remove -f'
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/pg/google-cloud-sdk/path.zsh.inc' ]; then . '/home/pg/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/pg/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/pg/google-cloud-sdk/completion.zsh.inc'; fi

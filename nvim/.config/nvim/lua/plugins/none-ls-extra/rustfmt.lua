@@ -18,7 +18,7 @@ return h.make_builtin({
   filetypes = { 'rust' },
   generator_opts = {
     command = 'rustfmt',
-    args = { 'run', 'nightly', 'rustfmt' },
+    args = { 'run', 'nightly', 'rustfmt', '--edition=2021' },
     to_stdin = true,
   },
   factory = h.formatter_factory,
