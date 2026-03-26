@@ -1,0 +1,1 @@
+/home/pg/github/contracts-boilerplate/.claude/commands/fixture.md

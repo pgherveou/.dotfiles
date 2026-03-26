@@ -1,0 +1,83 @@
+{
+  "skill_name": "tmux",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "My dev server seems to be crashing, can you check what's going on in the other panes and figure out the error?",
+      "expected_output": "Claude discovers the tmux layout, reads pane content from relevant panes, identifies errors or status, and provides a diagnosis",
+      "assertions": [
+        {
+          "name": "discovers_layout",
+          "description": "Runs tmux list-panes or list-windows to discover what's available before acting",
+          "type": "transcript_contains_command",
+          "pattern": "list-panes|list-windows|list-sessions"
+        },
+        {
+          "name": "reads_pane_content",
+          "description": "Uses capture-pane to read output from at least one pane",
+          "type": "transcript_contains_command",
+          "pattern": "capture-pane"
+        },
+        {
+          "name": "provides_diagnosis",
+          "description": "Provides some analysis or diagnosis based on what it found",
+          "type": "qualitative"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Restart the server running in the servers window",
+      "expected_output": "Claude finds the servers window (or adapts if it doesn't exist), sends C-c to interrupt, then restarts the process",
+      "assertions": [
+        {
+          "name": "discovers_layout",
+          "description": "Checks what windows/panes exist before blindly sending commands",
+          "type": "transcript_contains_command",
+          "pattern": "list-panes|list-windows|list-sessions"
+        },
+        {
+          "name": "interrupts_first",
+          "description": "Sends C-c before starting a new command",
+          "type": "transcript_contains_command",
+          "pattern": "send-keys.*C-c"
+        },
+        {
+          "name": "sends_restart_command",
+          "description": "Sends a command to start/restart a process",
+          "type": "transcript_contains_command",
+          "pattern": "send-keys.*Enter"
+        },
+        {
+          "name": "adapts_if_missing",
+          "description": "If no servers window exists, explains what it found and adapts rather than failing silently",
+          "type": "qualitative"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Run the tests in the pane below and tell me if they pass",
+      "expected_output": "Claude sends a test command to the next pane, waits, captures the output, and reports results",
+      "assertions": [
+        {
+          "name": "sends_command_to_next_pane",
+          "description": "Uses send-keys with a pane target (:.+ or similar) to run a command",
+          "type": "transcript_contains_command",
+          "pattern": "send-keys"
+        },
+        {
+          "name": "captures_result",
+          "description": "Uses capture-pane to read back the test output",
+          "type": "transcript_contains_command",
+          "pattern": "capture-pane"
+        },
+        {
+          "name": "reports_outcome",
+          "description": "Tells the user whether tests passed/failed or what happened",
+          "type": "qualitative"
+        }
+      ]
+    }
+  ]
+}

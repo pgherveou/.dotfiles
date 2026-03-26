@@ -40,6 +40,10 @@ if ! tmux has-session -t=$selected_name 2>/dev/null; then
 	tmux send-keys -t $selected_name "tmux rename-window 'nvim'" Enter
 	tmux send-keys -t $selected_name "nv" Enter
 
+	# open claude in a vertical split on the first window
+	tmux split-window -h -t $selected_name -c $selected
+	tmux send-keys -t $selected_name "ca" Enter
+
 	# # create a second window and rename it to "shell"
 	# tmux new-window -t $selected_name -n "shell" -c $selected
 	#

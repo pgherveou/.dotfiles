@@ -131,7 +131,7 @@ fi
 
 # Open gh url
 gh-pr-view(){
-  gh pr view --web
+  gh pr view --web 2>/dev/null || gh repo view --web
 } 
 
 # Init a PR with prdoc and label
