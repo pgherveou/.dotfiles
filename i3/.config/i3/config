@@ -144,7 +144,7 @@ bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 
 bindsym $mod+g fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh ghostty ghostty 1
-bindsym $mod+c fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="chromium"' chromium 2
+bindsym $mod+c fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="chromium"' 'chromium --remote-debugging-port=9222' 2
 # bindsym $mod+e fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh Element element-desktop 3
 bindsym $mod+e fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="app.element.io"' 'chromium --app=https://app.element.io --profile-directory="Default"' 5
 bindsym $mod+i fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="chatgpt.com"' 'chromium --app=https://chatgpt.com --profile-directory="Default"' 4
