@@ -32,6 +32,10 @@ After creating and pushing a PR to `polkadot-sdk`, run `gh-pr-init` to set the `
 
 Use `xdg-open` on Linux or `open` on Mac to open URLs in the browser (not `google-chrome-stable`).
 
+### HTML Gists
+
+When creating an HTML gist, include a rendering link using `https://htmlpreview.github.io/?<raw_gist_url>`.
+
 ### Git Worktree Management
 
 Place worktrees as siblings to the main repo using `--` as separator:

@@ -101,6 +101,11 @@ run_install() {
 		stow "$folder"
 	done
 
+	# claude needs --no-folding to avoid symlinking the .claude dir itself
+	echo "Stowing claude"
+	stow -D claude
+	stow --no-folding claude
+
 	pushd "$HOME/.private"
 	stow -t ~/ ssh
 	popd
