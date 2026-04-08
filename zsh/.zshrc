@@ -351,8 +351,16 @@ export PATH=/home/pg/.opencode/bin:$PATH
 if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
 alias wt-clean='git worktree list --porcelain | grep "^branch" | sed "s|branch refs/heads/||" | fzf --multi --header="TAB to select, Enter to remove" | xargs wt remove -f'
 
+# excalidraw MCP canvas server
+excalidraw() {
+  cd ~/github/mcp_excalidraw && PORT=3000 npm run canvas
+}
+
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/pg/google-cloud-sdk/path.zsh.inc' ]; then . '/home/pg/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/pg/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/pg/google-cloud-sdk/completion.zsh.inc'; fi
+
+# bun completions
+[ -s "/Users/pg/.bun/_bun" ] && source "/Users/pg/.bun/_bun"

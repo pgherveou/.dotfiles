@@ -122,19 +122,14 @@ local setup_servers = function()
     vim.tbl_extend('force', default_config, {
       root_markers = { 'package.json' },
       single_file_support = false,
-      root_dir = function(fname)
-        local util = vim.lsp.config.util or require('lspconfig.util')
-        local root = util.root_pattern('package.json')(fname)
-        if root then
-          -- Check if this is a Deno project
-          local deno_json = vim.uv.fs_stat(root .. '/deno.json')
-          local deno_jsonc = vim.uv.fs_stat(root .. '/deno.jsonc')
-          if deno_json or deno_jsonc then
-            return nil -- Don't start ts_ls in Deno projects
-          end
-          return root
+      on_attach = function(client, bufnr)
+        -- Don't run in Deno projects
+        local root = client.root_dir
+        if root and (vim.uv.fs_stat(root .. '/deno.json') or vim.uv.fs_stat(root .. '/deno.jsonc')) then
+          client:stop()
+          return
         end
-        return nil
+        on_attach(client, bufnr)
       end,
     })
   )

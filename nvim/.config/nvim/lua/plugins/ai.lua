@@ -30,39 +30,29 @@ return {
       -- },
 
       adapters = {
-        acp = {
-          codex = function()
-            return require('codecompanion.adapters').extend('codex', {
-              defaults = {
-                auth_method = 'chatgpt', -- "openai-api-key"|"codex-api-key"|"chatgpt"
-              },
-            })
-          end,
-        },
+        claude_code = function()
+          return require('codecompanion.adapters').extend('claude_code', {})
+        end,
+        codex = function()
+          return require('codecompanion.adapters').extend('codex', {
+            defaults = {
+              auth_method = 'chatgpt',
+            },
+          })
+        end,
       },
-      -- adapters = {
-      --   http = {
-      --     openai = function()
-      --       return require('codecompanion.adapters').extend('openai', {
-      --         env = {
-      --           api_key = os.getenv('OPENAI_API_NVIM_KEY'),
-      --         },
-      --       })
-      --     end,
-      --   },
-      -- },
       strategies = {
         chat = {
-          adapter = 'codex',
+          adapter = 'claude_code',
         },
         inline = {
-          adapter = 'codex',
+          adapter = 'claude_code',
         },
         completion = {
-          adapter = 'codex',
+          adapter = 'claude_code',
         },
         diagnostics = {
-          adapter = 'codex',
+          adapter = 'claude_code',
         },
       },
     })

@@ -1,6 +1,6 @@
 ---
 argument-hint: [google doc url]
-description: Export a Google Doc to a clean Markdown file. Use when the user says "convert this google doc", "export google doc to markdown", or provides a Google Docs URL to convert. Requires Chromium running with --remote-debugging-port=9222 and the Chrome DevTools MCP plugin.
+description: Export a Google Doc to a clean Markdown file. Use when the user says "convert this google doc", "export google doc to markdown", or provides a Google Docs URL to convert. Requires a Chromium-based browser (Brave, Chrome) running with --remote-debugging-port=9222 and the Chrome DevTools MCP plugin.
 ---
 
 Convert a Google Doc to Markdown, saving it as a folder with `index.md`, images, and per-tab files.

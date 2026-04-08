@@ -1,7 +1,7 @@
 [user]
 	email = pgherveou@gmail.com
 	name = pgherveou
-	signingkey = C7446D07D90C8961
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPtHwEtb5pAdZXtqiymDx0Aa0XEKHQSy1wlJb4Y5eQHT
 ; [commit]
 ; 	gpgsign = true
 [rerere]
@@ -43,11 +43,9 @@
 [push]
 	autoSetupRemote = true
 [credential "https://github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
+	helper = !gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
+	helper = !gh auth git-credential
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -56,6 +54,10 @@
 ; [commit]
 ; 	gpgsign = true
 [commit]
-	gpgsign = true
+	gpgsign = false
 [tag]
-	gpgsign = true
+	gpgsign = false
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
