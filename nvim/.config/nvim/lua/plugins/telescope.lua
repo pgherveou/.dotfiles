@@ -86,6 +86,7 @@ local function get_filetype_prefix()
     typescript = '(import|function|const|let|class|interface|type) ',
     lua = '(function|local|require) ',
     go = '(func|type|interface|const|var|struct|package|import) ',
+    swift = '(func|class|struct|enum|protocol|extension|var|let|import) ',
   }
 
   local filetype = vim.bo.filetype

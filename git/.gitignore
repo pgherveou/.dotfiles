@@ -8,3 +8,5 @@ hack.sh
 .claude/draft
 .claude/explanations
 .sisyphus
+excalidraw.log
+.playwright-mcp
