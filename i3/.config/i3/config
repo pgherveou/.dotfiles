@@ -64,6 +64,8 @@ smart_gaps on
 
 # floating windows
 for_window [class="1Password"] floating enable
+for_window [title="Android Emulator"] floating enable
+for_window [class="Emulator"] floating enable
 
 
 # kill focused window

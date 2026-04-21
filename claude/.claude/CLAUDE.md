@@ -49,6 +49,40 @@ repo--review-pr-123/
 
 Example: `git worktree add ../polkadot-sdk--my-feature my-feature-branch`
 
+### Android Emulator
+
+The Claude Code bash subshell inherits no `DISPLAY`/`XAUTHORITY`, and system Java defaults to JDK 25 which breaks Kotlin 1.9.x toolchains. To start an AVD and build Android apps:
+
+1. Find the active X auth cookie (SDDM writes a per-session file under `/tmp/xauth_*`):
+
+   ```bash
+   XAUTHORITY=$(for pid in $(pgrep -u $USER); do
+     f=$(tr '\0' '\n' < /proc/$pid/environ 2>/dev/null | sed -n 's/^XAUTHORITY=//p')
+     [ -n "$f" ] && echo "$f" && break
+   done)
+   export DISPLAY=:0 XAUTHORITY
+   ```
+
+2. Boot the AVD in the background (SDK is at `/opt/android-sdk`):
+
+   ```bash
+   nohup /opt/android-sdk/emulator/emulator -avd <name> -no-snapshot-save -no-boot-anim \
+     >/tmp/emulator.log 2>&1 &
+   /opt/android-sdk/platform-tools/adb wait-for-device
+   until [ "$(/opt/android-sdk/platform-tools/adb shell getprop sys.boot_completed | tr -d '\r')" = "1" ]; do sleep 2; done
+   ```
+
+3. Build with JDK 17 (AGP 8.x + Kotlin 1.9 reject JDK 25):
+
+   ```bash
+   JAVA_HOME=/usr/lib/jvm/java-17-openjdk PATH=$JAVA_HOME/bin:$PATH ./gradlew installDebug
+   ```
+
+Symptom → cause shortcuts:
+- `Could not load the Qt platform plugin "xcb"` → missing `DISPLAY`/`XAUTHORITY`.
+- Gradle `* What went wrong: 25.0.2` (or `IllegalArgumentException` in `JavaVersion.parse`) → JDK too new, use 17.
+- Vite dev server reachable from emulator only if bound to all interfaces: `vite --host 0.0.0.0`. `10.0.2.2` on the emulator maps to the host's IPv4 loopback, so IPv6-only `[::1]` binds are unreachable.
+
 ## Working Style
 
 ### 1. Plan Node Default

@@ -20,7 +20,7 @@
   },
   "plugin": [
     "opencode-openai-codex-auth",
-    "@ex-machina/opencode-anthropic-auth",
+    "oh-my-openagent@latest"
   ],
   "provider": {
     "openai": {

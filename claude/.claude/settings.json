@@ -46,8 +46,6 @@
     "skill-creator@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true
   },
-  "effortLevel": "high",
-  "skipDangerousModePermissionPrompt": true,
   "extraKnownMarketplaces": {
     "karpathy-skills": {
       "source": {
@@ -55,5 +53,8 @@
         "repo": "forrestchang/andrej-karpathy-skills"
       }
     }
-  }
+  },
+  "effortLevel": "high",
+  "skipDangerousModePermissionPrompt": true,
+  "skipAutoPermissionPrompt": true
 }
