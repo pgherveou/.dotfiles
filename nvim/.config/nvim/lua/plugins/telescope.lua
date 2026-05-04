@@ -74,7 +74,6 @@ local config = function()
   telescope.load_extension('git_worktree')
 
   require('refactoring').setup({})
-  telescope.load_extension('refactoring')
 end
 
 local last_file_type = 'rust'
@@ -242,6 +241,13 @@ return {
       mode = 'v',
       desc = 'Search from selection',
     },
-    { '<leader>rr', extension('refactoring', 'refactors'), mode = 'v', desc = 'Search refactors' },
+    {
+      '<leader>rr',
+      function()
+        require('refactoring').select_refactor()
+      end,
+      mode = 'v',
+      desc = 'Search refactors',
+    },
   },
 }

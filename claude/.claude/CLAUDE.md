@@ -32,6 +32,10 @@ After creating and pushing a PR to `polkadot-sdk`, run `gh-pr-init` to set the `
 
 Use `xdg-open` on Linux or `open` on Mac to open URLs in the browser (not `google-chrome-stable`).
 
+### Long-running scripts and Chrome automation
+
+See [notes/long-running-and-cdp.md](./notes/long-running-and-cdp.md) for: redirecting long-running script output to a flat file (never `| tail`), watching with `until` + `run_in_background`, hard per-task timeouts, the ~2-minute silence stop-and-rethink rule, and CDP gotchas (same-eTLD iframes don't get separate targets, glyph-prefixed button text breaks naive regex).
+
 ### HTML Gists
 
 When creating an HTML gist, include a rendering link using `https://htmlpreview.github.io/?<raw_gist_url>`.

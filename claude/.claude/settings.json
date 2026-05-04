@@ -7,9 +7,8 @@
     "allow": [
       "Bash(tmux send-keys*)"
     ],
-    "defaultMode": "bypassPermissions"
+    "defaultMode": "auto"
   },
-  "model": "opus",
   "hooks": {
     "Stop": [
       {
@@ -55,6 +54,8 @@
     }
   },
   "effortLevel": "high",
+  "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
+  "editorMode": "vim",
   "skipAutoPermissionPrompt": true
 }
