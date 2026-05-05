@@ -98,6 +98,20 @@ local config = function()
       },
     },
   })
+
+  -- nvim 0.12 passes captures as TSNode[] to query directives; nvim-treesitter's
+  -- `set-lang-from-info-string!` still indexes the array as a single node, which
+  -- crashes on every fenced code block in markdown. Override with an array-aware version.
+  local md_aliases = { ex = 'elixir', pl = 'perl', sh = 'bash', uxn = 'uxntal', ts = 'typescript' }
+  vim.treesitter.query.add_directive('set-lang-from-info-string!', function(match, _, bufnr, pred, metadata)
+    local node = match[pred[2]]
+    if type(node) == 'table' then node = node[1] end
+    if not node then return end
+    local alias = vim.treesitter.get_node_text(node, bufnr):lower()
+    metadata['injection.language'] = vim.filetype.match({ filename = 'a.' .. alias })
+      or md_aliases[alias]
+      or alias
+  end, { force = true })
 end
 
 local ts_autotag = {

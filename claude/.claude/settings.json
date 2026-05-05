@@ -43,13 +43,20 @@
     "playwright@claude-plugins-official": true,
     "chrome-devtools-mcp@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
-    "swift-lsp@claude-plugins-official": true
+    "swift-lsp@claude-plugins-official": true,
+    "product-dev-skills@product-dev-skills": true
   },
   "extraKnownMarketplaces": {
     "karpathy-skills": {
       "source": {
         "source": "github",
         "repo": "forrestchang/andrej-karpathy-skills"
+      }
+    },
+    "product-dev-skills": {
+      "source": {
+        "source": "github",
+        "repo": "replghost/product-dev-skills"
       }
     }
   },
