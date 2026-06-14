@@ -218,8 +218,8 @@ mode "action" {
         # show last notification
         bindsym d exec --no-startup-id dunstctl history-pop; mode "default"
 
-        # run notification default action, focusing --app windows when matched
-        bindsym a exec --no-startup-id ~/.local/scripts/dunst-action.sh; mode "default"
+        # run notification default action (chromium --app URLs focus the app)
+        bindsym a exec --no-startup-id dunstctl action; mode "default"
 
         bindsym Escape mode "default"
 }

@@ -3,6 +3,7 @@
 - Do not comment obvious things, keep comments short and on point
 - When editing existing code, preserve the local style
 - Do not use em dashes (—) in prose, use commas or periods instead
+- Never force push, even with `--force-with-lease`, without explicit user permission. Always `git fetch` before pushing to a shared branch and use a fast-forward push (or pull/rebase first) so you cannot overwrite work pushed by the user or another agent.
 
 ### Editing Rust Code
 

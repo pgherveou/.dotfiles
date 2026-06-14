@@ -1,1 +1,10 @@
 xset r rate 300 40
+
+# Monitor layout: DP (1440p) primary on the left, HDMI (1080p) on the right.
+# Tolerant of output name changes between cards (DP-1/DP-2, HDMI-1/HDMI-2).
+DP_OUT=$(xrandr --query | awk '/^DP-[0-9]+ connected/ {print $1; exit}')
+HDMI_OUT=$(xrandr --query | awk '/^HDMI-[A0-9-]+ connected/ {print $1; exit}')
+if [ -n "$DP_OUT" ] && [ -n "$HDMI_OUT" ]; then
+    xrandr --output "$DP_OUT"   --primary --mode 2560x1440 --pos 0x0 \
+           --output "$HDMI_OUT" --mode 1920x1080 --pos 2560x0
+fi

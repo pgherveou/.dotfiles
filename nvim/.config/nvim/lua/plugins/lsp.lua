@@ -107,6 +107,9 @@ local setup_servers = function()
   vim.lsp.config('clangd', default_config)
   vim.lsp.enable('clangd')
 
+  vim.lsp.config('kotlin_language_server', default_config)
+  vim.lsp.enable('kotlin_language_server')
+
 
   vim.lsp.config(
     'denols',
@@ -153,7 +156,7 @@ return {
     require('mason').setup()
 
     -- ensure these packages are installed with mason
-    -- 'bashls', 'prettierd', 'clang-format', 'bacon', 'clangd', 'codelldb', 'codespell', 'eslint_d', 'golangci_lint_ls', 'jq', 'jsonls', 'lua_ls', 'luacheck', 'marksman', 'pyright', 'rust_analyzer', 'shellcheck', 'stylua', 'tailwindcss', 'taplo', 'ts_ls',
+    -- 'bashls', 'prettierd', 'clang-format', 'bacon', 'clangd', 'codelldb', 'codespell', 'eslint_d', 'golangci_lint_ls', 'jq', 'jsonls', 'kotlin-language-server', 'lua_ls', 'luacheck', 'marksman', 'pyright', 'rust_analyzer', 'shellcheck', 'stylua', 'tailwindcss', 'taplo', 'ts_ls',
     require('mason-lspconfig').setup({
       automatic_enable = false,
     })

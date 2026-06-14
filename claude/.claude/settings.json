@@ -44,7 +44,8 @@
     "chrome-devtools-mcp@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true,
-    "product-dev-skills@product-dev-skills": true
+    "product-dev-skills@product-dev-skills": true,
+    "polkadot-skills@product-skills": true
   },
   "extraKnownMarketplaces": {
     "karpathy-skills": {
@@ -55,14 +56,22 @@
     },
     "product-dev-skills": {
       "source": {
+        "source": "directory",
+        "path": "/home/pg/github/product-dev-skills"
+      }
+    },
+    "product-skills": {
+      "source": {
         "source": "github",
-        "repo": "replghost/product-dev-skills"
+        "repo": "paritytech/product-skills"
       }
     }
   },
   "effortLevel": "high",
   "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
+  "theme": "dark",
   "editorMode": "vim",
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "model": "claude-fable-5[1m]"
 }

@@ -43,9 +43,11 @@
 [push]
 	autoSetupRemote = true
 [credential "https://github.com"]
-	helper = !gh auth git-credential
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = !gh auth git-credential
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -61,3 +63,8 @@
 	format = ssh
 [gpg "ssh"]
 	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[product-dev-skills]
+	github-author = pgherveou
+	pr-merge-flags = --squash
+	auto-merge = false
+	auto-fix = false

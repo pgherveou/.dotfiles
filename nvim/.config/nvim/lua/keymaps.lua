@@ -77,7 +77,8 @@ local mappings = {
     ['Q'] = { '@q', desc = 'Replay macro' },
 
     -- copy path into clipboard
-    ['<leader>cp'] = { ':let @+=expand("%:p")<CR>', desc = 'Copy path into clipboard' },
+    ['<leader>cp'] = { ':let @+=expand("%:.")<CR>', desc = 'Copy relative path into clipboard' },
+    ['<leader>cP'] = { ':let @+=expand("%:p")<CR>', desc = 'Copy full path into clipboard' },
 
     -- cd to the current folder
     ['<leader>cd'] = { ':cd %:h<CR>', desc = 'Change directory to the current file' },

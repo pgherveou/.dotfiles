@@ -41,6 +41,7 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias clip="nc localhost 8377"
 alias ca="claude --dangerously-skip-permissions"
+alias cx="codex --yolo"
 
 # if linux alias open=xdg-open
 if [[ $(uname) == "Linux" ]]; then
@@ -372,3 +373,7 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+export PATH="$HOME/.cdm/bin:$HOME/.local/bin:$PATH"
+
+export PATH="$HOME/.polkadot/bin:$HOME/.local/bin:$PATH"
