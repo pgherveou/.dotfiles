@@ -5,15 +5,16 @@ ALERT_POPUP_BEFORE_SECONDS=10
 NERD_FONT_FREE=" "
 NERD_FONT_MEETING=" "
 
+# Next meeting is written to this cache by a background refresher
+# (~/.private/scripts/cal-refresh.sh, run hourly via a systemd timer)
+# as one TSV line: start_date \t start_time \t end_date \t end_time \t title
+CACHE_FILE="$HOME/.cache/next-meeting.tsv"
+
 get_next_meeting() {
+    [[ -f "$CACHE_FILE" ]] || { next_meeting=""; return; }
     next_meeting=$(
-        gcalcli agenda \
-            --tsv \
-            --nostarted \
-            --nodeclined \
-            --calendar pgherveou@parity.io \
-        | sed 1d \
-        | grep -P '^[0-9]{4}-[0-9]{2}-[0-9]{2}\t[0-9]{2}:[0-9]{2}\t[0-9]{4}-[0-9]{2}-[0-9]{2}\t[0-9]{2}:[0-9]{2}\t.+$' \
+        grep -P '^[0-9]{4}-[0-9]{2}-[0-9]{2}\t[0-9]{2}:[0-9]{2}\t[0-9]{4}-[0-9]{2}-[0-9]{2}\t[0-9]{2}:[0-9]{2}\t.+$' \
+            "$CACHE_FILE" \
         | head -n1
     )
 }
@@ -24,6 +25,7 @@ parse_result() {
 
 calculate_times() {
     epoc_meeting=$(date -d "$event_date $start_time" +%s)
+    epoc_end=$(date -d "$end_date $end_time" +%s)
     epoc_now=$(date +%s)
     epoc_diff=$((epoc_meeting - epoc_now))
     minutes_till_meeting=$((epoc_diff / 60))
@@ -35,12 +37,7 @@ display_popup() {
         -w 50% \
         -h 50% \
         -d '#{pane_current_path}' \
-        "gcalcli agenda \
-            --details all \
-            --nostarted \
-            --nodeclined \
-            --calendar pgherveou@parity.io $start_time $end_time
-    "
+        "bash -c \"printf '%s\n\n%s\n' '$NERD_FONT_MEETING $title' 'Starts $start_time, ends $end_time'; read -rsn1 -p 'press any key to close'\""
 }
 
 print_tmux_status() {
@@ -51,9 +48,12 @@ print_tmux_status() {
         event_str="$NERD_FONT_MEETING $event_date $start_time $title ($minutes_till_meeting minutes)"
     fi
 
-    if [[ $minutes_till_meeting -lt $ALERT_IF_IN_NEXT_MINUTES && $minutes_till_meeting -gt -60 ]]; then
+    # Hide the event once it has ended
+    if [[ $epoc_now -ge $epoc_end ]]; then
+        echo "$NERD_FONT_FREE"
+    elif [[ $minutes_till_meeting -lt $ALERT_IF_IN_NEXT_MINUTES ]]; then
         echo "$event_str"
-    elif [[ $minutes_till_meeting -ge -60 ]]; then
+    else
         # Show date if not today
         if [[ "$event_date" != "$today" ]]; then
             weekday=$(date -d "$event_date" +%a)
@@ -61,8 +61,6 @@ print_tmux_status() {
         else
             echo "$NERD_FONT_MEETING $start_time $title"
         fi
-    else
-        echo "$NERD_FONT_FREE"
     fi
 
     # If we're within the tiny popup window, fire it off:
