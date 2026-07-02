@@ -106,10 +106,12 @@ run_install() {
 	stow -D claude
 	stow --no-folding claude
 
-	# codex skills: target ~/.codex so each skill dir folds into a symlink under
-	# ~/.codex/skills, leaving codex-managed dirs (e.g. skills/.system) untouched
+	# codex skills: target ~/.codex so the whole skills dir folds into a single
+	# symlink (~/.codex/skills -> repo). codex writes its system skills into
+	# skills/.system, which is gitignored. Do not pre-create ~/.codex/skills, or
+	# stow can't fold it into one symlink.
 	echo "Stowing codex"
-	mkdir -p "$HOME/.codex/skills"
+	mkdir -p "$HOME/.codex"
 	stow -t "$HOME/.codex" -D codex
 	stow -t "$HOME/.codex" codex
 

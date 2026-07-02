@@ -11,3 +11,4 @@ qmk/.cache
 .DS_Store
 alfred/Alfred.alfredpreferences/workflows
 cargo/.cargo
+codex/skills/.system
