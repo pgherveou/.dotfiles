@@ -1,0 +1,4 @@
+interface:
+  display_name: "Backport Main To Stack"
+  short_description: "Dispatch main PR changes onto stack PRs"
+  default_prompt: "Use $backport-main-to-stack to commit source PR changes and backport them onto the Rust core stack."

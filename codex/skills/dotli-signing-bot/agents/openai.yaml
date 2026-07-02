@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dotli Signing Bot"
+  short_description: "Pair dotli QR payloads with signer-bot"
+  default_prompt: "Use $dotli-signing-bot with {\"qrPayload\":\"polkadotapp://pair?handshake=...\"} to complete a dotli login."

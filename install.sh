@@ -106,6 +106,13 @@ run_install() {
 	stow -D claude
 	stow --no-folding claude
 
+	# codex skills: target ~/.codex so each skill dir folds into a symlink under
+	# ~/.codex/skills, leaving codex-managed dirs (e.g. skills/.system) untouched
+	echo "Stowing codex"
+	mkdir -p "$HOME/.codex/skills"
+	stow -t "$HOME/.codex" -D codex
+	stow -t "$HOME/.codex" codex
+
 	pushd "$HOME/.private"
 	stow -t ~/ ssh
 	popd
