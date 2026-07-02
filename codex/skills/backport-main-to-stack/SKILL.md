@@ -16,6 +16,7 @@ Treat the source PR branch as canonical and the stack as derived.
 - Do not start stack mutation until the user approves the hunk-to-layer dispatch plan.
 - Stop on dirty unrelated work, remote/local divergence, rejected patches, rebase conflicts, or failing verification.
 - The remote top stack branch must end with the exact same git tree as the remote source PR branch. Treat any non-empty diff or tree-hash mismatch as a blocker, not a successful backport.
+- Never force push any branch, source PR or stack layer, even with `--force-with-lease`, without explicit user permission. Always `git fetch origin <branch>` first and prefer a fast-forward push. If a push is rejected as non-fast-forward, stop and ask before force pushing so you cannot overwrite work pushed by the user or another agent.
 
 ## Preflight
 
@@ -111,7 +112,7 @@ For each target layer, from lowest to highest:
 5. Rebase or sync every upper layer through the `gh-stack` skill so the stack remains linear.
 6. Repeat for the next target layer.
 
-After all impacted layers pass locally, push the stack through the `gh-stack` skill or with explicit `git push --force-with-lease origin <branch>` for each updated layer when `gh-stack` metadata is unavailable.
+After all impacted layers pass locally, push the stack through the `gh-stack` skill. Rebasing a stack rewrites history, so pushing updated layers will usually require a force push. Do not force push any stack layer without explicit user permission (see Ground Rules): `git fetch origin <branch>` first, try a plain `git push origin <branch>`, and only if it is rejected as non-fast-forward, stop and ask the user before running `git push --force-with-lease origin <branch>`.
 
 Then verify the pushed remote top stack branch exactly matches the pushed remote source PR branch:
 
