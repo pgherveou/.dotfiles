@@ -71,6 +71,19 @@ local function unstagedHunksQuickfixList()
   return quickFixListFromDiff('/tmp/staged.diff')
 end
 
+local function stagedFilesQuickfixList()
+  local git_root = vim.fn.system('git rev-parse --show-toplevel'):gsub('\n', '')
+  local files = vim.split(vim.fn.system('git diff --cached --name-only'), '\n', { trimempty = true })
+
+  local qf_list = {}
+  for _, file in ipairs(files) do
+    table.insert(qf_list, { filename = git_root .. '/' .. file, lnum = 1, text = file })
+  end
+
+  vim.fn.setqflist(qf_list)
+  vim.cmd('copen')
+end
+
 -- stagedHunksQuickfixList()
 -- bind leader R to source the current file
 -- vim.api.nvim_set_keymap('n', '<leader>R', ':source %<cr>', { noremap = true, silent = true })
@@ -101,6 +114,7 @@ return {
     { '<leader>grc', ':G rebase --continue<cr>', desc = '[Git] Continue rebase' },
     { '<leader>gq', stagedHunksQuickfixList, desc = '[Git] Create a quick fix list with staged hunks' },
     { '<leader>gu', unstagedHunksQuickfixList, desc = '[Git] Create a quick fix list with unstaged hunks' },
+    { '<leader>gF', stagedFilesQuickfixList, desc = '[Git] Create a quick fix list with staged files' },
   },
   config = function()
     -- alias Gclog to Gclog -100 using cnoreabbrev

@@ -49,10 +49,13 @@ if [[ $(uname) == "Linux" ]]; then
 fi
 
 # local scripts
-export PATH="$PATH:$HOME/.local/scripts:$HOME/.local/bin:$HOME/github/git-pile/bin"
+export PATH="$PATH:$HOME/.local/scripts:$HOME/.local/bin:$HOME/.private/scripts:$HOME/github/git-pile/bin"
 
 # mason bin
 export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
+
+# flutter
+export PATH="$HOME/flutter/bin:$PATH"
 
 # clangd
 export PATH="/usr/local/opt/llvm/bin:$PATH"
@@ -350,7 +353,14 @@ export PATH=/home/pg/.opencode/bin:$PATH
 
 # wt worktrunk
 if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
-alias wt-clean='git worktree list --porcelain | grep "^branch" | sed "s|branch refs/heads/||" | fzf --multi --header="TAB to select, Enter to remove" | xargs wt remove -f'
+# Select one or more worktrees to remove (TAB to multi-select)
+wt-clean(){
+  local branches
+  branches=$(git worktree list --porcelain | grep "^branch" | sed "s|branch refs/heads/||" \
+    | fzf --multi --header="TAB to select, Enter to remove")
+  [ -z "$branches" ] && return 0
+  echo "$branches" | xargs wt remove -f
+}
 
 # excalidraw MCP canvas server
 excalidraw() {

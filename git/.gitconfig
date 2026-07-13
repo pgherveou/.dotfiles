@@ -68,3 +68,5 @@
 	pr-merge-flags = --squash
 	auto-merge = false
 	auto-fix = false
+[safe]
+	directory = /home/pg/flutter

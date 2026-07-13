@@ -41,6 +41,20 @@ local default_lsp_mappings = {
   ['go'] = { cmd = ':Telescope lsp_references<CR>', desc = 'Display lsp references' },
 }
 
+-- When no rust LSP is running, provide treesitter-based gd/gr as a fallback
+-- (replaces the dropped nvim-treesitter-refactor). LSP attaches buffer-local
+-- gd/gr in set_mappings below, which shadow these in LSP-backed buffers.
+if M.no_rust_lsp then
+  vim.keymap.set('n', 'gd', function()
+    if not require('plugins.lsp.ts_refactor').goto_definition() then
+      vim.notify('No treesitter definition found', vim.log.levels.INFO)
+    end
+  end, { desc = 'Go to definition (treesitter)' })
+  vim.keymap.set('n', 'gr', function()
+    require('plugins.lsp.ts_refactor').rename()
+  end, { desc = 'Rename symbol (treesitter)' })
+end
+
 local lsp_buf_format_augroup = vim.api.nvim_create_augroup('lsp_buf_format', { clear = true })
 M.format_on_save = function(client, bufnr)
   if client.server_capabilities.documentFormattingProvider then
