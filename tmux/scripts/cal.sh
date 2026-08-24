@@ -6,14 +6,16 @@ NERD_FONT_FREE=" "
 NERD_FONT_MEETING=" "
 
 # Next meeting is written to this cache by a background refresher
-# (~/.private/scripts/cal-refresh.sh, run hourly via a systemd timer)
+# (~/.private/scripts/cal-refresh.sh, run hourly by the com.pg.cal-refresh
+# launchd agent on macOS, a systemd timer on Linux)
 # as one TSV line: start_date \t start_time \t end_date \t end_time \t title
 CACHE_FILE="$HOME/.cache/next-meeting.tsv"
 
 get_next_meeting() {
     [[ -f "$CACHE_FILE" ]] || { next_meeting=""; return; }
     next_meeting=$(
-        grep -P '^[0-9]{4}-[0-9]{2}-[0-9]{2}\t[0-9]{2}:[0-9]{2}\t[0-9]{4}-[0-9]{2}-[0-9]{2}\t[0-9]{2}:[0-9]{2}\t.+$' \
+        # -E, not -P: BSD grep on macOS has no -P. $'\t' is a literal tab.
+        grep -E $'^[0-9]{4}-[0-9]{2}-[0-9]{2}\t[0-9]{2}:[0-9]{2}\t[0-9]{4}-[0-9]{2}-[0-9]{2}\t[0-9]{2}:[0-9]{2}\t.+$' \
             "$CACHE_FILE" \
         | head -n1
     )
@@ -23,9 +25,26 @@ parse_result() {
     IFS=$'\t' read -r event_date start_time end_date end_time title <<< "$1"
 }
 
+# BSD date (macOS) has no -d; it parses with -j -f instead
+to_epoch() { # "YYYY-MM-DD HH:MM"
+    if [[ "$OSTYPE" == darwin* ]]; then
+        date -j -f '%Y-%m-%d %H:%M' "$1" +%s
+    else
+        date -d "$1" +%s
+    fi
+}
+
+weekday_of() { # "YYYY-MM-DD"
+    if [[ "$OSTYPE" == darwin* ]]; then
+        date -j -f '%Y-%m-%d' "$1" +%a
+    else
+        date -d "$1" +%a
+    fi
+}
+
 calculate_times() {
-    epoc_meeting=$(date -d "$event_date $start_time" +%s)
-    epoc_end=$(date -d "$end_date $end_time" +%s)
+    epoc_meeting=$(to_epoch "$event_date $start_time")
+    epoc_end=$(to_epoch "$end_date $end_time")
     epoc_now=$(date +%s)
     epoc_diff=$((epoc_meeting - epoc_now))
     minutes_till_meeting=$((epoc_diff / 60))
@@ -56,7 +75,7 @@ print_tmux_status() {
     else
         # Show date if not today
         if [[ "$event_date" != "$today" ]]; then
-            weekday=$(date -d "$event_date" +%a)
+            weekday=$(weekday_of "$event_date")
             echo "$NERD_FONT_MEETING $weekday $start_time $title"
         else
             echo "$NERD_FONT_MEETING $start_time $title"

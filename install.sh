@@ -40,6 +40,23 @@ install_cargo_bin() {
 	done
 }
 
+# mac equivalent of the linux systemd timers: hourly background jobs
+setup_launch_agents() {
+	mkdir -p "$HOME/Library/LaunchAgents"
+	stow -D launchd
+	stow launchd
+
+	local uid
+	uid=$(id -u)
+	for plist in launchd/Library/LaunchAgents/*.plist; do
+		local label
+		label=$(basename "$plist" .plist)
+		launchctl bootout "gui/$uid/$label" 2>/dev/null || true
+		launchctl bootstrap "gui/$uid" "$HOME/Library/LaunchAgents/$label.plist"
+		echo "Loaded launch agent $label"
+	done
+}
+
 setup_cron_jobs() {
 	# cleanup rust projects every day at 7am
 	add_cron_job "$HOME/.dotfiles/bin/.local/scripts/rust_projects_cleanup.sh" "0 7 * * *"
@@ -63,6 +80,8 @@ run_install() {
 		ln -s .tmux-macos.conf .tmux.conf
 		# ln -s /opt/homebrew/share/antigen/antigen.zsh ~/.antigen.zsh
 		# brew bundle install
+
+		setup_launch_agents
 	else
 		ln -sf .tmux-linux.conf .tmux.conf
 	fi

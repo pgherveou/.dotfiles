@@ -38,17 +38,24 @@ local config = function()
   require('nvim-treesitter').setup()
 
   -- Register custom local vhs parser (compile with :TSInstall vhs)
-  require('nvim-treesitter.parsers').vhs = {
-    install_info = {
-      url = '/home/pg/github/tree-sitter-vhs',
-      branch = 'main',
-    },
-  }
+  local vhs_dir = vim.fn.expand('~/github/tree-sitter-vhs')
+  local has_vhs = vim.fn.isdirectory(vhs_dir) == 1
+  if has_vhs then
+    require('nvim-treesitter.parsers').vhs = {
+      install_info = {
+        path = vhs_dir,
+        queries = vim.fn.isdirectory(vhs_dir .. '/queries') == 1 and 'queries' or nil,
+      },
+    }
+  end
   vim.treesitter.language.register('vhs', { 'vhs' })
 
   -- Install any parsers we want that aren't compiled yet
   local installed = require('nvim-treesitter.config').get_installed('parsers')
   local missing = vim.tbl_filter(function(p)
+    if p == 'vhs' and not has_vhs then
+      return false
+    end
     return not vim.tbl_contains(installed, p)
   end, ensure_installed)
   if #missing > 0 then

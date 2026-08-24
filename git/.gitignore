@@ -11,3 +11,4 @@ hack.sh
 .sisyphus
 excalidraw.log
 .playwright-mcp
+build/*

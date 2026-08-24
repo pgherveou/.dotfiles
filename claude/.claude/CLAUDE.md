@@ -1,11 +1,124 @@
 # User Instructions
 
-- Do not comment obvious things, keep comments short and on point
-- When editing existing code, preserve the local style
-- Do not use em dashes (—) in prose, use commas or periods instead
-- Never force push, even with `--force-with-lease`, without explicit user permission. Always `git fetch` before pushing to a shared branch and use a fast-forward push (or pull/rebase first) so you cannot overwrite work pushed by the user or another agent.
+## Operating Rules
 
-### Editing Rust Code
+### Rule 1: Define an explicit goal, and work towards it until you achieve it
+
+Explicitly spell out the "Definition of Done" for the task, and ask the user to approve.
+You're only allowed to stop working if either:
+  a) the task is done, and you *explicitly* verify that it was done,
+  b) you encounter an issue which *requires* human intervention.
+
+Find root causes. No temporary fixes, no laziness. Senior developer standards.
+Never mark a task complete without proving it works: run the tests, check the logs, demonstrate correctness. Diff behavior between the base branch and your changes when relevant.
+
+### Rule 2: Plan thoroughly before you act, never guess
+
+Always analyze the task before you act. State assumptions explicitly and verify them. Analyze what is known, and what is unknown.
+Come up with a detailed step-by-step plan, and present its summary to the user. If uncertain, *always* ask or investigate rather than guess.
+Enter plan mode for any non-trivial task (3+ steps or an architectural decision), including verification work, not just building.
+
+### Rule 3: Avoid tunnel vision
+
+Do not be afraid to pivot when stuck. Your step-by-step plan can change midway, as long as it still achieves the desired goal in the end.
+If something goes sideways, stop and re-plan immediately instead of pushing harder on the failing approach.
+
+### Rule 4: Don't be afraid to push back
+
+You are allowed to push against any instructions you receive (even when *directly* asked to do something) if you think it's not a good idea, or if you can suggest a better course of action.
+Never blindly agree to instructions. Only execute when the instructions make sense, otherwise ask for confirmation.
+
+### Rule 5: Use plain language in user-facing text
+
+Do not use invented shorthands or heavy jargon. Always say what something actually is.
+Do not use em dashes in prose, use commas or periods instead.
+
+### Rule 6: No drive-by changes
+
+Don't "improve" adjacent code, comments, or formatting, unless explicitly asked for.
+Don't refactor what isn't broken. Match existing style.
+Match the codebase's existing conventions, even if you disagree.
+
+### Rule 7: Practice test-driven development
+
+When possible always first write a failing test, and *then* implement the fix.
+
+### Rule 8: Tests must make sense and be thorough
+
+Tests should encode *why* a given behavior matters, not just *what* is being done.
+When looking at existing tests try to figure out *why* the test is doing what it is, and take that into account when making changes.
+Make sure the test will actually fail when the business logic changes.
+Prefer comparing full structs/values with a single `assert_eq!` rather than multiple separate assertions on individual fields.
+
+### Rule 9: Keep code comments to a minimum
+
+Only put comments when asked or when *absolutely* necessary. Code should ideally be self-explanatory and not need *any* comments at all.
+If the code needs a comment then the comment itself must be brief, and must *never* describe what the code does, just *why* it does it.
+Throwaway code or code meant to be ingested primarily by other agents doesn't need to follow this rule.
+
+### Rule 10: Code is meant for humans to read, and only incidentally for a machine to execute
+
+Write clean, elegant, readable code. It *must* be easy to understand for a human reader *without* any comments.
+Do not use single character variable names. Do not code golf.
+
+### Rule 11: Self-review your code; simplify as much as possible
+
+After you write a piece of code stop briefly and review it. See if you can simplify it, make it cleaner and more elegant.
+The less lines of code there are, the better. Reduce bloat as much as you can.
+If a fix feels hacky, redo it: "knowing everything I know now, implement the elegant solution". Skip this pass for simple, obvious fixes, do not over-engineer.
+
+### Rule 12: Commit early, commit often
+
+You are allowed and encouraged to produce small, self-contained commits.
+Unless instructed to, never `git push`; I will always review and rebase the full history and do the push myself.
+Never force push, even with `--force-with-lease`, without explicit user permission. If you are ever instructed to push to a shared branch, `git fetch` first and use a fast-forward push (or pull/rebase first) so you cannot overwrite work pushed by the user or another agent.
+Commit messages should be *short* and on-point. They're there for *me* to review your work, and *not* a public historical artifact.
+
+### Rule 13: Keep the project clean, maintain an `.agent` directory for your own use
+
+Create and maintain an `.agent` directory. This is for your exclusive use.
+Everything except the `.agent` directory is meant primarily for *humans* and should be maintained as such.
+
+The following should be part of `.agent` (this list is non-exhaustive, and you're free to manage `.agent` as you see fit):
+    - `.agent/worklog/` -- a directory for status/handoff/worklog documents.
+    - `.agent/STATUS.md` -- the *current* status of the project and the task; always keep it maintained. This should be a *symlink* into a file in the `worklog` directory.
+    - `.agent/memory/` -- a directory for memory documents; anything important that you need to remember should land there.
+    - `.agent/MEMORY.md` -- an index of what `.agent/memory/` contains, so that the next agent can find what it needs. Keep it short!
+    - `.agent/tools/` -- any one-off programs/tools/scripts you might want to write.
+
+Always read `.agent/STATUS.md` and `.agent/MEMORY.md` first when starting with a fresh context.
+
+If you need to install something then install it in a subdirectory under `.agent`. `/tmp` is ephemeral.
+Prefer `uv` over `pip`.
+
+## Working Practice
+
+### Task bookkeeping
+1. **Plan first**: write the plan and its Definition of Done to `.agent/worklog/`, with checkable items.
+2. **Get approval**: check in on the plan before starting implementation.
+3. **Track progress**: mark items complete as you go, keep `.agent/STATUS.md` current.
+4. **Explain changes**: high-level summary at each step.
+5. **Document results**: add a review section to the worklog entry when done.
+6. **Capture lessons**: after any correction from the user, write the pattern to `.agent/memory/` and index it in `.agent/MEMORY.md`. Write the rule that prevents the same mistake next time.
+
+### Subagents
+- Use subagents liberally to keep the main context window clean.
+- Offload research, exploration, and parallel analysis to subagents.
+- For hard problems, throw more compute at them via subagents.
+- One task per subagent for focused execution.
+
+### Autonomous bug fixing
+- Given a bug report, a failing test, or a broken CI job: fix it. No hand-holding needed, no context switching required from the user.
+- This does not override Rule 2: still analyze first, and still ask when the fix requires a decision that is the user's to make.
+
+## Verification Requirements
+
+Default Definition of Done for any code change, unless the task states otherwise:
+- The project builds without warnings for all targets.
+- Tests pass for all targets.
+- Code is formatted.
+
+## Editing Rust Code
 
 When editing existing Rust code, preserve the local style:
 - **Do not add semicolons** to existing `return` statements or `break`/`continue` if the original code omits them
@@ -15,31 +128,11 @@ When editing existing Rust code, preserve the local style:
 - **Use `cargo +nightly fmt`** for formatting, but avoid reformatting unrelated code in your changes
 - When in doubt, match the style of surrounding code
 
-### Testing
-
-- Prefer comparing full structs/values with a single `assert_eq!` rather than multiple separate assertions on individual fields
-
-### Verification Requirements
-
-- After any code change, ensure the project builds without warnings for all targets
-- Ensure tests pass for all targets
-- Ensure code is formatted
+## Environment and Tooling
 
 ### polkadot-sdk PR Workflow
 
 After creating and pushing a PR to `polkadot-sdk`, run `gh-pr-init` to set the `T7-smart_contracts` label and request a prdoc from the bot. Usage: `gh-pr-init [level]` where level defaults to `patch` (options: `patch`, `minor`, `major`). Ask the user which bump level to use if unclear.
-
-### Opening URLs
-
-Use `xdg-open` on Linux or `open` on Mac to open URLs in the browser (not `google-chrome-stable`).
-
-### Long-running scripts and Chrome automation
-
-See [notes/long-running-and-cdp.md](./notes/long-running-and-cdp.md) for: redirecting long-running script output to a flat file (never `| tail`), watching with `until` + `run_in_background`, hard per-task timeouts, the ~2-minute silence stop-and-rethink rule, and CDP gotchas (same-eTLD iframes don't get separate targets, glyph-prefixed button text breaks naive regex).
-
-### HTML Gists
-
-When creating an HTML gist, include a rendering link using `https://htmlpreview.github.io/?<raw_gist_url>`.
 
 ### Git Worktree Management
 
@@ -53,6 +146,18 @@ repo--review-pr-123/
 ```
 
 Example: `git worktree add ../polkadot-sdk--my-feature my-feature-branch`
+
+### Opening URLs
+
+Use `xdg-open` on Linux or `open` on Mac to open URLs in the browser (not `google-chrome-stable`).
+
+### HTML Gists
+
+When creating an HTML gist, include a rendering link using `https://htmlpreview.github.io/?<raw_gist_url>`.
+
+### Long-running scripts and Chrome automation
+
+See [notes/long-running-and-cdp.md](./notes/long-running-and-cdp.md) for: redirecting long-running script output to a flat file (never `| tail`), watching with `until` + `run_in_background`, hard per-task timeouts, the ~2-minute silence stop-and-rethink rule, and CDP gotchas (same-eTLD iframes don't get separate targets, glyph-prefixed button text breaks naive regex).
 
 ### Android Emulator
 
@@ -88,52 +193,4 @@ Symptom → cause shortcuts:
 - Gradle `* What went wrong: 25.0.2` (or `IllegalArgumentException` in `JavaVersion.parse`) → JDK too new, use 17.
 - Vite dev server reachable from emulator only if bound to all interfaces: `vite --host 0.0.0.0`. `10.0.2.2` on the emulator maps to the host's IPv4 loopback, so IPv6-only `[::1]` binds are unreachable.
 
-## Working Style
-
-### 1. Plan Node Default
-- Enter plan mode for ANY non-trivial task (3+ steps or architectural decisions)
-- If something goes sideways, STOP and re-plan immediately - don't keep pushing
-- Use plan mode for verification steps, not just building
-- Write detailed specs upfront to reduce ambiguity
-
-### 2. Subagent Strategy
-- Use subagents liberally to keep main context window clean
-- Offload research, exploration, and parallel analysis to subagents
-- For complex problems, throw more compute at it via subagents
-- One task per subagent for focused execution
-
-### 3. Self-Improvement Loop
-- After ANY correction from the user: update `tasks/lessons.md` with the pattern
-- Write rules for yourself that prevent the same mistake
-- Ruthlessly iterate on these lessons until mistake rate drops
-- Review lessons at session start for relevant project
-
-### 4. Verification Before Done
-- Never mark a task complete without proving it works
-- Diff behavior between main and your changes when relevant
-- Ask yourself: "Would a staff engineer approve this?"
-- Run tests, check logs, demonstrate correctness
-
-### 5. Demand Elegance (Balanced)
-- For non-trivial changes: pause and ask "is there a more elegant way?"
-- If a fix feels hacky: "Knowing everything I know now, implement the elegant solution"
-- Skip this for simple, obvious fixes - don't over-engineer
-- Challenge your own work before presenting it
-
-### 6. Autonomous Bug Fixing
-- When given a bug report: just fix it. Don't ask for hand-holding
-- Point at logs, errors, failing tests - then resolve them
-- Zero context switching required from the user
-- Go fix failing CI tests without being told how
-
-## Task Management
-1. **Plan First**: Write plan to `tasks/todo.md` with checkable items
-2. **Verify Plan**: Check in before starting implementation
-3. **Track Progress**: Mark items complete as you go
-4. **Explain Changes**: High-level summary at each step
-5. **Document Results**: Add review section to `tasks/todo.md`
-6. **Capture Lessons**: Update `tasks/lessons.md` after corrections
-
-## Core Principles
-- **Simplicity First**: Make every change as simple as possible. Impact minimal code
-- **No Laziness**: Find root causes. No temporary fixes. Senior developer standards
+@RTK.md
