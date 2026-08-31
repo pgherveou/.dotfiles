@@ -42,7 +42,7 @@ install_cargo_bin() {
 
 # mac equivalent of the linux systemd timers: hourly background jobs
 setup_launch_agents() {
-	mkdir -p "$HOME/Library/LaunchAgents"
+	mkdir -p "$HOME/Library/LaunchAgents" "$HOME/.cache"
 	stow -D launchd
 	stow launchd
 
@@ -55,6 +55,58 @@ setup_launch_agents() {
 		launchctl bootstrap "gui/$uid" "$HOME/Library/LaunchAgents/$label.plist"
 		echo "Loaded launch agent $label"
 	done
+}
+
+setup_codex() {
+	local operating_system="${1:-$(uname -s)}"
+	local codex_home="${CODEX_HOME:-$HOME/.codex}"
+	local config_path="$codex_home/config.toml"
+	local dotfiles_root
+	dotfiles_root=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+	local config_name
+
+	case "$operating_system" in
+	Darwin)
+		config_name="config.macos.toml"
+		;;
+	Linux)
+		config_name="config.linux.toml"
+		;;
+	*)
+		echo "Unsupported operating system: $operating_system" >&2
+		return 1
+		;;
+	esac
+
+	local selected_config="$dotfiles_root/codex/$config_name"
+	local backup_path="$codex_home/config.toml.before-dotfiles"
+	local pending_link="$codex_home/config.toml.linking.$$"
+
+	mkdir -p "$codex_home"
+
+	stow -d "$dotfiles_root" -t "$codex_home" -D \
+		--ignore='^config\.(macos|linux)\.toml$' \
+		--ignore='^skills/\.system($|/)' \
+		codex
+	stow -d "$dotfiles_root" -t "$codex_home" \
+		--ignore='^config\.(macos|linux)\.toml$' \
+		--ignore='^skills/\.system($|/)' \
+		codex
+
+	if [ -e "$config_path" ] && [ ! -L "$config_path" ]; then
+		if [ ! -f "$config_path" ]; then
+			echo "Cannot replace non-file Codex config at $config_path" >&2
+			return 1
+		fi
+		if [ -e "$backup_path" ] || [ -L "$backup_path" ]; then
+			echo "Cannot preserve Codex config because $backup_path already exists" >&2
+			return 1
+		fi
+		mv "$config_path" "$backup_path"
+	fi
+
+	ln -s "$selected_config" "$pending_link"
+	mv -f "$pending_link" "$config_path"
 }
 
 setup_cron_jobs() {
@@ -130,9 +182,7 @@ run_install() {
 	# skills/.system, which is gitignored. Do not pre-create ~/.codex/skills, or
 	# stow can't fold it into one symlink.
 	echo "Stowing codex"
-	mkdir -p "$HOME/.codex"
-	stow -t "$HOME/.codex" -D codex
-	stow -t "$HOME/.codex" codex
+	setup_codex
 
 	pushd "$HOME/.private"
 	stow -t ~/ ssh

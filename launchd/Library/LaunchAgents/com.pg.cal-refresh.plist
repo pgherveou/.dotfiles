@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+  <key>Label</key>
+  <string>com.pg.cal-refresh</string>
+  <!-- bash -c so $HOME expands; launchd plists have no variable expansion -->
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>-c</string>
+    <string>exec "$HOME/.private/scripts/cal-refresh.sh" &gt;&gt;"$HOME/.cache/cal-refresh.log" 2&gt;&amp;1</string>
+  </array>
+  <!-- StartInterval (not StartCalendarInterval): on a laptop this fires right
+       after wake if the hourly tick was missed while asleep -->
+  <key>StartInterval</key>
+  <integer>3600</integer>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>ProcessType</key>
+  <string>Background</string>
+  </dict>
+</plist>

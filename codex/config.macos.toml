@@ -1,0 +1,237 @@
+model = "gpt-5.6-sol"
+model_reasoning_effort = "xhigh"
+
+service_tier = "fast"
+sandbox_mode = "workspace-write"
+
+
+notify = ["/Users/pg/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
+
+[tui.keymap.global]
+open_external_editor = "ctrl-e"
+
+# ctrl-e is codex's default move_line_end; rebound so it can open the editor
+# (ctrl-g, the default, is ghostty's leader key)
+[tui.keymap.editor]
+move_line_end = "end"
+
+[tui.model_availability_nux]
+"gpt-5.5" = 4
+"gpt-5.6-sol" = 4
+
+[mcp_servers.figma]
+url = "https://mcp.figma.com/mcp"
+
+[mcp_servers.node_repl]
+args = []
+command = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl"
+startup_timeout_sec = 120
+
+[mcp_servers.node_repl.env]
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = "/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_PATH = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/pg/.codex:/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
+CODEX_HOME = "/Users/pg/.codex"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+BROWSER_USE_TINYSKY_ENABLED = "0"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = "Control desktop apps on macOS through Computer Use."
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.825.41651"
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/pg/.codex/plugins/cache/openai-bundled/browser/26.825.41651/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
+SKY_CUA_SERVICE_PATH = "/Users/pg/.codex/computer-use/Codex Computer Use.app"
+CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex"
+
+[mcp_servers.computer-use]
+command = "./Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient"
+args = ["mcp"]
+cwd = "."
+enabled = false
+
+[mcp_servers.cua_repl]
+command = "/Applications/ChatGPT.app/Contents/MacOS/ChatGPT"
+enabled = false
+
+[plugins."gmail@openai-curated"]
+enabled = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."computer-use@openai-bundled"]
+enabled = true
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+[plugins."visualize@openai-bundled"]
+enabled = true
+
+[plugins."sites@openai-bundled"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."codex-app-tools@openai-bundled"]
+enabled = true
+
+[plugins."chrome@openai-bundled"]
+enabled = true
+
+[projects."/Users/pg/github/polkadot-sdk"]
+trust_level = "trusted"
+
+[projects."/Users/pg/github/truapi"]
+trust_level = "trusted"
+
+[projects."/Users/pg/github/host-product-sdk"]
+trust_level = "trusted"
+
+[projects."/Users/pg/github/individuality"]
+trust_level = "trusted"
+
+[projects."/Users/pg/github/product-sdk"]
+trust_level = "trusted"
+
+[projects."/Users/pg/github/host-playground"]
+trust_level = "trusted"
+
+[projects."/Users/pg/github/smoldot_stress_test"]
+trust_level = "trusted"
+
+[projects."/Users/pg/github/chasse_au_tresor"]
+trust_level = "trusted"
+
+[projects."/Users/pg/github/summit-faucet-chatbot"]
+trust_level = "trusted"
+
+[projects."/Users/pg/github/festival"]
+trust_level = "trusted"
+
+[projects."/Users/pg/Documents/Codex/2026-06-21/can"]
+trust_level = "trusted"
+
+[projects."/Users/pg/github/holiday_trip"]
+trust_level = "trusted"
+
+[projects."/Users/pg/Documents/Codex/2026-06-22/h"]
+trust_level = "trusted"
+
+[projects."/Users/pg/github/pyto"]
+trust_level = "trusted"
+
+[projects."/Users/pg/github/shared-worker-demo"]
+trust_level = "trusted"
+
+[projects."/Users/pg/github"]
+trust_level = "trusted"
+
+[projects."/Users/pg/Documents/Codex/2026-07-27/i"]
+trust_level = "trusted"
+
+[projects."/Users/pg/Documents/Codex/2026-07-27/derive-clone-copy-debug-partialeq-eq"]
+trust_level = "trusted"
+
+[projects."/Users/pg/github/voting-app"]
+trust_level = "trusted"
+
+[projects."/Users/pg/github/truapi/hosts/ios"]
+trust_level = "trusted"
+
+[projects."/Users/pg/Documents/Codex/2026-07-30/is"]
+trust_level = "trusted"
+
+[projects."/Users/pg/github/dotli"]
+trust_level = "trusted"
+
+[projects."/Users/pg/Documents/Codex/2026-08-03/is"]
+trust_level = "trusted"
+
+[projects."/Users/pg/Documents/Codex/2026-08-05/wha"]
+trust_level = "trusted"
+
+[projects."/Users/pg/Documents/Codex/2026-08-07/impact-stepped-into-a-coordination-clusterfuck"]
+trust_level = "trusted"
+
+[projects."/Users/pg/github/sdk-team"]
+trust_level = "trusted"
+
+[projects."/Users/pg/Documents/Codex/2026-08-08/few-notes-for-next-two-weeks"]
+trust_level = "trusted"
+
+[projects."/Users/pg/Documents/Codex/2026-08-19/lis"]
+trust_level = "trusted"
+
+[projects."/Users/pg/Documents/Codex/2026-08-23/google-drive-plugin-google-drive-openai"]
+trust_level = "trusted"
+
+[projects."/Users/pg/Documents/Codex/2026-08-23/google-drive-plugin-google-drive-openai-2"]
+trust_level = "trusted"
+
+[projects."/Users/pg/Documents/Codex/2026-08-24/google-drive-plugin-google-drive-openai"]
+trust_level = "trusted"
+
+[projects."/Users/pg/Documents/ChatGPT/sdk-team"]
+trust_level = "trusted"
+
+[projects."/Users/pg/.dotfiles"]
+trust_level = "trusted"
+
+[projects."/Users/pg"]
+trust_level = "trusted"
+
+[projects."/Users/pg/github/majority"]
+trust_level = "trusted"
+
+[projects."/Users/pg/Documents/Codex/2026-08-26/how"]
+trust_level = "trusted"
+
+[projects."/Users/pg/Documents/Codex/2026-08-27/s"]
+trust_level = "trusted"
+
+[projects."/Users/pg/Documents/Codex/2026-08-29/build-ios-apps-plugin-build-ios"]
+trust_level = "trusted"
+
+[projects."/Users/pg/Documents/Codex/2026-08-30/build-ios-apps-plugin-build-ios"]
+trust_level = "trusted"
+
+[desktop]
+followUpQueueMode = "queue"
+dock-icon-preference = "codex-system"
+conversationDetailMode = "STEPS_PROSE"
+
+[desktop.open-in-target-preferences]
+global = "ghostty"
+
+[desktop.open-in-target-preferences.perPath]
+"/Users/pg/github/polkadot-sdk/substrate/frame/revive" = "ghostty"
+
+[marketplaces.openai-bundled]
+source_type = "local"
+source = "/Users/pg/.codex/.tmp/bundled-marketplaces/openai-bundled"
+
+[marketplaces.openai-primary-runtime]
+last_updated = "2026-08-27T09:12:58Z"
+source_type = "local"
+source = "/Users/pg/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
+
+[features]
+js_repl = false
+
+[sandbox_workspace_write]
+network_access = true
+
+[shell_environment_policy.set]
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "9230e2bd8b24b7ac7a0ba6774c64bf0d78ecdabbdd91d0ed627b02a587bae2df"

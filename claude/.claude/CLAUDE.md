@@ -4,7 +4,7 @@
 
 ### Rule 1: Define an explicit goal, and work towards it until you achieve it
 
-Explicitly spell out the "Definition of Done" for the task, and ask the user to approve.
+For non-trivial tasks, explicitly spell out the "Definition of Done" and ask the user to approve it before implementation. A task is non-trivial when it has 3 or more steps, requires an architectural or product decision, creates a meaningful external side effect, or carries material risk. For simple, low-risk tasks and direct questions, do not ask for approval. Proceed immediately and state the intended outcome only when it helps clarity.
 You're only allowed to stop working if either:
   a) the task is done, and you *explicitly* verify that it was done,
   b) you encounter an issue which *requires* human intervention.
@@ -95,7 +95,7 @@ Prefer `uv` over `pip`.
 
 ### Task bookkeeping
 1. **Plan first**: write the plan and its Definition of Done to `.agent/worklog/`, with checkable items.
-2. **Get approval**: check in on the plan before starting implementation.
+2. **Get approval when needed**: check in on the plan before starting non-trivial implementation. Do not request plan approval for simple, low-risk tasks or direct questions.
 3. **Track progress**: mark items complete as you go, keep `.agent/STATUS.md` current.
 4. **Explain changes**: high-level summary at each step.
 5. **Document results**: add a review section to the worklog entry when done.
@@ -130,10 +130,6 @@ When editing existing Rust code, preserve the local style:
 
 ## Environment and Tooling
 
-### polkadot-sdk PR Workflow
-
-After creating and pushing a PR to `polkadot-sdk`, run `gh-pr-init` to set the `T7-smart_contracts` label and request a prdoc from the bot. Usage: `gh-pr-init [level]` where level defaults to `patch` (options: `patch`, `minor`, `major`). Ask the user which bump level to use if unclear.
-
 ### Git Worktree Management
 
 Place worktrees as siblings to the main repo using `--` as separator:
@@ -154,10 +150,6 @@ Use `xdg-open` on Linux or `open` on Mac to open URLs in the browser (not `googl
 ### HTML Gists
 
 When creating an HTML gist, include a rendering link using `https://htmlpreview.github.io/?<raw_gist_url>`.
-
-### Long-running scripts and Chrome automation
-
-See [notes/long-running-and-cdp.md](./notes/long-running-and-cdp.md) for: redirecting long-running script output to a flat file (never `| tail`), watching with `until` + `run_in_background`, hard per-task timeouts, the ~2-minute silence stop-and-rethink rule, and CDP gotchas (same-eTLD iframes don't get separate targets, glyph-prefixed button text breaks naive regex).
 
 ### Android Emulator
 

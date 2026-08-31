@@ -9,6 +9,7 @@
     ],
     "defaultMode": "auto"
   },
+  "model": "opus[1m]",
   "hooks": {
     "Stop": [
       {
@@ -21,6 +22,17 @@
           {
             "type": "command",
             "command": "~/.local/scripts/claude-save-response.sh"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if command -v rtk >/dev/null 2>&1; then rtk hook claude; fi"
           }
         ]
       }
@@ -45,7 +57,9 @@
     "skill-creator@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true,
     "product-dev-skills@product-dev-skills": true,
-    "polkadot-skills@product-skills": true
+    "polkadot-skills@product-skills": true,
+    "caveman@caveman": true,
+    "eli5@claude-community": true
   },
   "extraKnownMarketplaces": {
     "karpathy-skills": {
@@ -56,14 +70,26 @@
     },
     "product-dev-skills": {
       "source": {
-        "source": "directory",
-        "path": "/home/pg/github/product-dev-skills"
+        "source": "github",
+        "repo": "pgherveou/product-dev-skills"
       }
     },
     "product-skills": {
       "source": {
         "source": "github",
         "repo": "paritytech/product-skills"
+      }
+    },
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    },
+    "claude-community": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-community"
       }
     }
   },

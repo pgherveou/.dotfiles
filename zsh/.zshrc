@@ -62,7 +62,6 @@ export PATH="/usr/local/opt/llvm/bin:$PATH"
 
 if [[ $(uname) == "Darwin" ]]; then
   export LIBCLANG_PATH="/opt/homebrew/opt/llvm/lib"
-  export DYLD_LIBRARY_PATH="/opt/homebrew/opt/llvm/lib:$DYLD_LIBRARY_PATH"
 fi
 
 # Deno
@@ -349,7 +348,7 @@ install_codex_acp() {
 
 
 # opencode
-export PATH=/home/pg/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
 
 # wt worktrunk
 if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
@@ -368,16 +367,16 @@ excalidraw() {
 }
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/pg/google-cloud-sdk/path.zsh.inc' ]; then . '/home/pg/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/path.zsh.inc"; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/home/pg/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/pg/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
 
 # bun completions
-[ -s "/Users/pg/.bun/_bun" ] && source "/Users/pg/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # pnpm
-export PNPM_HOME="/home/pg/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
