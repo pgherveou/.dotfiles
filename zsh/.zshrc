@@ -205,6 +205,36 @@ git-recent(){
   git checkout $branch
 }
 
+# Terminal title: the ssh host while connected, the working directory otherwise
+_terminal_title() { print -n "\e]2;$1\a" }
+
+_ssh_target() {
+  local arg skip_value=0
+  for arg in "$@"; do
+    if (( skip_value )); then skip_value=0; continue; fi
+    case $arg in
+      -[BbcDEeFIiJLlmOopQRSWw]) skip_value=1 ;;
+      -*) ;;
+      *) print -r -- "${arg#*@}"; return ;;
+    esac
+  done
+}
+
+_terminal_title_precmd() { _terminal_title "${PWD/#$HOME/~}" }
+
+_terminal_title_preexec() {
+  local words=(${(z)1})
+  if [[ $words[1] == ssh ]]; then
+    _terminal_title "$(_ssh_target ${words[2,-1]})"
+  else
+    _terminal_title "$words[1]"
+  fi
+}
+
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd _terminal_title_precmd
+add-zsh-hook preexec _terminal_title_preexec
+
 # Start a new tmux session and SSH to the given host
 ssh_session() {
   tmux new-session -d -s "ssh_$1" "ssh $1"
