@@ -384,11 +384,16 @@ export PATH="$HOME/.opencode/bin:$PATH"
 if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
 # Select one or more worktrees to remove (TAB to multi-select)
 wt-clean(){
-  local branches
-  branches=$(git worktree list --porcelain | grep "^branch" | sed "s|branch refs/heads/||" \
+  local main current branches
+  main=$(git worktree list --porcelain | sed -n '1s|^worktree ||p')
+  current=$(git rev-parse --show-toplevel)
+  branches=$(git worktree list --porcelain \
+    | awk -v main="$main" -v current="$current" '
+        /^worktree /{ path = substr($0, 10) }
+        /^branch /  { if (path != main && path != current) { sub(/^refs\/heads\//, "", $2); print $2 } }' \
     | fzf --multi --header="TAB to select, Enter to remove")
   [ -z "$branches" ] && return 0
-  echo "$branches" | xargs wt remove -f
+  echo "$branches" | xargs wt remove -f -y
 }
 
 # excalidraw MCP canvas server
