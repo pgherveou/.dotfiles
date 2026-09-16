@@ -385,15 +385,24 @@ if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)
 # Select one or more worktrees to remove (TAB to multi-select)
 wt-clean(){
   local main current branches
+  git worktree prune
   main=$(git worktree list --porcelain | sed -n '1s|^worktree ||p')
   current=$(git rev-parse --show-toplevel)
   branches=$(git worktree list --porcelain \
     | awk -v main="$main" -v current="$current" '
-        /^worktree /{ path = substr($0, 10) }
-        /^branch /  { if (path != main && path != current) { sub(/^refs\/heads\//, "", $2); print $2 } }' \
+        BEGIN { RS = ""; FS = "\n" }
+        {
+          path = ""; branch = ""
+          for (i = 1; i <= NF; i++) {
+            if ($i ~ /^prunable/) next
+            if ($i ~ /^worktree /) path = substr($i, 10)
+            if ($i ~ /^branch /) { branch = $i; sub(/^branch refs\/heads\//, "", branch) }
+          }
+          if (branch != "" && path != main && path != current) print branch
+        }' \
     | fzf --multi --header="TAB to select, Enter to remove")
   [ -z "$branches" ] && return 0
-  echo "$branches" | xargs wt remove -f -y
+  echo "$branches" | xargs wt remove -f -y --foreground
 }
 
 # excalidraw MCP canvas server
