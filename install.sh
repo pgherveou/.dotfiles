@@ -114,6 +114,19 @@ setup_cron_jobs() {
 	add_cron_job "$HOME/.dotfiles/bin/.local/scripts/rust_projects_cleanup.sh" "0 7 * * *"
 }
 
+# lazy.nvim resolves `dev = true` plugins from ~/github and fails to start if one
+# is missing. gh.nvim has no remote: its whole implementation lives in the plugin
+# spec, so lazy only needs the directory to exist.
+setup_nvim_dev_plugins() {
+	local dev_path="$HOME/github"
+
+	mkdir -p "$dev_path/gh.nvim"
+
+	if [ ! -d "$dev_path/quick-tests.nvim" ]; then
+		git clone https://github.com/pgherveou/quick-tests.nvim.git "$dev_path/quick-tests.nvim"
+	fi
+}
+
 run_install() {
 	set -euo pipefail
 	pushd "$HOME/.dotfiles"
@@ -143,6 +156,8 @@ run_install() {
 		mkdir -p ~/.tmux/plugins
 		git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 	fi
+
+	setup_nvim_dev_plugins
 
 	# # clone qmk firmware
 	# if [ ! -d ~/qmk_firmware ]; then
