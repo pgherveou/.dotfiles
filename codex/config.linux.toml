@@ -1,7 +1,7 @@
 model = "gpt-6-astra"
 model_reasoning_effort = "xhigh"
 
-service_tier = "fast"
+service_tier = "default"
 sandbox_mode = "workspace-write"
 
 [tui.keymap.global]
@@ -11,6 +11,9 @@ open_external_editor = "ctrl-e"
 # (ctrl-g, the default, is ghostty's leader key)
 [tui.keymap.editor]
 move_line_end = "end"
+
+[tui.model_availability_nux]
+gpt-6-astra = 4
 
 [mcp_servers.figma]
 url = "https://mcp.figma.com/mcp"
@@ -61,3 +64,27 @@ js_repl = false
 
 [sandbox_workspace_write]
 network_access = true
+
+[projects."/home/pg/github/host-rust-core"]
+trust_level = "trusted"
+
+[projects."/home/pg/.dotfiles"]
+trust_level = "trusted"
+
+[projects."/home/pg/github/dotli"]
+trust_level = "trusted"
+
+[projects."/home/pg"]
+trust_level = "trusted"
+
+[projects."/home/pg/github/polkadot-app-wiki"]
+trust_level = "trusted"
+
+[projects."/home/pg/github/sdk-team"]
+trust_level = "trusted"
+
+[projects."/home/pg/github/polkadot-android-community"]
+trust_level = "trusted"
+
+[projects."/home/pg/github/issue-proxy"]
+trust_level = "trusted"

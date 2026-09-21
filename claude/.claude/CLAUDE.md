@@ -32,6 +32,7 @@ Never blindly agree to instructions. Only execute when the instructions make sen
 
 Do not use invented shorthands or heavy jargon. Always say what something actually is.
 Do not use em dashes in prose, use commas or periods instead.
+In terminal chat, use ASCII diagrams only. Do not use Mermaid diagrams.
 
 ### Rule 6: No drive-by changes
 
