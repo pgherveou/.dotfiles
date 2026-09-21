@@ -153,6 +153,13 @@ gh-pr-fmt(){
 }
 
 
+# Ask lore-bot to review
+gh-bot-review(){
+  PR_NUMBER=$(gh pr view --json number --jq '.number' | xargs)
+  gh pr comment $PR_NUMBER --body $'@lore-bot-app review\n\n'
+}
+
+
 # Bench pallet-revive
 gh-pr-bench(){
   PR_NUMBER=$(gh pr view --json number --jq '.number' | xargs)
