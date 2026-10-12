@@ -12,3 +12,5 @@ hack.sh
 excalidraw.log
 .playwright-mcp
 build/*
+
+**/.claude/settings.local.json
