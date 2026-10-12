@@ -1,0 +1,3 @@
+# Absolute symlinks to Linux-only repo paths (/home/pg/github/...) that cannot
+# be stowed on macOS. Remove entries here once the targets exist locally.
+^/\.claude/commands/(anvil-stack|dev-stack|fixture|geth-stack|kill-servers|logs|node-env|paseo-stack|retester-test|test-evm|test-pvm|westend-stack)\.md$
