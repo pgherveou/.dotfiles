@@ -1,7 +1,7 @@
 [user]
 	email = pgherveou@gmail.com
 	name = pgherveou
-	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPtHwEtb5pAdZXtqiymDx0Aa0XEKHQSy1wlJb4Y5eQHT
+	signingkey = ~/.ssh/id_rsa.pub
 ; [commit]
 ; 	gpgsign = true
 [rerere]
@@ -61,8 +61,6 @@
 	gpgsign = false
 [gpg]
 	format = ssh
-[gpg "ssh"]
-	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 [product-dev-skills]
 	github-author = pgherveou
 	pr-merge-flags = --squash
