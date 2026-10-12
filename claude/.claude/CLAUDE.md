@@ -118,15 +118,22 @@ Default Definition of Done for any code change, unless the task states otherwise
 - Tests pass for all targets.
 - Code is formatted.
 
-## Editing Rust Code
+## Editing Existing Code
 
-When editing existing Rust code, preserve the local style:
+When editing existing code in any language, preserve the local style:
+- **Do not introduce formatting-only changes** (keep line breaks, indentation, blank lines and bracing style as-is unless required for correctness)
+- **Do not add or remove optional syntax** the surrounding code omits or uses (semicolons, braces, trailing commas, parentheses, quote style)
+- **Do not change operator position** (e.g., `&&` or `-` at end of line vs start of next line)
+- **Do not reorder** imports, declarations or members unless the change requires it
+- **Use the project's formatter** on the code you changed, but avoid reformatting unrelated code in your changes
+- **Revert tool side effects**: if a formatter, linter or build step rewrites files you did not mean to change, restore them before committing
+- When in doubt, match the style of surrounding code
+
+### Rust
+
 - **Do not add semicolons** to existing `return` statements or `break`/`continue` if the original code omits them
 - **Do not add braces** to match arms or if-else expressions if the original code uses the braceless form
-- **Do not change operator position** (e.g., `&&` or `-` at end of line vs start of next line)
-- **Do not introduce formatting-only changes** (keep line breaks and bracing style as-is unless required for correctness)
-- **Use `cargo +nightly fmt`** for formatting, but avoid reformatting unrelated code in your changes
-- When in doubt, match the style of surrounding code
+- **Use `cargo +nightly fmt`** for formatting
 
 ## Environment and Tooling
 
@@ -150,6 +157,13 @@ Use `xdg-open` on Linux or `open` on Mac to open URLs in the browser (not `googl
 ### HTML Gists
 
 When creating an HTML gist, include a rendering link using `https://htmlpreview.github.io/?<raw_gist_url>`.
+
+### iOS Simulator
+
+Check XcodeBuildMCP session defaults and booted devices before choosing a
+simulator. Prefer the simulator already used for this project, including across
+worktrees; otherwise reuse a compatible booted simulator. Choose or create a
+different device only when the task requires it or the user requests it.
 
 ### Android Emulator
 
