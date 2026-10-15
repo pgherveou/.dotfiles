@@ -17,7 +17,6 @@
     "defaultMode": "auto"
   },
   "model": "opus",
-  "outputStyle": "bottom-line",
   "hooks": {
     "Stop": [
       {
@@ -101,6 +100,7 @@
       }
     }
   },
+  "outputStyle": "bottom-line",
   "effortLevel": "xhigh",
   "modelSettings": {
     "claude-opus-5": {
