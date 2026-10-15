@@ -9,8 +9,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
-  "outputStyle": "bottom-line",
+  "model": "opus",
   "hooks": {
     "Stop": [
       {
@@ -94,6 +93,7 @@
       }
     }
   },
+  "outputStyle": "bottom-line",
   "effortLevel": "xhigh",
   "modelSettings": {
     "claude-opus-5": {
