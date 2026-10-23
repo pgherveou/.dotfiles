@@ -23,9 +23,11 @@ fi
 # clean up the target name
 selected_name=$(basename "$selected" | tr . _)
 
-# a typed name that is not a directory starts a session in ~/github
+# a typed name that is not a directory starts a single-pane session in ~/github
+split_pane=true
 if [[ ! -d $selected ]]; then
 	selected="$HOME/github"
+	split_pane=false
 fi
 
 # check if tmux is running
@@ -46,7 +48,9 @@ if ! tmux has-session -t=$selected_name 2>/dev/null; then
 	tmux send-keys -t $selected_name "nv" Enter
 
 	# open an empty shell in a vertical split on the first window
-	tmux split-window -h -t $selected_name -c $selected
+	if $split_pane; then
+		tmux split-window -h -t $selected_name -c $selected
+	fi
 
 	# # create a second window and rename it to "shell"
 	# tmux new-window -t $selected_name -n "shell" -c $selected
