@@ -12,12 +12,18 @@ if [[ $# -eq 1 ]]; then
 	selected=$1
 # use fzf to select the target
 else
-	selected=$(printf '%s\n' $(find -L ~/github -mindepth 1 -maxdepth 1 -type d) $(find ~ -mindepth 1 -maxdepth 1 -type l -exec test -d {} \; -print) "$HOME/.dotfiles" | $FZF_BIN)
+	selected=$(printf '%s\n' $(find -L ~/github -mindepth 1 -maxdepth 1 -type d) $(find ~ -mindepth 1 -maxdepth 1 -type l -exec test -d {} \; -print) "$HOME/.dotfiles" | $FZF_BIN --bind "enter:accept-or-print-query,alt-enter:print-query")
 fi
 
 # exit if no target selected
 if [[ -z $selected ]]; then
 	exit 0
+fi
+
+# create a new project folder when the input is not an existing directory
+if [[ ! -d $selected ]]; then
+	selected="$HOME/github/$selected"
+	mkdir -p "$selected"
 fi
 
 # clean up the target name
@@ -40,9 +46,8 @@ if ! tmux has-session -t=$selected_name 2>/dev/null; then
 	tmux send-keys -t $selected_name "tmux rename-window 'nvim'" Enter
 	tmux send-keys -t $selected_name "nv" Enter
 
-	# open claude in a vertical split on the first window
+	# open an empty shell in a vertical split on the first window
 	tmux split-window -h -t $selected_name -c $selected
-	tmux send-keys -t $selected_name "ca" Enter
 
 	# # create a second window and rename it to "shell"
 	# tmux new-window -t $selected_name -n "shell" -c $selected
