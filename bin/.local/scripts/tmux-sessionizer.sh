@@ -20,14 +20,13 @@ if [[ -z $selected ]]; then
 	exit 0
 fi
 
-# create a new project folder when the input is not an existing directory
-if [[ ! -d $selected ]]; then
-	selected="$HOME/github/$selected"
-	mkdir -p "$selected"
-fi
-
 # clean up the target name
 selected_name=$(basename "$selected" | tr . _)
+
+# a typed name that is not a directory starts a session in ~/github
+if [[ ! -d $selected ]]; then
+	selected="$HOME/github"
+fi
 
 # check if tmux is running
 tmux_running=$(pgrep tmux)
