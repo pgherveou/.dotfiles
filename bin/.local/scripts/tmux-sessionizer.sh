@@ -12,7 +12,12 @@ if [[ $# -eq 1 ]]; then
 	selected=$1
 # use fzf to select the target
 else
-	selected=$(printf '%s\n' $(find -L ~/github -mindepth 1 -maxdepth 1 -type d) $(find ~ -mindepth 1 -maxdepth 1 -type l -exec test -d {} \; -print) "$HOME/.dotfiles" | $FZF_BIN --bind "enter:accept-or-print-query,alt-enter:print-query")
+	export FZF_BIN DIRECTORIES
+	DIRECTORIES=$(printf '%s\n' $(find -L ~/github -mindepth 1 -maxdepth 1 -type d) $(find ~ -mindepth 1 -maxdepth 1 -type l -exec test -d {} \; -print) "$HOME/.dotfiles")
+	# the [new] entry goes after the ranked matches so an existing directory stays the default
+	list_matches='echo "$DIRECTORIES" | $FZF_BIN --filter {q}; [ -z {q} ] || [ -d "$HOME"/github/{q} ] || echo "$HOME/github/"{q}" [new]"'
+	selected=$(echo "$DIRECTORIES" | $FZF_BIN --no-sort --bind "change:reload($list_matches)")
+	selected=${selected% \[new\]}
 fi
 
 # exit if no target selected
