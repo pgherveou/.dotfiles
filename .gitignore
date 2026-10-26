@@ -12,3 +12,4 @@ qmk/.cache
 alfred/Alfred.alfredpreferences/workflows
 cargo/.cargo
 codex/skills/.system
+.agent
