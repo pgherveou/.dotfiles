@@ -7,6 +7,7 @@ TelegramDesktop = "Telegram"
 "@polkadot/apps-electron" = "PolkadotJS"
 "whatsapp.com" = "WhatsApp"
 "chatgpt.com" = "ChatGPT"
+"^chatgpt " = "ChatGPT"
 
 [aliases.name]
 ".*Excalidraw.*" = "Excalidraw"

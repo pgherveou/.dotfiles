@@ -177,33 +177,24 @@ gh-failing-job() {
 }
 
 
+# Pick an open PR number with fzf; pass "mine" to list only your own PRs
+_gh-pr-select(){
+  local -a filter
+  [ "$1" = "mine" ] && filter=(--author "@me")
+  gh pr list "${filter[@]}" | fzf | awk '{print $1}' | grep .
+}
+
 # Select a PR to checkout 
 gh-pr-co(){
-  local use_all="$1"
-  local SELECTED_PR
-
-  if [ "$use_all" = "all" ]; then
-    SELECTED_PR=$(gh pr list | fzf)
-  else
-    SELECTED_PR=$(gh pr list --author "@me" | fzf)
-  fi
-
-  local PR=$(echo "$SELECTED_PR" | awk '{print $1;}')
+  local PR
+  PR=$(_gh-pr-select "$1") || return
   gh pr checkout $PR
 }
 
 # Select a PR and create a worktree for it
 gh-pr-wt(){
-  local use_all="$1"
-  local SELECTED_PR
-
-  if [ "$use_all" = "all" ]; then
-    SELECTED_PR=$(gh pr list | fzf)
-  else
-    SELECTED_PR=$(gh pr list --author "@me" | fzf)
-  fi
-
-  local PR=$(echo "$SELECTED_PR" | awk '{print $1;}')
+  local PR
+  PR=$(_gh-pr-select "$1") || return
   wt switch "pr:$PR"
 }
 
@@ -407,3 +398,5 @@ esac
 export PATH="$HOME/.cdm/bin:$HOME/.local/bin:$PATH"
 
 export PATH="$HOME/.polkadot/bin:$HOME/.local/bin:$PATH"
+
+alias gh-ios-nightly="gh workflow run ios-nightly-prepare.yml --ref main"

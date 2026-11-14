@@ -76,7 +76,7 @@ bindsym $mod+Shift+x exec --no-startup-id ~/.config/i3/lockscreen.sh
 
 # start dmenu (a program launcher)
 bindsym $mod+f fullscreen disable, exec ~/.config/rofi/web-search.sh
-bindsym $mod+d fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="discord.com"' 'chromium --app=https://discord.com/app --profile-directory="Default"' 5
+bindsym $mod+d fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'title="^Android Emulator"' '~/android-sdk/emulator/emulator -avd truapi-api34 -no-snapshot-save -no-boot-anim' 5
 bindsym $mod+space fullscreen disable, exec --no-startup-id rofi -show combi
 bindsym $mod+Tab fullscreen disable, exec --no-startup-id rofi -show window
 
@@ -149,7 +149,7 @@ bindsym $mod+g fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_st
 bindsym $mod+c fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="chromium"' 'chromium --remote-debugging-port=9222' 2
 # bindsym $mod+e fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh Element element-desktop 3
 bindsym $mod+e fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="app.element.io"' 'chromium --app=https://app.element.io --profile-directory="Default"' 5
-bindsym $mod+i fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="chatgpt.com"' 'chromium --app=https://chatgpt.com --profile-directory="Default"' 4
+bindsym $mod+i fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'class="Chatgpt"' 'chatgpt' 4
 bindsym $mod+w fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="whatsapp.com"' 'chromium --app=https://web.whatsapp.com --profile-directory="Default"' 5
 bindsym $mod+p fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'instance="polkadot.js.org"' 'chromium --app=https://polkadot.js.org/apps --profile-directory="Default"' 5
 bindsym $mod+x fullscreen disable, exec --no-startup-id ~/.config/i3/focus_or_start.sh 'title=".*Excalidraw.*"' 'chromium --app=http://localhost:3401 --profile-directory="Default"' 4

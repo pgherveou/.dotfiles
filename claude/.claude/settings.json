@@ -16,7 +16,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus",
+  "model": "fable",
   "hooks": {
     "Stop": [
       {
@@ -100,16 +100,15 @@
       }
     }
   },
-  "outputStyle": "bottom-line",
   "effortLevel": "xhigh",
   "modelSettings": {
-    "claude-opus-5": {
-      "effortLevel": "xhigh"
-    },
     "claude-fable-5-1": {
       "effortLevel": "xhigh"
     },
     "claude-opus-5-5": {
+      "effortLevel": "xhigh"
+    },
+    "claude-haiku-5-5": {
       "effortLevel": "xhigh"
     }
   },

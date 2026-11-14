@@ -18,6 +18,7 @@ keybind = ctrl+g>z=toggle_split_zoom
 keybind = ctrl+g>c=new_tab
 keybind = ctrl+g>n=next_tab
 keybind = ctrl+g>b=next_tab
+keybind = ctrl+g>shift+semicolon=toggle_command_palette
 keybind = ctrl+g>ctrl+g=text:\x07
 
 

@@ -68,3 +68,6 @@
 	auto-fix = false
 [safe]
 	directory = /home/pg/flutter
+# Machine-local overrides (e.g. the Linux signing key). Missing file is ignored.
+[include]
+	path = ~/.gitconfig.local
